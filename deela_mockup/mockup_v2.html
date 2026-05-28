@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>deela — ค้นครั้งเดียว เจอของคุ้มสุด</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #8B5CF6;
+      --pink: #EC4899;
+      --deep-purple: #7030A0;
+      --white: #FFFFFF;
+      --bg: #F8F8FA;
+      --charcoal: #1A1A2E;
+      --text-dark: #1A1A2E;
+      --text-gray: #6B7280;
+      --text-light: #9CA3AF;
+      --shopee: #FF6B35;
+      --lazada: #0F9BE8;
+      --tiktok: #000000;
+      --red: #EF4444;
+      --teal: #10B981;
+      --orange: #F97316;
+      --yellow: #FBBF24;
+      --card-radius: 16px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Thai', sans-serif;
+      background: #EDE9FE;
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 16px;
+      gap: 24px;
+    }
+
+    .mockup-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--purple);
+      text-transform: uppercase;
+    }
+
+    /* ===================== LOGO ===================== */
+    .deela-logo {
+      font-size: 28px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: baseline;
+      letter-spacing: -0.5px;
+    }
+    .logo-dee { color: var(--charcoal); }
+    .logo-la {
+      background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .deela-logo-sm {
+      font-size: 20px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: baseline;
+      letter-spacing: -0.5px;
+    }
+
+    /* ===================== HERO ===================== */
+    .hero {
+      background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+      border-radius: 24px;
+      padding: 40px;
+      color: white;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -20px;
+      width: 160px; height: 160px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    .hero-logo { font-size: 42px; font-weight: 700; margin-bottom: 16px; }
+    .hero h1 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-top: 10px;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      padding: 10px 16px;
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .badge-icon {
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--charcoal);
+      font-weight: 700;
+    }
+
+    /* ===================== MOBILE FRAME ===================== */
+    .mobile-frame {
+      width: 390px;
+      background: var(--white);
+      border-radius: 44px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+      overflow: hidden;
+      border: 10px solid var(--charcoal);
+      flex-shrink: 0;
+    }
+
+    /* Status bar */
+    .status-bar {
+      background: var(--charcoal);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status-bar .dots { display: flex; gap: 4px; align-items: center; }
+    .status-bar .dot { width: 3px; height: 3px; background: white; border-radius: 50%; }
+
+    /* App header */
+    .app-header {
+      padding: 14px 20px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .app-header .deela-logo-sm { font-size: 20px; }
+    .header-actions { display: flex; gap: 8px; margin-left: auto; }
+    .header-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: #F3F4F6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .header-icon.notify::after {
+      content: '';
+      position: absolute;
+      top: 7px; right: 7px;
+      width: 8px; height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    /* Search bar */
+    .search-bar {
+      margin: 8px 20px 12px;
+      background: #F3F4F6;
+      border-radius: 50px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .search-bar .search-icon { color: var(--text-gray); }
+    .search-bar input {
+      border: none;
+      background: transparent;
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-size: 14px;
+      color: var(--text-dark);
+      flex: 1;
+      outline: none;
+    }
+    .search-bar input::placeholder { color: var(--text-light); }
+
+    /* Categories */
+    .categories {
+      display: flex;
+      gap: 10px;
+      padding: 0 20px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+    .categories::-webkit-scrollbar { display: none; }
+    .cat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      min-width: 60px;
+      cursor: pointer;
+    }
+    .cat-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: #F3F4F6;
+      border: 2px solid #E5E7EB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cat-icon svg { width: 24px; height: 24px; stroke: var(--charcoal); stroke-width: 1.8; fill: none; }
+    .cat-label { font-size: 10px; color: var(--text-dark); font-weight: 500; text-align: center; }
+
+    /* Section header */
+    .section-header {
+      display: flex;
+      align-items: center;
+      padding: 18px 20px 10px;
+    }
+    .section-header h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+    .section-header h2 .fire { margin-right: 4px; }
+    .view-all {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--purple);
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+    }
+
+    /* Deal cards */
+    .deal-cards {
+      display: flex;
+      gap: 12px;
+      padding: 0 20px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .deal-cards::-webkit-scrollbar { display: none; }
+    .deal-card {
+      min-width: 130px;
+      background: white;
+      border: 1px solid #F0F0F0;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .deal-card-img {
+      width: 100%; height: 110px;
+      background: #F9FAFB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      position: relative;
+    }
+    .deal-card-discount {
+      position: absolute;
+      top: 6px; left: 6px;
+      background: var(--red);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+    .deal-card-body { padding: 10px 12px; }
+    .deal-card-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--red);
+    }
+    .deal-card-original {
+      font-size: 11px;
+      color: var(--text-light);
+      text-decoration: line-through;
+    }
+    .deal-card-platform {
+      font-size: 10px;
+      color: var(--text-gray);
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .platform-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+    .platform-dot.shopee { background: var(--shopee); }
+    .platform-dot.lazada { background: var(--lazada); }
+    .platform-dot.tiktok { background: var(--tiktok); }
+
+    /* Trending */
+    .trending-list { padding: 0 20px; display: flex; flex-direction: column; gap: 8px; }
+    .trending-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      background: white;
+      border: 1px solid #F0F0F0;
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .trending-rank {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--yellow));
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .trending-info { flex: 1; }
+    .trending-name { font-size: 13px; font-weight: 500; color: var(--text-dark); }
+    .trending-price { font-size: 12px; color: var(--red); font-weight: 600; }
+
+    /* Bottom nav */
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 24px;
+      border-top: 1px solid #F0F0F0;
+      background: white;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      color: var(--text-gray);
+      cursor: pointer;
+    }
+    .nav-item.active { color: var(--purple); }
+    .nav-item svg { width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+    .nav-item.active svg { stroke: var(--purple); }
+
+    .divider { width: 100%; height: 1px; background: #F0F0F0; margin: 6px 0; }
+
+    /* Search results */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 0 20px 14px;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      padding: 7px 16px;
+      border-radius: 50px;
+      border: 1.5px solid #E5E7EB;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-dark);
+      cursor: pointer;
+      background: white;
+    }
+    .filter-tab.active {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white;
+      border-color: transparent;
+    }
+
+    .search-results { padding: 0 20px 10px; }
+    .product-card {
+      background: white;
+      border: 1px solid #F0F0F0;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .product-card-header { padding: 14px; display: flex; gap: 14px; }
+    .product-img-area {
+      width: 95px; height: 95px;
+      border-radius: 12px;
+      background: #F9FAFB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .product-img-area .product-discount-tag {
+      position: absolute;
+      top: 4px; left: 4px;
+      background: var(--red);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    .product-info { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+    .badge-small {
+      display: inline-flex;
+      align-items: center;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 5px;
+      width: fit-content;
+    }
+    .product-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dark);
+      line-height: 1.45;
+    }
+    .product-rating {
+      font-size: 11px;
+      color: var(--text-gray);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .product-rating .star { color: var(--yellow); }
+    .product-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+      margin-top: 2px;
+    }
+    .product-price { font-size: 18px; font-weight: 700; color: var(--red); }
+    .product-original-price { font-size: 12px; color: var(--text-light); text-decoration: line-through; }
+    .product-discount-badge { font-size: 11px; color: var(--red); font-weight: 600; }
+    .price-compare-mini { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+    .pc-tag {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid;
+      font-weight: 500;
+    }
+    .pc-tag.shopee { color: var(--shopee); border-color: var(--shopee); background: rgba(255,107,53,0.06); }
+    .pc-tag.lazada { color: var(--lazada); border-color: var(--lazada); background: rgba(15,155,232,0.06); }
+    .pc-tag.tiktok { color: var(--tiktok); border-color: var(--tiktok); background: rgba(0,0,0,0.05); }
+
+    /* AI Summary */
+    .ai-summary {
+      margin: 12px 20px;
+      background: #FAF8FF;
+      border: 1.5px solid #EDE9FE;
+      border-radius: var(--card-radius);
+      padding: 14px;
+    }
+    .ai-summary-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .ai-icon {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .ai-label {
+      font-size: 13px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .ai-pro-con { display: flex; flex-direction: column; gap: 7px; }
+    .ai-point {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-dark);
+      line-height: 1.4;
+    }
+    .ai-point.plus { color: #10B981; }
+    .ai-point.minus { color: #EF4444; }
+    .ai-bullet {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .ai-point.plus .ai-bullet { background: #D1FAE5; color: #10B981; }
+    .ai-point.minus .ai-bullet { background: #FEE2E2; color: #EF4444; }
+
+    /* Price history */
+    .price-history {
+      margin: 12px 20px;
+      background: white;
+      border: 1px solid #F0F0F0;
+      border-radius: var(--card-radius);
+      padding: 16px;
+    }
+    .price-history h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chart-container { position: relative; }
+    .price-chart {
+      width: 100%;
+      height: 90px;
+    }
+    .chart-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 10px;
+      color: var(--text-gray);
+    }
+    .price-alert {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .price-alert input {
+      flex: 1;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      outline: none;
+      color: var(--charcoal);
+    }
+    .price-alert input:focus { border-color: var(--purple); }
+    .alert-btn {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white;
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Platform comparison table */
+    .compare-section { padding: 0 20px 10px; }
+    .compare-row {
+      display: flex;
+      align-items: center;
+      padding: 12px 14px;
+      border: 1px solid #F0F0F0;
+      border-radius: 14px;
+      margin-bottom: 8px;
+      background: white;
+    }
+    .compare-platform {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 100px;
+    }
+    .platform-logo {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: white;
+      font-weight: 700;
+    }
+    .platform-logo.shopee { background: var(--shopee); }
+    .platform-logo.lazada { background: var(--lazada); }
+    .platform-logo.tiktok { background: var(--tiktok); }
+    .platform-name { font-size: 13px; font-weight: 500; }
+    .compare-prices { flex: 1; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .compare-price { font-size: 14px; font-weight: 700; color: var(--charcoal); }
+    .compare-old { font-size: 11px; color: var(--text-light); text-decoration: line-through; }
+    .compare-disc { font-size: 10px; color: white; background: var(--red); padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+    .goto-btn {
+      background: var(--charcoal);
+      color: white;
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Data comparison grid */
+    .data-grid {
+      margin: 12px 20px;
+      background: white;
+      border: 1px solid #F0F0F0;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+    }
+    .data-row { display: flex; }
+    .data-row:not(:last-child) { border-bottom: 1px solid #F0F0F0; }
+    .data-label {
+      width: 90px;
+      padding: 10px 12px;
+      font-size: 11px;
+      color: var(--text-gray);
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+    }
+    .data-values { flex: 1; display: flex; }
+    .data-cell {
+      flex: 1;
+      padding: 10px 10px;
+      font-size: 11px;
+      color: var(--text-dark);
+      border-left: 1px solid #F0F0F0;
+      display: flex;
+      align-items: center;
+    }
+    .data-cell.highlight { color: var(--teal); font-weight: 600; }
+    .data-cell.red { color: var(--red); font-weight: 600; }
+
+    /* ===================== DESKTOP LAYOUT ===================== */
+    .desktop-frame {
+      width: 100%;
+      max-width: 1140px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      overflow: hidden;
+      display: flex;
+    }
+    .desktop-sidebar {
+      width: 240px;
+      background: #FAFAFA;
+      border-right: 1px solid #F0F0F0;
+      padding: 28px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-logo {
+      font-size: 26px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: baseline;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+    }
+    .sidebar-logo .logo-dee { color: var(--charcoal); }
+    .sidebar-logo .logo-la {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: var(--text-gray);
+      cursor: pointer;
+      margin-bottom: 2px;
+    }
+    .sidebar-item svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.8; fill: none; }
+    .sidebar-item.active { background: #EDE9FE; color: var(--purple); font-weight: 600; }
+    .sidebar-item.active svg { stroke: var(--purple); }
+    .sidebar-item:hover { background: #F0F0F0; color: var(--text-dark); }
+    .sidebar-spacer { flex: 1; }
+    .sidebar-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .profile-avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .profile-name { font-size: 13px; font-weight: 500; color: var(--text-dark); }
+
+    .desktop-main { flex: 1; padding: 28px 28px 28px 24px; overflow: hidden; }
+    .desktop-search {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .desktop-search-bar {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: #F3F4F6;
+      border-radius: 50px;
+      padding: 14px 20px;
+      gap: 12px;
+    }
+    .desktop-search-bar input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-size: 14px;
+      outline: none;
+      color: var(--text-dark);
+    }
+    .desktop-search-bar input::placeholder { color: var(--text-light); }
+
+    /* Desktop hero */
+    .desktop-hero {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border-radius: 20px;
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .desktop-hero::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 250px; height: 250px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    .desktop-hero-text { flex: 1; position: relative; z-index: 1; }
+    .desktop-hero-text h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.5;
+    }
+    .desktop-hero-text p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+    .desktop-hero-cta {
+      background: white;
+      color: var(--purple);
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Robot mascot */
+    .hero-robot {
+      width: 160px;
+      height: 160px;
+      position: relative;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .robot-body {
+      width: 140px;
+      height: 120px;
+      background: white;
+      border-radius: 40px 40px 50px 50px;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .robot-face {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 50px;
+      background: #1A1A2E;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    .robot-eye {
+      width: 18px; height: 18px;
+      background: var(--lazada);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(15,155,232,0.8);
+    }
+    .robot-antenna {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px; height: 30px;
+      background: #E5E7EB;
+      border-radius: 3px;
+    }
+    .robot-antenna::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px; height: 14px;
+      background: var(--purple);
+      border-radius: 50%;
+    }
+    .robot-magnifier {
+      position: absolute;
+      bottom: 10px;
+      right: -20px;
+      width: 70px;
+      height: 70px;
+      border: 6px solid white;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .robot-magnifier-handle {
+      position: absolute;
+      bottom: -5px;
+      right: -25px;
+      width: 35px;
+      height: 10px;
+      background: white;
+      border-radius: 5px;
+      transform: rotate(45deg);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Deal scroll */
+    .desktop-deal-scroll { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; }
+    .desktop-deal-scroll::-webkit-scrollbar { display: none; }
+    .desktop-deal-card {
+      min-width: 150px;
+      background: white;
+      border: 1px solid #F0F0F0;
+      border-radius: 14px;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      position: relative;
+    }
+    .desktop-deal-img {
+      height: 120px;
+      background: #F9FAFB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 46px;
+    }
+    .desktop-deal-discount {
+      position: absolute;
+      top: 6px; left: 6px;
+      background: var(--red);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+    .desktop-deal-body { padding: 10px 12px; }
+    .desktop-deal-price { font-size: 15px; font-weight: 700; color: var(--red); }
+    .desktop-deal-orig { font-size: 11px; color: var(--text-light); text-decoration: line-through; }
+
+    /* Desktop rightbar */
+    .desktop-rightbar { width: 250px; padding: 24px 20px; }
+    .rightbar-section { }
+    .rightbar-section h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .trending-list-desktop { display: flex; flex-direction: column; gap: 10px; }
+    .trending-desktop-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+    .trending-desktop-rank {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--yellow));
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .trending-desktop-name { flex: 1; color: var(--text-dark); font-weight: 500; }
+    .trending-desktop-price { font-weight: 600; color: var(--red); }
+
+    .app-promo {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border-radius: 14px;
+      padding: 18px;
+      color: white;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .app-promo h4 { font-size: 14px; font-weight: 700; }
+    .app-promo p { font-size: 11px; opacity: 0.9; margin: 6px 0 12px; }
+    .app-promo-badges { display: flex; gap: 8px; justify-content: center; }
+    .qr-code {
+      width: 70px; height: 70px;
+      background: white;
+      border-radius: 8px;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Screen row */
+    .screen-row {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--purple);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <p class="mockup-label">✦ deela — Mockup v2.0</p>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-logo">
+      <span class="logo-dee">dee</span><span class="logo-la">la</span>
+    </div>
+    <h1>ค้นครั้งเดียว<br><span class="highlight">เจอของคุ้มสุด</span><br>ทุกแพลตฟอร์ม</h1>
+    <p>เปรียบเทียบราคาและรีวิวจาก Shopee Lazada TikTok Shop ด้วย AI สรุป</p>
+    <div class="hero-buttons">
+      <div class="badge">
+        <div class="badge-icon"></div>
+        <span>App Store</span>
+      </div>
+      <div class="badge">
+        <div class="badge-icon">▶</div>
+        <span>Google Play</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-row">
+
+    <!-- MOBILE: HOME -->
+    <div>
+      <p class="section-label">Mobile — Home</p>
+      <div class="mobile-frame">
+        <div class="status-bar">
+          <span>9:41</span>
+          <div class="dots">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="white"><rect x="0" y="5" width="12" height="7" rx="1.5"/><rect x="13" y="8" width="3" height="4" rx="1"/></svg>
+          </div>
+        </div>
+        <div class="app-header">
+          <div class="deela-logo-sm"><span class="logo-dee">dee</span><span class="logo-la">la</span></div>
+          <div class="header-actions">
+            <div class="header-icon notify">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a-2 2 0 0 1-3.46 0"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="search-bar">
+          <span class="search-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </span>
+          <input type="text" placeholder="ค้นหาสินค้า เช่น หูฟัง, iPhone, โต๊ะทำงาน">
+        </div>
+        <div class="categories">
+          <div class="cat-item">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg>
+            </div>
+            <div class="cat-label">Mobile & Tablet</div>
+          </div>
+          <div class="cat-item">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+            </div>
+            <div class="cat-label">Computer</div>
+          </div>
+          <div class="cat-item">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><circle cx="9" cy="9" r="2"/></svg>
+            </div>
+            <div class="cat-label">Audio</div>
+          </div>
+          <div class="cat-item">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="cat-label">Home & Lifestyle</div>
+          </div>
+          <div class="cat-item">
+            <div class="cat-icon">
+              <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+            </div>
+            <div class="cat-label">Health & Beauty</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="section-header">
+          <h2><span class="fire">🔥</span>ดีลน่าช้อปวันนี้</h2>
+          <span class="view-all">ดูทั้งหมด
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </div>
+        <div class="deal-cards">
+          <div class="deal-card">
+            <div class="deal-card-img">
+              🎧
+              <div class="deal-card-discount">-47%</div>
+            </div>
+            <div class="deal-card-body">
+              <div class="deal-card-price">฿299</div>
+              <div class="deal-card-original">฿560</div>
+              <div class="deal-card-platform">
+                <span class="platform-dot shopee"></span>Shopee
+              </div>
+            </div>
+          </div>
+          <div class="deal-card">
+            <div class="deal-card-img">
+              📱
+              <div class="deal-card-discount">-38%</div>
+            </div>
+            <div class="deal-card-body">
+              <div class="deal-card-price">฿4,900</div>
+              <div class="deal-card-original">฿7,900</div>
+              <div class="deal-card-platform">
+                <span class="platform-dot lazada"></span>Lazada
+              </div>
+            </div>
+          </div>
+          <div class="deal-card">
+            <div class="deal-card-img">
+              💻
+              <div class="deal-card-discount">-33%</div>
+            </div>
+            <div class="deal-card-body">
+              <div class="deal-card-price">฿9,999</div>
+              <div class="deal-card-original">฿14,900</div>
+              <div class="deal-card-platform">
+                <span class="platform-dot tiktok"></span>TikTok Shop
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="section-header">
+          <h2>📈 สินค้ากำลังมาแรง</h2>
+          <span class="view-all">ดูทั้งหมด
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </div>
+        <div class="trending-list">
+          <div class="trending-item">
+            <div class="trending-rank">1</div>
+            <div class="trending-info"><div class="trending-name">พัดลมพกพา 2024</div></div>
+            <div class="trending-price">฿199</div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-rank">2</div>
+            <div class="trending-info"><div class="trending-name">หูฟังบลูทูธ</div></div>
+            <div class="trending-price">฿690</div>
+          </div>
+          <div class="trending-item">
+            <div class="trending-rank">3</div>
+            <div class="trending-info"><div class="trending-name">iPhone 15</div></div>
+            <div class="trending-price">฿27,900</div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <div class="nav-item active">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            Home
+          </div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            Search
+          </div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Wishlist
+          </div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a-2 2 0 0 1-3.46 0"/></svg>
+            Notifications
+          </div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Profile
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE: SEARCH RESULTS -->
+    <div>
+      <p class="section-label">Mobile — Search Results</p>
+      <div class="mobile-frame">
+        <div class="status-bar"><span>9:41</span><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+        <div class="app-header" style="padding:12px 20px 8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          <div style="flex:1;font-size:14px;font-weight:600;color:var(--charcoal)">ผลการค้นหา: หูฟังบลูทูธ</div>
+          <div class="header-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="17" cy="6" r="1" fill="#6B7280" stroke="none"/><circle cx="9" cy="12" r="1" fill="#6B7280" stroke="none"/><circle cx="17" cy="18" r="1" fill="#6B7280" stroke="none"/></svg>
+          </div>
+        </div>
+        <div class="filter-tabs">
+          <div class="filter-tab active">คุ้มสุด</div>
+          <div class="filter-tab">ราคาถูกสุด</div>
+          <div class="filter-tab">รีวิวดีที่สุด</div>
+          <div class="filter-tab">ยอดขายสูงสุด</div>
+        </div>
+        <div class="search-results">
+          <div class="product-card">
+            <div class="product-card-header">
+              <div class="product-img-area">
+                🎧
+                <div class="product-discount-tag">-47%</div>
+              </div>
+              <div class="product-info">
+                <span class="badge-small">คุ้มสุด</span>
+                <div class="product-name">หูฟังบลูทูธ Anker Soundcore P20i คุณภาพเสียงดี</div>
+                <div class="product-rating"><span class="star">⭐</span> 4.8 (1.2พันรีวิว)</div>
+                <div class="product-price-row">
+                  <span class="product-price">฿690</span>
+                  <span class="product-original-price">฿1,290</span>
+                  <span class="product-discount-badge">-47%</span>
+                </div>
+                <div class="price-compare-mini">
+                  <span class="pc-tag shopee">ชีปี้ ฿690</span>
+                  <span class="pc-tag lazada">ลาซาด้า ฿720</span>
+                  <span class="pc-tag tiktok">ติ๊กต๊อก ฿705</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-card-header">
+              <div class="product-img-area">
+                🎵
+                <div class="product-discount-tag">-50%</div>
+              </div>
+              <div class="product-info">
+                <span class="badge-small">คุ้มสุด</span>
+                <div class="product-name">หูฟัง TWS i12 ราคาถูก คุณภาพเสียงดี</div>
+                <div class="product-rating"><span class="star">⭐</span> 4.5 (850รีวิว)</div>
+                <div class="product-price-row">
+                  <span class="product-price">฿299</span>
+                  <span class="product-original-price">฿599</span>
+                  <span class="product-discount-badge">-50%</span>
+                </div>
+                <div class="price-compare-mini">
+                  <span class="pc-tag shopee">ชีปี้ ฿299</span>
+                  <span class="pc-tag lazada">ลาซาด้า ฿350</span>
+                  <span class="pc-tag tiktok">ติ๊กต๊อก ฿320</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</div>
+          <div class="nav-item active"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Search</div>
+          <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Wishlist</div>
+          <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a-2 2 0 0 1-3.46 0"/></svg>Noti</div>
+          <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE: PRODUCT DETAIL -->
+    <div>
+      <p class="section-label">Mobile — Product Detail</p>
+      <div class="mobile-frame">
+        <div class="status-bar"><span>9:41</span><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+        <div class="app-header" style="padding:12px 20px 8px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          <div class="header-icon" style="margin-left:auto;background:transparent;border:1.5px solid #E5E7EB">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div class="header-icon" style="margin-left:6px;background:transparent;border:1.5px solid #E5E7EB">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </div>
+        </div>
+        <div class="product-img-area" style="height:180px;border-radius:0;font-size:64px;background:#F9FAFB">
+          🎧
+          <div class="product-discount-tag" style="top:10px;left:10px;font-size:11px;padding:3px 8px">-47%</div>
+        </div>
+        <div style="padding:14px 20px;background:linear-gradient(135deg,#FF6B35,#F97316);color:white;display:flex;align-items:center;gap:12px">
+          <div>
+            <div style="font-size:11px;opacity:0.85">ราคาที่ดีที่สุด</div>
+            <div style="font-size:24px;font-weight:700">฿690</div>
+          </div>
+          <div style="margin-left:auto;background:white;color:#FF6B35;font-size:12px;font-weight:700;padding:10px 16px;border-radius:50px">ไปที่ Shopee →</div>
+        </div>
+        <div style="padding:14px 20px 6px">
+          <div style="font-size:15px;font-weight:600;color:var(--charcoal);line-height:1.5">หูฟังบลูทูธ Anker Soundcore P20i คุณภาพเสียงดี ระบบตัดเสียง</div>
+          <div style="font-size:12px;color:var(--text-gray);margin-top:4px">⭐ 4.8 (1,200 รีวิว) · ยอดขาย 2,350 ชิ้น</div>
+        </div>
+        <div class="ai-summary">
+          <div class="ai-summary-header">
+            <div class="ai-icon">🤖</div>
+            <span class="ai-label">AI สรุปรีวิว</span>
+          </div>
+          <div class="ai-pro-con">
+            <div class="ai-point plus">
+              <div class="ai-bullet">✓</div>
+              คุณภาพเสียงดีในราคา ฟังเพลิน
+            </div>
+            <div class="ai-point plus">
+              <div class="ai-bullet">✓</div>
+              แบตเตอรี่ทนทาน ใช้ได้นาน
+            </div>
+            <div class="ai-point plus">
+              <div class="ai-bullet">✓</div>
+              ไมค์คุณภาพดี สำหรับเรียน/ประชุม
+            </div>
+            <div class="ai-point minus">
+              <div class="ai-bullet">✗</div>
+              เบสอาจหนักไปสำหรับบางคน
+            </div>
+          </div>
+        </div>
+
+        <!-- Price comparison -->
+        <div class="section-header" style="padding-top:6px">
+          <h2>💰 เปรียบเทียบราคา</h2>
+        </div>
+        <div class="compare-section">
+          <div class="compare-row">
+            <div class="compare-platform">
+              <div class="platform-logo shopee">ซ</div>
+              <div class="platform-name" style="color:var(--shopee)">Shopee</div>
+            </div>
+            <div class="compare-prices">
+              <div class="compare-price">฿690</div>
+              <div class="compare-old">฿1,290</div>
+              <div class="compare-disc">-47%</div>
+            </div>
+            <button class="goto-btn" style="background:var(--shopee)">ไปที่ร้าน</button>
+          </div>
+          <div class="compare-row">
+            <div class="compare-platform">
+              <div class="platform-logo lazada">ล</div>
+              <div class="platform-name" style="color:var(--lazada)">Lazada</div>
+            </div>
+            <div class="compare-prices">
+              <div class="compare-price">฿720</div>
+              <div class="compare-old">฿1,290</div>
+              <div class="compare-disc">-44%</div>
+            </div>
+            <button class="goto-btn" style="background:var(--lazada)">ไปที่ร้าน</button>
+          </div>
+          <div class="compare-row">
+            <div class="compare-platform">
+              <div class="platform-logo tiktok">ต</div>
+              <div class="platform-name">TikTok Shop</div>
+            </div>
+            <div class="compare-prices">
+              <div class="compare-price">฿705</div>
+              <div class="compare-old">฿1,290</div>
+              <div class="compare-disc">-45%</div>
+            </div>
+            <button class="goto-btn" style="background:var(--tiktok)">ไปที่ร้าน</button>
+          </div>
+        </div>
+
+        <!-- Price history -->
+        <div class="price-history">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            ประวัติราคา 30 วัน
+          </h3>
+          <div class="chart-container">
+            <svg class="price-chart" viewBox="0 0 340 90" preserveAspectRatio="none">
+              <!-- Gradient fill -->
+              <defs>
+                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.2"/>
+                  <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <!-- Area fill -->
+              <path d="M0,75 L28,60 L56,68 L84,45 L112,50 L140,30 L168,40 L196,25 L224,35 L252,15 L280,28 L308,20 L340,18 L340,90 L0,90 Z" fill="url(#chartGrad)"/>
+              <!-- Line -->
+              <path d="M0,75 L28,60 L56,68 L84,45 L112,50 L140,30 L168,40 L196,25 L224,35 L252,15 L280,28 L308,20 L340,18" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Current price dot -->
+              <circle cx="340" cy="18" r="5" fill="#EF4444" stroke="white" stroke-width="2"/>
+              <!-- Data points -->
+              <circle cx="0" cy="75" r="3" fill="#8B5CF6"/>
+              <circle cx="56" cy="68" r="3" fill="#8B5CF6"/>
+              <circle cx="112" cy="50" r="3" fill="#8B5CF6"/>
+              <circle cx="168" cy="40" r="3" fill="#8B5CF6"/>
+              <circle cx="224" cy="35" r="3" fill="#8B5CF6"/>
+              <circle cx="280" cy="28" r="3" fill="#8B5CF6"/>
+            </svg>
+          </div>
+          <div class="chart-labels">
+            <span>24 เม.ย.</span>
+            <span style="color:var(--red);font-weight:600">วันนี้: ฿690</span>
+            <span>24 พ.ค.</span>
+          </div>
+          <div class="price-alert">
+            <input type="text" placeholder="ตั้งราคาที่ต้องการ..." value="฿600">
+            <button class="alert-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a-2 2 0 0 1-3.46 0"/></svg>
+              ตั้งแจ้งเตือน
+            </button>
+          </div>
+        </div>
+
+        <!-- Data comparison -->
+        <div class="section-header" style="padding-top:6px">
+          <h2>📋 เปรียบเทียบข้อมูล</h2>
+        </div>
+        <div class="data-grid">
+          <div class="data-row">
+            <div class="data-label">ราคา</div>
+            <div class="data-values" style="display:flex">
+              <div class="data-cell red">฿690</div>
+              <div class="data-cell">฿720</div>
+              <div class="data-cell">฿705</div>
+            </div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">ค่าส่ง</div>
+            <div class="data-values" style="display:flex">
+              <div class="data-cell highlight">ฟรี</div>
+              <div class="data-cell">฿30</div>
+              <div class="data-cell highlight">ฟรี</div>
+            </div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">คะแนนร้าน</div>
+            <div class="data-values" style="display:flex">
+              <div class="data-cell">⭐4.8</div>
+              <div class="data-cell">4.6</div>
+              <div class="data-cell">4.5</div>
+            </div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">รีวิว</div>
+            <div class="data-values" style="display:flex">
+              <div class="data-cell">1.2พัน</div>
+              <div class="data-cell">850</div>
+              <div class="data-cell">620</div>
+            </div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">ยอดขาย</div>
+            <div class="data-values" style="display:flex">
+              <div class="data-cell">2,350</div>
+              <div class="data-cell">1,820</div>
+              <div class="data-cell">940</div>
+            </div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">รับประกัน</div>
+            <div class="data-values" style="display:flex">
+              <div class="data-cell">6 เดือน</div>
+              <div class="data-cell">3 เดือน</div>
+              <div class="data-cell">ไม่มี</div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Home</div>
+          <div class="nav-item"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Search</div>
+          <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Wishlist</div>
+          <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a-2 2 0 0 1-3.46 0"/></svg>Noti</div>
+          <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DESKTOP -->
+  <div style="width:100%;max-width:1140px">
+    <p class="section-label">Desktop — Home</p>
+    <div class="desktop-frame">
+      <div class="desktop-sidebar">
+        <div class="sidebar-logo">
+          <span class="logo-dee">dee</span><span class="logo-la">la</span>
+        </div>
+        <div class="sidebar-item active">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          Home
+        </div>
+        <div class="sidebar-item">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Search
+        </div>
+        <div class="sidebar-item">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Wishlist
+        </div>
+        <div class="sidebar-item">
+          <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a-2 2 0 0 1-3.46 0"/></svg>
+          Notifications
+        </div>
+        <div class="sidebar-item">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Trending
+        </div>
+        <div class="sidebar-item">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Categories
+        </div>
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-profile">
+          <div class="profile-avatar">N</div>
+          <div class="profile-name">Nattawat</div>
+        </div>
+      </div>
+
+      <div class="desktop-main">
+        <div class="desktop-search">
+          <div class="desktop-search-bar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" placeholder="ค้นหาสินค้า เช่น หูฟัง, iPhone, โต๊ะทำงาน">
+          </div>
+        </div>
+
+        <div class="desktop-hero">
+          <div class="desktop-hero-text">
+            <h2>🤖 AI ช่วยหาของคุ้มที่สุด<br>จากทุกแพลตฟอร์ม</h2>
+            <p>เปรียบเทียบราคาและรีวิวจาก Shopee Lazada TikTok Shop ด้วย AI สรุป ค้นครั้งเดียวเจอของดีที่สุด</p>
+            <button class="desktop-hero-cta">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              ลองค้นหาเลย
+            </button>
+          </div>
+
+          <!-- Robot mascot -->
+          <div class="hero-robot">
+            <div class="robot-antenna"></div>
+            <div class="robot-body">
+              <div class="robot-face">
+                <div class="robot-eye"></div>
+                <div class="robot-eye"></div>
+              </div>
+            </div>
+            <div class="robot-magnifier"></div>
+            <div class="robot-magnifier-handle"></div>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <h2>🔥 ดีลน่าช้อปวันนี้</h2>
+          <span class="view-all">ดูทั้งหมด
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </span>
+        </div>
+        <div class="desktop-deal-scroll">
+          <div class="desktop-deal-card">
+            <div class="desktop-deal-img">
+              🎧
+              <div class="desktop-deal-discount">-47%</div>
+            </div>
+            <div class="desktop-deal-body">
+              <div class="desktop-deal-price">฿690</div>
+              <div class="desktop-deal-orig">฿1,290</div>
+            </div>
+          </div>
+          <div class="desktop-deal-card">
+            <div class="desktop-deal-img">
+              📱
+              <div class="desktop-deal-discount">-38%</div>
+            </div>
+            <div class="desktop-deal-body">
+              <div class="desktop-deal-price">฿4,900</div>
+              <div class="desktop-deal-orig">฿7,900</div>
+            </div>
+          </div>
+          <div class="desktop-deal-card">
+            <div class="desktop-deal-img">
+              💻
+              <div class="desktop-deal-discount">-33%</div>
+            </div>
+            <div class="desktop-deal-body">
+              <div class="desktop-deal-price">฿9,999</div>
+              <div class="desktop-deal-orig">฿14,900</div>
+            </div>
+          </div>
+          <div class="desktop-deal-card">
+            <div class="desktop-deal-img">
+              ⌨️
+              <div class="desktop-deal-discount">-20%</div>
+            </div>
+            <div class="desktop-deal-body">
+              <div class="desktop-deal-price">฿399</div>
+              <div class="desktop-deal-orig">฿499</div>
+            </div>
+          </div>
+          <div class="desktop-deal-card">
+            <div class="desktop-deal-img">
+              🎮
+              <div class="desktop-deal-discount">-60%</div>
+            </div>
+            <div class="desktop-deal-body">
+              <div class="desktop-deal-price">฿199</div>
+              <div class="desktop-deal-orig">฿499</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="desktop-rightbar">
+        <div class="rightbar-section">
+          <h3>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            สินค้ากำลังมาแรง
+          </h3>
+          <div class="trending-list-desktop">
+            <div class="trending-desktop-item">
+              <div class="trending-desktop-rank">1</div>
+              <div class="trending-desktop-name">พัดลมพกพา 2024</div>
+              <div class="trending-desktop-price">฿199</div>
+            </div>
+            <div class="trending-desktop-item">
+              <div class="trending-desktop-rank">2</div>
+              <div class="trending-desktop-name">หูฟังบลูทูธ</div>
+              <div class="trending-desktop-price">฿690</div>
+            </div>
+            <div class="trending-desktop-item">
+              <div class="trending-desktop-rank">3</div>
+              <div class="trending-desktop-name">iPhone 15</div>
+              <div class="trending-desktop-price">฿27,900</div>
+            </div>
+            <div class="trending-desktop-item">
+              <div class="trending-desktop-rank">4</div>
+              <div class="trending-desktop-name">คีย์บอร์ดไร้สาย</div>
+              <div class="trending-desktop-price">฿399</div>
+            </div>
+            <div class="trending-desktop-item">
+              <div class="trending-desktop-rank">5</div>
+              <div class="trending-desktop-name">สายชาร์จมินิ</div>
+              <div class="trending-desktop-price">฿89</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-promo">
+          <div class="qr-code">
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+              <rect x="0" y="0" width="15" height="15" rx="2" fill="#1A1A2E"/>
+              <rect x="18" y="0" width="5" height="5" rx="1" fill="#1A1A2E"/>
+              <rect x="26" y="0" width="7" height="5" rx="1" fill="#1A1A2E"/>
+              <rect x="36" y="0" width="14" height="5" rx="1" fill="#1A1A2E"/>
+              <rect x="0" y="18" width="5" height="5" rx="1" fill="#1A1A2E"/>
+              <rect x="8" y="18" width="7" height="7" rx="1" fill="#1A1A2E"/>
+              <rect x="0" y="26" width="15" height="5" rx="1" fill="#1A1A2E"/>
+              <rect x="18" y="20" width="5" height="5" rx="1" fill="#1A1A2E"/>
+              <rect x="26" y="18" width="7" height="7" rx="1" fill="#1A1A2E"/>
+              <rect x="36" y="18" width="5" height="5" rx="1" fill="#1A1A2E"/>
+              <rect x="44" y="18" width="6" height="5" rx="1" fill="#1A1A2E"/>
+              <rect x="0" y="36" width="15" height="14" rx="2" fill="#1A1A2E"/>
+              <rect x="18" y="36" width="7" height="5" rx="1" fill="#1A1A2E"/>
+              <rect x="28" y="36" width="5" height="5" rx="1" fill="#1A1A2E"/>
+              <rect x="36" y="36" width="14" height="14" rx="2" fill="#1A1A2E"/>
+            </svg>
+          </div>
+          <h4>📱 ติดตั้งแอป Deela</h4>
+          <p>ราคาดี ส่งเร็ว แจ้งเตือนราคาลด</p>
+          <div class="app-promo-badges">
+            <div class="badge"><div class="badge-icon"></div></div>
+            <div class="badge"><div class="badge-icon">▶</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;color:var(--text-gray);font-size:11px;margin-top:8px">
+    deela mockup v2.0 · design reference · SVG icons · price history chart · robot mascot
+  </div>
+
+</body>
+</html>

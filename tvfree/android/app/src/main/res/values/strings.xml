@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">TVFree</string>
+    <string name="title_activity_main">TVFree</string>
+    <string name="package_name">com.tvfree.app</string>
+    <string name="custom_url_scheme">com.tvfree.app</string>
+</resources>

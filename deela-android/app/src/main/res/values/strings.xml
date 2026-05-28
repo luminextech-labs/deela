@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">deela</string>
+    <string name="search_hint">ค้นหาสินค้า เช่น หูฟัง, iPhone, โต๊ะทำงาน</string>
+    <string name="deals_today">ดีลน่าช้อปวันนี้</string>
+    <string name="trending">สินค้ากำลังมาแรง</string>
+    <string name="view_all">ดูทั้งหมด</string>
+    <string name="ai_summary">AI สรุปรีวิว</string>
+    <string name="price_compare">เปรียบเทียบราคา</string>
+    <string name="price_history">ประวัติราคา 30 วัน</string>
+    <string name="set_alert">ตั้งแจ้งเตือนราคา</string>
+    <string name="data_compare">เปรียบเทียบข้อมูล</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple">#8B5CF6</color>
+    <color name="pink">#EC4899</color>
+    <color name="deep_purple">#7030A0</color>
+    <color name="charcoal">#1A1A2E</color>
+    <color name="white">#FFFFFF</color>
+    <color name="bg">#F8F8FA</color>
+    <color name="text_dark">#1A1A2E</color>
+    <color name="text_gray">#6B7280</color>
+    <color name="text_light">#9CA3AF</color>
+    <color name="shopee">#FF6B35</color>
+    <color name="lazada">#0F9BE8</color>
+    <color name="tiktok">#000000</color>
+    <color name="red">#EF4444</color>
+    <color name="teal">#10B981</color>
+    <color name="orange">#F97316</color>
+    <color name="yellow">#FBBF24</color>
+    <color name="card_border">#F0F0F0</color>
+</resources>

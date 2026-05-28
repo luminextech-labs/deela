@@ -1,0 +1,9 @@
+{
+  "appId": "com.tvfree.app",
+  "appName": "TVFree",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "bundledWebRuntime": false
+}

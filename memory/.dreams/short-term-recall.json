@@ -1,0 +1,294 @@
+{
+  "version": 1,
+  "updatedAt": "2026-05-19T03:25:39.454Z",
+  "entries": {
+    "memory:memory/2026-04-01.md:1:48": {
+      "key": "memory:memory/2026-04-01.md:1:48",
+      "path": "memory/2026-04-01.md",
+      "startLine": 1,
+      "endLine": 48,
+      "source": "memory",
+      "snippet": "# 2026-04-01 Daily Notes ## MindTrade OS - Security Fixes ### Project - Repo: Adrenaline189/mindtrade-os (public now) - Trading bot for Binance Futures with multi-tenant support - Tech stack: Python, ccxt, Flask/Fastify, JSON file storage ### 8 Fixes Identified (Fix #1 DONE) **Fix #1 ✅ APPLIED** - File: bot/engine.py - Issues fixed: 1. API key fallback leak - non-default tenants could use admin's global env keys 2. datetime.utcnow() deprecated → datetime.now(timezone.utc) - Branch: fix/security-fixes-1 (but actually already merged/pushed) **Fix #2 🔴 NOT YET APPLIED** - File: bot/license_service.py - Issue: verify_binancepay_signature() returns True when secret is empty - Fix: Raise",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.9312868678300434,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-04-14T12:19:41.760Z",
+      "lastRecalledAt": "2026-05-19T03:25:39.454Z",
+      "queryHashes": [
+        "5fafe29bdec0",
+        "376cbd33a5c0"
+      ],
+      "recallDays": [
+        "2026-04-14",
+        "2026-05-19"
+      ],
+      "conceptTags": [
+        "adrenaline189/mindtrade-os",
+        "multi-tenant",
+        "flask/fastify",
+        "bot/engine.py",
+        "non-default",
+        "datetime.utcnow",
+        "datetime.now",
+        "timezone.utc"
+      ]
+    },
+    "memory:memory/2026-04-01.md:40:75": {
+      "key": "memory:memory/2026-04-01.md:40:75",
+      "path": "memory/2026-04-01.md",
+      "startLine": 40,
+      "endLine": 75,
+      "source": "memory",
+      "snippet": "**Fix #7 🔴 NOT YET APPLIED** - Create: scripts/migrate_licenses.py - Issue: No migration system for JSON schema changes **Fix #8 🔴 NOT YET APPLIED** - Files: bot/paths.py, bot/license_service.py, bot/tenant_store.py - Issue: Hardcoded ROOT paths - Fix: Use MINDTRADE_ROOT, MINDTRADE_DATA_ROOT, MINDTRADE_LICENSE_ROOT env vars ### Fix Files Location All fix files saved at: /Users/adrenaline/.openclaw/workspace/mindtrade-os-fixes/ ├── fixed-engine.py (Fix #1+4 - complete replacement) ├── 2_webhook_signature_bypass.py ├── 3_license_backup.py ├── 5_rate_limiting.py ├── 6_payment_validation_logging.py ├── 7_migration_system.py └── 8_hardcoded_paths.py ### Git Status - Cloned to: /tmp/mindtrade",
+      "recallCount": 3,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2.047422267263821,
+      "maxScore": 0.7832957021725615,
+      "firstRecalledAt": "2026-04-14T12:19:41.760Z",
+      "lastRecalledAt": "2026-05-19T03:25:39.454Z",
+      "queryHashes": [
+        "5fafe29bdec0",
+        "fc607deb34d0",
+        "376cbd33a5c0"
+      ],
+      "recallDays": [
+        "2026-04-14",
+        "2026-05-19"
+      ],
+      "conceptTags": [
+        "backup",
+        "scripts/migrate-licenses.py",
+        "bot/paths.py",
+        "bot/license-service.py",
+        "bot/tenant-store.py",
+        "mindtrade-root",
+        "mindtrade-data-root",
+        "mindtrade-license-root"
+      ]
+    },
+    "memory:memory/2026-04-14-affiliate-notification.md:114:168": {
+      "key": "memory:memory/2026-04-14-affiliate-notification.md:114:168",
+      "path": "memory/2026-04-14-affiliate-notification.md",
+      "startLine": 114,
+      "endLine": 168,
+      "source": "memory",
+      "snippet": "\"message_id\": \"534\", \"sender_id\": \"8695614281\", \"sender\": \"Mind Trade\", \"timestamp\": \"Tue 2026-04-14 19:12 GMT+7\" } ``` Sender (untrusted metadata): ```json { \"label\": \"Mind Trade (8695614281)\", \"id\": \"8695614281\", \"name\": \"Mind Trade\", \"username\": \"mindtrade89\" } ``` อยากให้เพิ่มในหน้า แดชบอร์ดตรงใหนก้ได้เด่นๆชัดๆ user: [Queued user message that arrived while the previous turn was still active] [Queued messages while agent was busy] --- Queued #1 Conversation info (untrusted metadata): ```json { \"message_id\": \"534\", \"sender_id\": \"8695614281\", \"sender\": \"Mind Trade\", \"timestamp\": \"Tue 2026-04-14 19:12 GMT+7\" } ``` Sender (untrusted metadata): ```json { \"label\":",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6334497913757361,
+      "maxScore": 0.6334497913757361,
+      "firstRecalledAt": "2026-05-19T03:21:08.264Z",
+      "lastRecalledAt": "2026-05-19T03:21:08.264Z",
+      "queryHashes": [
+        "fc607deb34d0"
+      ],
+      "recallDays": [
+        "2026-05-19"
+      ],
+      "conceptTags": [
+        "message-id",
+        "sender-id",
+        "affiliate",
+        "notification.md",
+        "sender",
+        "mind",
+        "trade",
+        "timestamp"
+      ]
+    },
+    "memory:memory/2026-04-15.md:34:65": {
+      "key": "memory:memory/2026-04-15.md:34:65",
+      "path": "memory/2026-04-15.md",
+      "startLine": 34,
+      "endLine": 65,
+      "source": "memory",
+      "snippet": "- ระบบ verify code + link chat_id ↔ email ↔ tenant - Webhook ตั้งแล้วบน VPS ### ✅ HTTPS/SSL - DNS www.mindtrade.trade เพิ่มแล้ว → SSL ทำงานได้แล้ว - Caddy certificate: expire May 30, 2026 ### ✅ Email (Resend) - API Key ใหม่: re_ApzRXzuY_8C4RkBDf3ce9cd6sJ1x2sYQt - ส่ง email สำเร็จแล้ว (test to mindtrade89@gmail.com - bounced) - ยังต้อง add domain mindtrade.trade ใน Resend dashboard แล้วเพิ่ม DNS records ที่ Cloudflare ### ✅ AI Help Rules - เพิ่ม Q&A หลากหลายมากขึ้นใน rules array (leverage, cooldown, API, RSI, Golden Zone, Daily loss, Affiliate, Entry score, etc.) - อยู่ใน app.py ส่วน @app.get('/api/ai-help') ### ⚠️ Still Pending - Resend domain verification - ต้อง add domain mindtrade.tra",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.6318702263822806,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-19T03:21:08.264Z",
+      "lastRecalledAt": "2026-05-19T03:25:39.454Z",
+      "queryHashes": [
+        "fc607deb34d0",
+        "376cbd33a5c0"
+      ],
+      "recallDays": [
+        "2026-05-19"
+      ],
+      "conceptTags": [
+        "chat-id",
+        "https/ssl",
+        "www.mindtrade.trade",
+        "gmail.com",
+        "mindtrade.trade",
+        "app.py",
+        "app.get",
+        "api/ai-help"
+      ]
+    },
+    "memory:memory/2026-04-14-affiliate-notification.md:37:92": {
+      "key": "memory:memory/2026-04-14-affiliate-notification.md:37:92",
+      "path": "memory/2026-04-14-affiliate-notification.md",
+      "startLine": 37,
+      "endLine": 92,
+      "source": "memory",
+      "snippet": "assistant: HEARTBEAT_OK user: Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK. When reading HEARTBEAT.md, use workspace file /Users/adrenaline/.openclaw/workspace/HEARTBEAT.md (exact case). Do not read docs/heartbeat.md. Current time: Tuesday, April 14th, 2026 - 6:49 PM (Asia/Bangkok) / 2026-04-14 11:49 UTC assistant: HEARTBEAT_OK user: Conversation info (untrusted metadata): ```json { \"message_id\": \"529\", \"sender_id\": \"8695614281\", \"sender\": \"Mind Trade\", \"timestamp\": \"Tue 2026-04-14 19:05 GMT+7\" } ``` Sender (untrusted metadata): ```json { \"label\": \"Mind Trad",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.3996666548350776,
+      "maxScore": 0.7680903117879863,
+      "firstRecalledAt": "2026-05-19T03:21:08.264Z",
+      "lastRecalledAt": "2026-05-19T03:25:39.454Z",
+      "queryHashes": [
+        "fc607deb34d0",
+        "376cbd33a5c0"
+      ],
+      "recallDays": [
+        "2026-05-19"
+      ],
+      "conceptTags": [
+        "heartbeat-ok",
+        "heartbeat.md",
+        "users/adrenaline",
+        "openclaw/workspace/heartbeat.md",
+        "docs/heartbeat.md",
+        "asia/bangkok",
+        "message-id",
+        "sender-id"
+      ]
+    },
+    "memory:memory/2026-04-14-affiliate-notification.md:73:131": {
+      "key": "memory:memory/2026-04-14-affiliate-notification.md:73:131",
+      "path": "memory/2026-04-14-affiliate-notification.md",
+      "startLine": 73,
+      "endLine": 131,
+      "source": "memory",
+      "snippet": "user: Conversation info (untrusted metadata): ```json { \"message_id\": \"531\", \"sender_id\": \"8695614281\", \"sender\": \"Mind Trade\", \"timestamp\": \"Tue 2026-04-14 19:09 GMT+7\" } ``` Sender (untrusted metadata): ```json { \"label\": \"Mind Trade (8695614281)\", \"id\": \"8695614281\", \"name\": \"Mind Trade\", \"username\": \"mindtrade89\" } ``` อยากให้ เพิ่มช่องทางติดต่อ admin ผ่านช่องทางtelegramนี้ @mindtrade89 assistant: เพิ่มแล้วค่ะ ✅ — ตอนนี้หน้า Affiliate Dashboard มีปุ่ม **💬 ติดต่อ Admin** อยู่ใต้ช่อง Copy Link ด้วย รีเฟรชดูได้เลยค่ะ 😊 user: System: [2026-04-14 19:10:42 GMT+7] Gateway restart update ok (npm) System: Run: openclaw doctor --non-interactive Read HEARTBEAT.md if it exists",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.3976753756951388,
+      "maxScore": 0.7661586971154071,
+      "firstRecalledAt": "2026-05-19T03:21:08.264Z",
+      "lastRecalledAt": "2026-05-19T03:25:39.454Z",
+      "queryHashes": [
+        "fc607deb34d0",
+        "376cbd33a5c0"
+      ],
+      "recallDays": [
+        "2026-05-19"
+      ],
+      "conceptTags": [
+        "gateway",
+        "message-id",
+        "sender-id",
+        "non-interactive",
+        "heartbeat.md",
+        "affiliate",
+        "notification.md",
+        "conversation"
+      ]
+    },
+    "memory:memory/2026-04-14-affiliate-notification.md:1:39": {
+      "key": "memory:memory/2026-04-14-affiliate-notification.md:1:39",
+      "path": "memory/2026-04-14-affiliate-notification.md",
+      "startLine": 1,
+      "endLine": 39,
+      "source": "memory",
+      "snippet": "# Session: 2026-04-14 12:18:33 UTC - **Session Key**: agent:main:main - **Session ID**: a5ee32ff-b4fc-4859-b40f-58753d8ae629 - **Source**: webchat ## Conversation Summary assistant: HEARTBEAT_OK user: Conversation info (untrusted metadata): ```json { \"message_id\": \"527\", \"sender_id\": \"8695614281\", \"sender\": \"Mind Trade\", \"timestamp\": \"Tue 2026-04-14 17:50 GMT+7\" } ``` Sender (untrusted metadata): ```json { \"label\": \"Mind Trade (8695614281)\", \"id\": \"8695614281\", \"name\": \"Mind Trade\", \"username\": \"mindtrade89\" } ``` ไม่มีแจ้งเตือน เราทำแจ้งเตือนคล้ายๆ กับการส่งสลิปการโอนเงินได้มั้ย assistant: เสร็จแล้วค่ะ ✅ — แก้ไขให้ใช้ `requests` library แบบเดียวกับระบบส่งสลิป (ซึ่งทำงาน",
+      "recallCount": 2,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1.3948726052437515,
+      "maxScore": 0.7634005087971444,
+      "firstRecalledAt": "2026-05-19T03:21:08.264Z",
+      "lastRecalledAt": "2026-05-19T03:25:39.454Z",
+      "queryHashes": [
+        "fc607deb34d0",
+        "376cbd33a5c0"
+      ],
+      "recallDays": [
+        "2026-05-19"
+      ],
+      "conceptTags": [
+        "heartbeat-ok",
+        "message-id",
+        "sender-id",
+        "affiliate",
+        "notification.md",
+        "utc",
+        "key",
+        "agent:main:main"
+      ]
+    },
+    "memory:memory/2026-04-21.md:1:23": {
+      "key": "memory:memory/2026-04-21.md:1:23",
+      "path": "memory/2026-04-21.md",
+      "startLine": 1,
+      "endLine": 23,
+      "source": "memory",
+      "snippet": "## Trading Stats - cacinotong (2026-04-21 16:17) - Total candle scans: 566 - Entries opened: 8 (all still pending/open) - Wins (TP): 0 - Losses (SL): 0 - Skipped/Blocked: 551 - Win rate: N/A (no closed trades yet) - Bot running but no positions closed yet ## Admin Pages Light Theme (2026-04-20) - /admin/payment-confirms → ✅ light themed - /admin/licenses → ✅ light themed - /admin/payments → ✅ light themed - /admin/workers uses style.css (already OK) ## Pro Trial changed to 14 days (2026-04-20) - pro_trial days=7 → days=14 in app.py signup ## Note: cacinotong license was issued (2026-04-18) - Plan: starter, Token: 51hwn076xs7W79mr6_uB0IHItVFCqNOs - cacinotong's original API key had no F",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 1,
+      "maxScore": 1,
+      "firstRecalledAt": "2026-05-19T03:25:39.454Z",
+      "lastRecalledAt": "2026-05-19T03:25:39.454Z",
+      "queryHashes": [
+        "376cbd33a5c0"
+      ],
+      "recallDays": [
+        "2026-05-19"
+      ],
+      "conceptTags": [
+        "pending/open",
+        "skipped/blocked",
+        "n/a",
+        "admin/payment-confirms",
+        "admin/licenses",
+        "admin/payments",
+        "admin/workers",
+        "style.css"
+      ]
+    },
+    "memory:memory/2026-04-15.md:1:43": {
+      "key": "memory:memory/2026-04-15.md:1:43",
+      "path": "memory/2026-04-15.md",
+      "startLine": 1,
+      "endLine": 43,
+      "source": "memory",
+      "snippet": "# 2026-04-15 Daily Notes ## User: มายด์ (Maidx) - Goal: 100 million baht - Interests: AI, crypto, stocks, coding for income - Timezone: GMT+7 (Bangkok) - Telegram: connected ✅ - Persona: ฉลาด สุขุม ละเอียดรอบคอบ ใช้ \"ค่ะ\" ต่อท้ายประโยค ## MindTrade OS - Today's Updates (2026-04-15) ### ✅ Landing Page - ปรับธีมเป็น Apple-inspired light mode - เพิ่มแบนเนอร์ 20% affiliate commission - เพิ่ม \"14 วันทดลองฟรี\" block ที่หน้า landing - เพิ่มคำอธิบายภาษาไลย์ใน Runtime Settings ทุกช่อง (11px) - ปรับ hero text ให้น่าเชื่อถือขึ้น ### ✅ Dashboard UI - เพิ่มปุ่ม \"📖 คู่มือ API\" → /setup - เพิ่มปุ่ม \"🔔 เชื่อมต่อ Telegram\" - Real-time Entry Scores - เพิ่ม JS ให้โหลดจาก /api/signals/realtime - KPI 5 ช่อ",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.6310268823776639,
+      "maxScore": 0.6310268823776639,
+      "firstRecalledAt": "2026-05-19T03:25:39.454Z",
+      "lastRecalledAt": "2026-05-19T03:25:39.454Z",
+      "queryHashes": [
+        "376cbd33a5c0"
+      ],
+      "recallDays": [
+        "2026-05-19"
+      ],
+      "conceptTags": [
+        "apple-inspired",
+        "real-time",
+        "api/signals/realtime",
+        "มายด",
+        "maidx",
+        "goal",
+        "million",
+        "baht"
+      ]
+    }
+  }
+}
