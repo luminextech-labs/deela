@@ -23,9 +23,19 @@ def _supabase_headers():
 @router.get("/deals")
 def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
     """Get trending deals sorted by discount + rating."""
+    # Immediate test - fetch from DB directly
+    from app.database import engine
+    from sqlalchemy import text
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(text("SELECT COUNT(*) as cnt FROM products"))
+            row = result.fetchone()
+            product_count = row[0]
+    except Exception as e:
+        product_count = f"error: {e}"
+    
     try:
         ctx = ssl._create_unverified_context()
-        # Build URL manually to avoid any encoding issues
         base_url = f"{SUPABASE_URL}/rest/v1/products"
         params = f"select=id,name,slug,description,image_url,category_id,created_at,prices(price,discount_percent,rating,sold_count)&limit={limit}"
         url = f"{base_url}?{params}"
@@ -35,7 +45,7 @@ def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
             products = json.loads(resp.read())
         
         if not products:
-            logger.warning("trending/deals: no products returned")
+            logger.warning(f"trending/deals: no products returned (db_count={product_count})")
             return []
         
         scored = []
@@ -69,7 +79,7 @@ def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
                 "highest_rating": max([px["rating"] for px in prices if px.get("rating")], default=None) if prices else None,
                 "prices": prices,
             })
-        logger.warning(f"trending/deals: returning {len(result)} results")
+        logger.warning(f"trending/deals: returning {len(result)} results (db_count={product_count}, fetched={len(products)})")
         return result
     except Exception as e:
         import traceback
