@@ -72,7 +72,7 @@ def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
         if products is None:
             products = _fetch_products_via_httpx(limit)
         if not products:
-            logger.warning("trending/deals: no products fetched")
+            logger.warning("trending/deals: no products fetched via urllib or httpx")
             return []
         
         scored = []
