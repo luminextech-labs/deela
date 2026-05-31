@@ -7,7 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
-TEST_MESSAGE = "TEST_TRENDING_V4_HARDCODED"
+TEST_MESSAGE = "TEST_TRENDING_V5"
 
 
 @router.get("/deals")
