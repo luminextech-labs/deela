@@ -9,7 +9,6 @@ import ssl
 import urllib.request
 import json
 
-import httpx
 import os
 
 from app.database import get_db
