@@ -60,8 +60,8 @@ def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
                 "image_url": p.get("image_url"),
                 "category_id": p.get("category_id"),
                 "created_at": p.get("created_at"),
-                "lowest_price": min([px["price"] for px in prices]) if prices else None,
-                "highest_rating": max([px["rating"] for px in prices if px.get("rating")]) if prices else None,
+                "lowest_price": min([px["price"] for px in prices], default=None) if prices else None,
+                "highest_rating": max([px["rating"] for px in prices if px.get("rating")], default=None) if prices else None,
                 "prices": prices,
             })
         return result
