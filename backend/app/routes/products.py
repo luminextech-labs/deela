@@ -183,6 +183,23 @@ def get_product_prices(slug: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Product not found")
 
 
+def _product_to_response(p: dict) -> ProductListResponse:
+    """Convert REST API product dict to ProductListResponse with prices."""
+    prices = p.get("prices", []) or []
+    return ProductListResponse(
+        id=p["id"],
+        name=p["name"],
+        slug=p["slug"],
+        description=p.get("description"),
+        image_url=p.get("image_url"),
+        category_id=p.get("category_id"),
+        created_at=p.get("created_at"),
+        lowest_price=min([px["price"] for px in prices]) if prices else None,
+        highest_rating=max([px.get("rating") for px in prices if px.get("rating")], default=None) if prices else None,
+        prices=[PriceResponse(**px) for px in prices]
+    )
+
+
 @router.get("/", response_model=List[ProductListResponse])
 def list_products(
     category: Optional[str] = Query(None),
@@ -216,12 +233,25 @@ def list_products(
                 category_id=product.category_id,
                 created_at=product.created_at,
                 lowest_price=lowest_price,
-                highest_rating=highest_rating
+                highest_rating=highest_rating,
+                prices=[PriceResponse(
+                    id=p.id,
+                    product_id=p.product_id,
+                    platform=p.platform,
+                    price=p.price,
+                    original_price=p.original_price,
+                    discount_percent=p.discount_percent,
+                    rating=p.rating,
+                    sold_count=p.sold_count,
+                    affiliate_url=p.affiliate_url,
+                    product_url=p.product_url,
+                    created_at=p.created_at
+                ) for p in prices]
             ))
         
         return result
     except Exception:
         rest_result = _list_via_rest(limit, offset)
         if rest_result:
-            return [ProductListResponse(**p) for p in rest_result]
+            return [_product_to_response(p) for p in rest_result]
         return []
