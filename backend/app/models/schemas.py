@@ -96,7 +96,6 @@ class ProductListResponse(BaseModel):
     created_at: datetime
     lowest_price: Optional[Decimal] = None
     highest_rating: Optional[Decimal] = None
-    prices: List[PriceResponse] = []
 
     class Config:
         from_attributes = True
