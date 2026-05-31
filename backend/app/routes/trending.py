@@ -22,7 +22,7 @@ def _supabase_headers():
 def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
     """Get trending deals sorted by discount + rating."""
     try:
-        with httpx.Client(timeout=15.0, http2=True) as client:
+        with httpx.Client(timeout=15.0) as client:
             r = client.get(
                 f"{SUPABASE_URL}/rest/v1/products",
                 headers=_supabase_headers(),
@@ -64,5 +64,6 @@ def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
             })
         return result
     except Exception as e:
-        logger.warning(f"trending/deals failed: {type(e).__name__}: {e}")
+        import traceback
+        logger.warning(f"trending/deals failed: {type(e).__name__}: {e}\\n{traceback.format_exc()}")
         return []
