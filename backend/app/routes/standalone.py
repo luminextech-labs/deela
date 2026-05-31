@@ -1,19 +1,21 @@
 """
-Test endpoint - completely standalone path.
+Standalone test - unique path with no chance of collision.
 """
 from fastapi import APIRouter
 import logging
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-@router.get("/test-standalone")
-def test_standalone():
-    """Test endpoint that should work immediately."""
-    logger.warning("test_standalone called!")
+@router.get("/uniquepath123/deals")
+def get_deals():
+    """Unique test path."""
+    now = datetime.now().isoformat()
+    logger.warning(f"UNIQUE_PATH deals called at {now}")
     return {
-        "test": "standalone",
-        "message": "If you see this, the standalone path works!",
-        "timestamp": "2026-05-31T00:00:00Z"
+        "version": "UNIQUE_V8",
+        "deployed_at": now,
+        "message": "If you see this, UNIQUE_PATH works!"
     }
