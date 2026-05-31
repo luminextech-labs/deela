@@ -1,0 +1,11 @@
+{
+  "$schema": "https://railway.com/resolver/schema.json",
+  "build": {
+    "builder": "custom",
+    "buildCommand": "cd backend && docker build -t deela-backend -f Dockerfile .",
+    "dockerfile": "backend/Dockerfile"
+  },
+  "deploy": {
+    "command": "docker run -p $PORT:8000 deela-backend"
+  }
+}

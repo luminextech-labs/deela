@@ -1,9 +1,0 @@
-{
-  "build": {
-    "command": "docker build -f backend/Dockerfile .",
-    "dockerfile": "backend/Dockerfile"
-  },
-  "deploy": {
-    "command": "docker run -p $PORT:8000 deela-backend"
-  }
-}
