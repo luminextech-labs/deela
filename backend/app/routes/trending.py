@@ -1,5 +1,6 @@
 """
 Trending router - fetches from products list and sorts by trending score.
+Uses httpx as primary, falls back to urllib+ssl on connection errors.
 """
 from fastapi import APIRouter, Query
 import logging
@@ -7,6 +8,9 @@ import ssl
 import urllib.request
 import json
 import os
+from typing import Optional
+
+import httpx
 
 logger = logging.getLogger(__name__)
 SUPABASE_URL = os.getenv("SUPABASE_URL", "https://dtdkjtqwnwqvozkayeps.supabase.co")
@@ -20,9 +24,30 @@ def _supabase_headers():
     return {"apikey": key, "Authorization": f"Bearer {key}", "Content-Type": "application/json"}
 
 
-@router.get("/deals")
-def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
-    """Get trending deals sorted by discount + rating."""
+def _fetch_products_via_httpx(limit: int) -> Optional[list]:
+    """Fetch products using httpx (HTTP/1.1)."""
+    try:
+        transport = httpx.HTTPTransport(retries=1)
+        with httpx.Client(timeout=15.0, transport=transport) as client:
+            r = client.get(
+                f"{SUPABASE_URL}/rest/v1/products",
+                headers=_supabase_headers(),
+                params={"select": "id,name,slug,description,image_url,category_id,created_at,prices(price,discount_percent,rating,sold_count)", "limit": limit}
+            )
+        if not r.ok:
+            logger.warning(f"httpx request failed: status={r.status_code}")
+            return None
+        return r.json()
+    except httpx.RequestError as e:
+        logger.warning(f"httpx request error: {e}")
+        return None
+    except Exception as e:
+        logger.warning(f"httpx unexpected error: {e}")
+        return None
+
+
+def _fetch_products_via_urllib(limit: int) -> Optional[list]:
+    """Fetch products using urllib+ssl (fallback)."""
     try:
         ctx = ssl._create_unverified_context()
         params = f"select=id,name,slug,description,image_url,category_id,created_at,prices(price,discount_percent,rating,sold_count)&limit={limit}"
@@ -32,7 +57,23 @@ def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
             method="GET"
         )
         with urllib.request.urlopen(req, context=ctx) as resp:
-            products = json.loads(resp.read())
+            return json.loads(resp.read())
+    except Exception as e:
+        logger.warning(f"urllib error: {e}")
+        return None
+
+
+@router.get("/deals")
+def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
+    """Get trending deals sorted by discount + rating."""
+    try:
+        # Try httpx first, then urllib as fallback
+        products = _fetch_products_via_httpx(limit)
+        if products is None:
+            products = _fetch_products_via_urllib(limit)
+        if not products:
+            logger.warning(f"trending/deals: no products fetched (tried httpx and urllib)")
+            return []
         
         scored = []
         for p in products:
