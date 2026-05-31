@@ -6,11 +6,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend code
-COPY ./backend ./app/
+# Copy backend code (from ./backend/ to /app)
+COPY backend/ ./app/
 
 # Expose port
 EXPOSE 8000
 
-# Run the app - Railway uses PORT env var
+# Run the app - use PORT env var (Railway injects this)
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
