@@ -1,63 +1,21 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import MobileSidebar from './components/MobileSidebar';
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://deela-foa0.onrender.com';
 
 const categories = ['อิเล็กทรอนิกส์', 'มือถือ & แก็ดเจ็ต', 'คอมพิวเตอร์', 'หูฟัง & เสียง', 'เกมมิ่งเกียร์', 'บ้าน & ไลฟ์สไตล์', 'สุขภาพ & ความงาม', 'แฟชั่น'];
 
-const fallbackProducts = [
-  { id: 'fallback-1', name: 'Anker Soundcore P20i', lowest_price: '690', image_url: '/placeholder.jpg', shop: 'Shopee', discount: '-47%', old: '฿1,290' },
-  { id: 'fallback-2', name: 'iPhone 15 (128GB)', lowest_price: '27,900', image_url: '/placeholder.jpg', shop: 'Lazada', discount: '-12%', old: '฿31,900' },
-  { id: 'fallback-3', name: 'Dyson V12 Detect Slim', lowest_price: '18,900', image_url: '/placeholder.jpg', shop: 'Shopee', discount: '-15%', old: '฿22,900' },
-  { id: 'fallback-4', name: 'Logitech G304', lowest_price: '890', image_url: '/placeholder.jpg', shop: 'Lazada', discount: '-36%', old: '฿1,390' },
-  { id: 'fallback-5', name: 'Samsung Galaxy Buds FE', lowest_price: '2,990', image_url: '/placeholder.jpg', shop: 'TikTok', discount: '-25%', old: '฿3,990' },
-  { id: 'fallback-6', name: 'iPad Pro M4 11"', lowest_price: '34,900', image_url: '/placeholder.jpg', shop: 'Shopee', discount: '-10%', old: '฿38,900' },
+const products = [
+  { name: 'Anker Soundcore P20i', price: '฿690', old: '฿1,290', discount: '-47%', shop: 'Shopee' },
+  { name: 'iPhone 15 (128GB)', price: '฿27,900', old: '฿31,900', discount: '-12%', shop: 'Lazada' },
+  { name: 'Dyson V12 Detect Slim', price: '฿18,900', old: '฿22,900', discount: '-15%', shop: 'Shopee' },
+  { name: 'Logitech G304', price: '฿890', old: '฿1,390', discount: '-36%', shop: 'Lazada' },
+  { name: 'Samsung Galaxy Buds FE', price: '฿2,990', old: '฿3,990', discount: '-25%', shop: 'TikTok' },
+  { name: 'iPad Pro M4 11"', price: '฿34,900', old: '฿38,900', discount: '-10%', shop: 'Shopee' },
 ];
-
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  image_url: string;
-  lowest_price: string;
-  highest_rating: string;
-}
 
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const res = await fetch(`${API_BASE}/api/products`);
-        if (!res.ok) throw new Error('Failed to fetch');
-        const data = await res.json();
-        // Take first 12 products
-        setProducts(data.slice(0, 12));
-      } catch (err) {
-        console.error('API error:', err);
-        setError('ไม่สามารถโหลดข้อมูลได้');
-        // Use fallback data
-        setProducts(fallbackProducts as any);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchProducts();
-  }, []);
-
-  const getShopLogo = (shop: string) => {
-    if (shop === 'Shopee') return '/logo_shopee.png';
-    if (shop === 'Lazada') return '/logo_lazada.png';
-    if (shop === 'TikTok') return '/logo_tiktok.png';
-    return '/logo_shopee.png';
-  };
 
   return (
     <div className="min-h-screen bg-[#F5F5FA] flex">
@@ -148,72 +106,54 @@ export default function HomePage() {
 
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-xl font-black text-gray-800">สินค้ากำลังมาแรง 🔥</h2>
-            <a href="/search" className="text-violet-600 font-semibold text-sm">ดูทั้งหมด →</a>
+            <button className="text-violet-600 font-semibold text-sm">ดูทั้งหมด →</button>
           </div>
 
-          {loading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 lg:gap-4 mb-6">
-              {[1,2,3,4,5,6].map((i) => (
-                <div key={i} className="bg-white rounded-xl p-3 shadow-sm border border-gray-100 animate-pulse">
-                  <div className="w-full h-24 bg-gray-200 rounded-lg mb-2"></div>
-                  <div className="h-4 bg-gray-200 rounded mb-2 w-3/4"></div>
-                  <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 lg:gap-4 mb-6">
+            {products.map((p, i) => (
+              <div key={i} className="bg-white rounded-xl p-3 shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer">
+                <div className="relative">
+                  <img src="/placeholder.jpg" alt={p.name} className="w-full h-24 object-cover rounded-lg mb-2" />
+                  <span className="absolute top-1 left-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded">{p.discount}</span>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 lg:gap-4 mb-6">
-              {products.map((p) => (
-                <a key={p.id} href={`/product/${p.id}`} className="bg-white rounded-xl p-3 shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer block">
-                  <div className="relative mb-2">
-                    <img src={p.image_url || '/placeholder.jpg'} alt={p.name} className="w-full h-24 object-cover rounded-lg" onError={(e) => { e.currentTarget.src = '/placeholder.jpg'; }} />
-                    <span className="absolute top-1 left-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded">Sale</span>
-                  </div>
-                  <h3 className="font-bold text-xs text-gray-800 mb-1 line-clamp-2">{p.name}</h3>
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-base font-black text-red-500">฿{Number(p.lowest_price).toLocaleString()}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-400">{p.highest_rating} ⭐</span>
-                    <button className="bg-violet-600 text-white px-3 py-1 rounded-lg font-semibold text-xs">ดู</button>
-                  </div>
-                </a>
-              ))}
-            </div>
-          )}
+                <h3 className="font-bold text-xs text-gray-800 mb-1 line-clamp-2">{p.name}</h3>
+                <div className="flex items-baseline gap-1 mb-2">
+                  <span className="text-base font-black text-red-500">{p.price}</span>
+                  <span className="text-xs text-gray-400 line-through">{p.old}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  {p.shop === 'Shopee' && <img src="/logo_shopee.png" alt="Shopee" className="w-4 h-4 object-contain" />}
+                  {p.shop === 'Lazada' && <img src="/logo_lazada.png" alt="Lazada" className="w-4 h-4 object-contain" />}
+                  {p.shop === 'TikTok' && <img src="/logo_tiktok.png" alt="TikTok" className="w-4 h-4 object-contain" />}
+                  <button className="bg-violet-600 text-white px-3 py-1 rounded-lg font-semibold text-xs">ดูดีล</button>
+                </div>
+              </div>
+            ))}
+          </div>
 
           <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-black text-gray-800">🔔 ติดตามราคา</h2>
-              <a href="/alerts" className="bg-violet-100 text-violet-700 px-4 py-2 rounded-xl font-semibold text-sm">+ เพิ่มสินค้า</a>
+              <button className="bg-violet-100 text-violet-700 px-4 py-2 rounded-xl font-semibold text-sm">+ เพิ่มสินค้า</button>
             </div>
             <div className="space-y-3">
-              {loading ? (
-                [1,2,3].map((i) => (
-                  <div key={i} className="flex items-center gap-4 p-4 rounded-xl border border-gray-100 animate-pulse">
-                    <div className="w-16 h-16 bg-gray-200 rounded-xl"></div>
-                    <div className="flex-1">
-                      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                      <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+              {products.slice(0, 3).map((p, i) => (
+                <div key={i} className="flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition cursor-pointer">
+                  <img src="/placeholder.jpg" alt={p.name} className="w-16 h-16 rounded-xl object-cover" />
+                  <div className="flex-1">
+                    <div className="font-bold text-sm text-gray-800 truncate">{p.name}</div>
+                    <div className="flex items-center gap-1 mt-1">
+                      {p.shop === 'Shopee' && <img src="/logo_shopee.png" alt="Shopee" className="w-4 h-4" />}
+                      {p.shop === 'Lazada' && <img src="/logo_lazada.png" alt="Lazada" className="w-4 h-4" />}
+                      {p.shop === 'TikTok' && <img src="/logo_tiktok.png" alt="TikTok" className="w-4 h-4" />}
                     </div>
                   </div>
-                ))
-              ) : (
-                products.slice(0, 3).map((p) => (
-                  <div key={p.id} className="flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition cursor-pointer">
-                    <img src={p.image_url || '/placeholder.jpg'} alt={p.name} className="w-16 h-16 rounded-xl object-cover" onError={(e) => { e.currentTarget.src = '/placeholder.jpg'; }} />
-                    <div className="flex-1">
-                      <div className="font-bold text-sm text-gray-800 truncate">{p.name}</div>
-                      <div className="flex items-center gap-1 mt-1">
-                        <span className="text-xs text-gray-500">{p.highest_rating} ⭐</span>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-lg font-black text-violet-600">฿{Number(p.lowest_price).toLocaleString()}</div>
-                    </div>
+                  <div className="text-right">
+                    <div className="text-lg font-black text-violet-600">{p.price}</div>
+                    <span className="text-xs text-orange-500">{p.shop}</span>
                   </div>
-                ))
-              )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
