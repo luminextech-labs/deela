@@ -3,7 +3,9 @@ Trending router - fetches from products list and sorts by trending score.
 """
 from fastapi import APIRouter, Query
 import logging
-import httpx
+import ssl
+import urllib.request
+import json
 import os
 
 logger = logging.getLogger(__name__)
@@ -22,16 +24,16 @@ def _supabase_headers():
 def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
     """Get trending deals sorted by discount + rating."""
     try:
-        with httpx.Client(timeout=15.0) as client:
-            r = client.get(
-                f"{SUPABASE_URL}/rest/v1/products",
-                headers=_supabase_headers(),
-                params={"select": "id,name,prices(price,discount_percent,rating,sold_count)", "limit": limit}
-            )
-        if not r.ok:
-            logger.warning(f"trending/deals: Supabase returned {r.status_code}: {r.text[:200]}")
-            return []
-        products = r.json()
+        ctx = ssl._create_unverified_context()
+        params = f"select=id,name,slug,description,image_url,category_id,created_at,prices(price,discount_percent,rating,sold_count)&limit={limit}"
+        req = urllib.request.Request(
+            f"{SUPABASE_URL}/rest/v1/products?{params}",
+            headers=_supabase_headers(),
+            method="GET"
+        )
+        with urllib.request.urlopen(req, context=ctx) as resp:
+            products = json.loads(resp.read())
+        
         scored = []
         for p in products:
             prices = p.get("prices", []) or []
@@ -65,5 +67,5 @@ def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
         return result
     except Exception as e:
         import traceback
-        logger.warning(f"trending/deals failed: {type(e).__name__}: {e}\\n{traceback.format_exc()}")
+        logger.warning(f"trending/deals failed: {type(e).__name__}: {e}\n{traceback.format_exc()}")
         return []
