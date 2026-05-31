@@ -1,87 +1,47 @@
 """
-Trending router - fetches from products list and sorts by trending score.
+Trending router - simplest possible test version.
 """
-from fastapi import APIRouter, Query, Response
+from fastapi import APIRouter, Query
 import logging
-import ssl
-import urllib.request
-import json
-import os
 
 logger = logging.getLogger(__name__)
-SUPABASE_URL = os.getenv("SUPABASE_URL", "https://dtdkjtqwnwqvozkayeps.supabase.co")
-ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0ZGtqdHF3bndxdm96a2F5ZXBzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjE2OTMsImV4cCI6MjA5NTUzNzY5M30.6tA5yXBxtG618IqCVo6N8lBml96ssUBFrRF7ft6t4ks"
-
 router = APIRouter()
-
-
-def _supabase_headers():
-    key = os.getenv("SUPABASE_SERVICE_KEY") or ANON_KEY
-    return {"apikey": key, "Authorization": f"Bearer {key}", "Content-Type": "application/json"}
 
 
 @router.get("/deals")
 def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
     """Get trending deals sorted by discount + rating."""
-    # Immediate test - fetch from DB directly
-    from app.database import engine
-    from sqlalchemy import text
-    try:
-        with engine.connect() as conn:
-            result = conn.execute(text("SELECT COUNT(*) as cnt FROM products"))
-            row = result.fetchone()
-            product_count = row[0]
-    except Exception as e:
-        product_count = f"error: {e}"
-    
-    try:
-        ctx = ssl._create_unverified_context()
-        base_url = f"{SUPABASE_URL}/rest/v1/products"
-        params = f"select=id,name,slug,description,image_url,category_id,created_at,prices(price,discount_percent,rating,sold_count)&limit={limit}"
-        url = f"{base_url}?{params}"
-        
-        req = urllib.request.Request(url, headers=_supabase_headers(), method="GET")
-        with urllib.request.urlopen(req, context=ctx, timeout=15) as resp:
-            products = json.loads(resp.read())
-        
-        if not products:
-            logger.warning(f"trending/deals: no products returned (db_count={product_count})")
-            return []
-        
-        scored = []
-        for p in products:
-            prices = p.get("prices", []) or []
-            if not prices:
-                continue
-            try:
-                max_disc = max([px.get("discount_percent", 0) or 0 for px in prices])
-                hi_rating = max([px.get("rating") or 0 for px in prices])
-                total_sold = sum([px.get("sold_count", 0) or 0 for px in prices])
-                score = (max_disc * 0.3) + (float(hi_rating) * 10 * 0.3) + (min(total_sold, 10000) / 100 * 0.4)
-                scored.append((score, p))
-            except Exception as e:
-                logger.warning(f"trending/deals: error scoring product {p.get('id')}: {e}")
-                continue
-        
-        scored.sort(key=lambda x: x[0], reverse=True)
-        result = []
-        for score, p in scored[:limit]:
-            prices = p.get("prices", []) or []
-            result.append({
-                "id": p["id"],
-                "name": p["name"],
-                "slug": p.get("slug"),
-                "description": p.get("description"),
-                "image_url": p.get("image_url"),
-                "category_id": p.get("category_id"),
-                "created_at": p.get("created_at"),
-                "lowest_price": min([px["price"] for px in prices], default=None) if prices else None,
-                "highest_rating": max([px["rating"] for px in prices if px.get("rating")], default=None) if prices else None,
-                "prices": prices,
-            })
-        logger.warning(f"trending/deals: returning {len(result)} results (db_count={product_count}, fetched={len(products)})")
-        return result
-    except Exception as e:
-        import traceback
-        logger.warning(f"trending/deals failed: {type(e).__name__}: {e}\n{traceback.format_exc()}")
-        return []
+    # HARDCODE TEST - return data immediately without any external calls
+    test_data = [
+        {
+            "id": "test-id-1",
+            "name": "Test Product 1",
+            "slug": "test-product-1",
+            "description": "Test description",
+            "image_url": "https://example.com/img.jpg",
+            "category_id": "cat-1",
+            "created_at": "2026-05-28T12:00:00Z",
+            "lowest_price": 1000,
+            "highest_rating": 4.5,
+            "prices": [
+                {"price": 1000, "discount_percent": 20, "rating": 4.5, "sold_count": 100},
+                {"price": 1200, "discount_percent": 15, "rating": 4.3, "sold_count": 50},
+            ],
+        },
+        {
+            "id": "test-id-2",
+            "name": "Test Product 2",
+            "slug": "test-product-2",
+            "description": "Test description 2",
+            "image_url": "https://example.com/img2.jpg",
+            "category_id": "cat-2",
+            "created_at": "2026-05-28T12:00:00Z",
+            "lowest_price": 2000,
+            "highest_rating": 4.8,
+            "prices": [
+                {"price": 2000, "discount_percent": 30, "rating": 4.8, "sold_count": 200},
+            ],
+        },
+    ]
+    logger.warning(f"trending/deals: returning HARDCODE {len(test_data)} items")
+    return test_data[:limit]
