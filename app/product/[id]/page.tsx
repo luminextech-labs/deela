@@ -46,16 +46,16 @@ export default function ProductPage() {
       <aside className="w-[240px] bg-white border-r border-gray-100 p-6 flex flex-col h-screen sticky top-0 overflow-y-auto flex-shrink-0 hidden lg:flex">
         <img src="/logo.png" alt="deela logo" className="h-16 mb-8 object-contain" />
         <nav className="space-y-1 mb-8">
-          {[
-            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.jpg' },
-            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.jpg' },
-            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.jpg' },
-            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.jpg' },
-            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.jpg' },
-            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.jpg' },
-            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.jpg' },
-            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.jpg' },
-          ].map((item) => (
+          {([
+            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.jpg', active: false },
+            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.jpg', active: false },
+            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.jpg', active: false },
+            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.jpg', active: false },
+            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.jpg', active: false },
+            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.jpg', active: false },
+            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.jpg', active: false },
+            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.jpg', active: false },
+          ] as {name:string;href:string;icon:string;active:boolean}[]).map((item) => (
             <a key={item.name} href={item.href} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition font-medium text-sm ${item.active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
               <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />
               <span>{item.name}</span>
