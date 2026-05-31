@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import MobileSidebar from './components/MobileSidebar';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://deela-foa0.onrender.com';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://thorough-clarity-production-b8ca.up.railway.app';
 
 const categories = ['อิเล็กทรอนิกส์', 'มือถือ & แก็ดเจ็ต', 'คอมพิวเตอร์', 'หูฟัง & เสียง', 'เกมมิ่งเกียร์', 'บ้าน & ไลฟ์สไตล์', 'สุขภาพ & ความงาม', 'แฟชั่น'];
 
