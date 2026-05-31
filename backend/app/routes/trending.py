@@ -1,7 +1,7 @@
 """
 Trending router - fetches from products list and sorts by trending score.
 """
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Response
 import logging
 import ssl
 import urllib.request
@@ -69,6 +69,7 @@ def get_trending_deals(limit: int = Query(20, ge=1, le=100)):
                 "highest_rating": max([px["rating"] for px in prices if px.get("rating")], default=None) if prices else None,
                 "prices": prices,
             })
+        logger.warning(f"trending/deals: returning {len(result)} results")
         return result
     except Exception as e:
         import traceback
