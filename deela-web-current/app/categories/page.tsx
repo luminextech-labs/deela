@@ -1,83 +1,116 @@
 'use client';
 
 import { useState } from 'react';
-import MobileSidebar from '../components/MobileSidebar';
+import Link from 'next/link';
+import { categories, products, type Product } from '../lib/data';
 
-const categories = [
-  { name: 'มือถือ & แก็ดเจ็ต', icon: '/icons/mobile.jpg', count: 856 },
-  { name: 'คอมพิวเตอร์', icon: '/icons/computer.jpg', count: 2341 },
-  { name: 'หูฟัง & เสียง', icon: '/icons/audio.jpg', count: 1567 },
-  { name: 'บ้าน & ไลฟ์สไตล์', icon: '/icons/icon6.jpg', count: 3456 },
-  { name: 'สุขภาพ & ความงาม', icon: '/icons/beauty.svg', count: 678 },
-  { name: 'แม่ & เด็ก', icon: '/icons/icon5.jpg', count: 1234 },
-  { name: 'กีฬา & กิจกรรม', icon: '/icons/icon4.jpg', count: 2345 },
-  { name: 'ยานยนต์', icon: '/icons/icon3.jpg', count: 567 },
-  { name: 'หนังสือ & สื่อ', icon: '/icons/icon2.jpg', count: 890 },
-  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.jpg', count: 432 },
-];
+function formatPrice(p: number) {
+  return '฿' + p.toLocaleString('th-TH');
+}
+
+function getBestPrice(product: Product) {
+  return product.prices.reduce((a, b) => a.price < b.price ? a : b);
+}
+
+// Icons per category (emoji-based, standard mall style)
+const categoryIcons: Record<string, string> = {
+  'อิเล็กทรอนิกส์': '📺',
+  'มือถือ & แก็ดเจ็ต': '📱',
+  'คอมพิวเตอร์': '💻',
+  'หูฟัง & เสียง': '🎧',
+  'เกมมิ่งเกียร์': '🎮',
+  'บ้าน & ไลฟ์สไตล์': '🏠',
+  'สุขภาพ & ความงาม': '💆',
+  'แฟชั่น': '👕',
+};
+
+const dealerLogos: Record<string, string> = {
+  shopee: '/logo_shopee.png',
+  lazada: '/logo_lazada.png',
+  tiktok: '/logo_tiktok.png',
+};
 
 export default function CategoriesPage() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
+  const filteredProducts = activeCategory
+    ? products.filter(p => p.category === activeCategory)
+    : products;
 
   return (
-    <div className="min-h-screen bg-[#F5F5FA] flex">
-      <aside className="w-[240px] bg-white border-r border-gray-100 p-6 flex flex-col h-screen sticky top-0 overflow-y-auto flex-shrink-0 hidden lg:flex">
-        <img src="/logo.png" alt="deela logo" className="h-16 mb-8 object-contain" />
-        <nav className="space-y-1 mb-8">
-          {[
-            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.jpg' },
-            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.jpg' },
-            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.jpg', active: true },
-            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.jpg' },
-            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.jpg' },
-            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.jpg' },
-            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.jpg' },
-            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.jpg' },
-          ].map((item) => (
-            <a key={item.name} href={item.href} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition font-medium text-sm ${item.active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
-              <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />
-              <span>{item.name}</span>
-            </a>
+    <div className="min-h-screen bg-[#F5F5FA]">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-50 px-4 py-3">
+        <div className="max-w-7xl mx-auto flex items-center gap-3">
+          <Link href="/" className="text-xl text-gray-600">←</Link>
+          <h1 className="font-black text-gray-800">หมวดหมู่สินค้า</h1>
+        </div>
+      </header>
+
+      {/* Category Grid */}
+      <div className="p-4 max-w-7xl mx-auto">
+        <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-3 mb-6">
+          <button
+            onClick={() => setActiveCategory(null)}
+            className={`flex flex-col items-center gap-1 p-3 rounded-2xl transition ${
+              activeCategory === null ? 'bg-violet-600 text-white' : 'bg-white text-gray-600 hover:bg-violet-50'
+            }`}
+          >
+            <span className="text-2xl">🏪</span>
+            <span className="text-xs font-semibold text-center">ทั้งหมด</span>
+          </button>
+          {categories.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat === activeCategory ? null : cat)}
+              className={`flex flex-col items-center gap-1 p-3 rounded-2xl transition ${
+                activeCategory === cat ? 'bg-violet-600 text-white' : 'bg-white text-gray-600 hover:bg-violet-50'
+              }`}
+            >
+              <span className="text-2xl">{categoryIcons[cat] || '📦'}</span>
+              <span className="text-xs font-semibold text-center leading-tight">{cat.split(' ')[0]}</span>
+            </button>
           ))}
-        </nav>
-        <div className="mt-auto mb-4">
-          <span className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 font-semibold">หมวดหมู่</span>
-          <div className="space-y-1">
-            {['อิเล็กทรอนิกส์', 'มือถือ & แก็ดเจ็ต', 'คอมพิวเตอร์', 'หูฟัง & เสียง', 'เกมมิ่งเกียร์', 'บ้าน & ไลฟ์สไตล์', 'สุขภาพ & ความงาม', 'แฟชั่น'].map((cat) => (
-              <a key={cat} href="#" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-500 cursor-pointer hover:text-violet-600 hover:bg-violet-50 rounded-lg transition">{cat}</a>
-            ))}
-          </div>
-        </div>
-        <div className="bg-violet-50 rounded-2xl p-3 flex items-center gap-3">
-          <img src="/placeholder.jpg" alt="" className="w-10 h-10 rounded-full object-cover" />
-          <div>
-            <div className="font-semibold text-sm">Nattawat</div>
-            <div className="text-xs text-gray-500">Premium</div>
-          </div>
-        </div>
-      </aside>
-
-      <MobileSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activePage="/categories" />
-
-      <main className="flex-1 min-w-0 pb-20">
-        <div className="bg-white border-b border-gray-100 px-4 py-3 sticky top-0 z-30">
-          <div className="flex items-center gap-3">
-            <a href="/" className="text-gray-500 hover:text-gray-700 text-xl">←</a>
-            <h1 className="text-lg font-bold text-gray-800">📂 หมวดหมู่สินค้า</h1>
-          </div>
         </div>
 
-        <div className="p-4 lg:p-6">
-          <div className="grid grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4">
-            {categories.map((cat, i) => (
-              <a key={i} href="#" className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center">
-                <img src={cat.icon} alt={cat.name} className="w-10 h-10 mb-2 object-contain" style={{imageRendering:'auto'}} />
-                <h3 className="font-bold text-xs text-gray-800 leading-tight">{cat.name}</h3>
-              </a>
-            ))}
-          </div>
+        {/* Product Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+          {filteredProducts.map(p => {
+            const best = getBestPrice(p);
+            return (
+              <Link key={p.id} href={`/product/${p.id}`}>
+                <div className="bg-white rounded-xl p-3 shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer h-full flex flex-col">
+                  <div className="relative mb-2">
+                    <img src={p.image} alt={p.name} className="w-full h-28 object-cover rounded-lg" />
+                    <span className="absolute top-1 left-1 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded">
+                      -{best.discount}%
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-xs text-gray-800 mb-1 line-clamp-2 flex-1">{p.name}</h3>
+                  <div className="flex items-baseline gap-1 mb-2">
+                    <span className="text-base font-black text-red-500">{formatPrice(best.price)}</span>
+                    <span className="text-xs text-gray-400 line-through">{formatPrice(best.oldPrice)}</span>
+                  </div>
+                  <div className="flex items-center justify-between mt-auto">
+                    <img src={dealerLogos[best.dealer]} alt={best.dealer} className="w-4 h-4 object-contain" />
+                    <div className="flex items-center gap-1 text-xs text-gray-500">
+                      ⭐ {best.rating}
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
         </div>
-      </main>
+
+        {filteredProducts.length === 0 && (
+          <div className="text-center py-16">
+            <div className="text-5xl mb-4">📦</div>
+            <h3 className="text-lg font-bold text-gray-700 mb-1">ไม่มีสินค้าในหมวดนี้</h3>
+            <button onClick={() => setActiveCategory(null)} className="text-violet-600 font-semibold mt-2">ดูสินค้าทั้งหมด</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,264 +1,196 @@
 'use client';
 
-import { useState } from 'react';
-import MobileSidebar from '../../components/MobileSidebar';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import Link from 'next/link';
+import { getProduct, comparePrices, getRelatedProducts, type ProductPrice } from '../../lib/data';
 
-const shops = [
-  { name: 'Shopee', logo: '/logo_shopee.png', price: 690, originalPrice: 1290, discount: 47, rating: 4.8, reviews: 1234, shipping: 'ฟรี' },
-  { name: 'Lazada', logo: '/logo_lazada.png', price: 699, originalPrice: 1490, discount: 53, rating: 4.7, reviews: 856, shipping: 'ฟรี' },
-  { name: 'TikTok Shop', logo: '/logo_tiktok.png', price: 685, originalPrice: 1390, discount: 51, rating: 4.6, reviews: 567, shipping: '฿30' },
-];
+function formatPrice(p: number) {
+  return '฿' + p.toLocaleString('th-TH');
+}
 
-const specs = [
-  { label: 'แบตเตอร์', value: '10 ชม.', sub: 'ต่อการชาร์จ 1 ครั้ง' },
-  { label: 'กันน้ำ', value: 'IPX5', sub: 'กันเหงื่อและน้ำ' },
-  { label: 'Bluetooth', value: '5.3', sub: 'เชื่อมต่อเสถียร' },
-];
+const dealerLabels: Record<string, string> = {
+  shopee: 'Shopee',
+  lazada: 'Lazada',
+  tiktok: 'TikTok Shop',
+};
 
-const tags = ['เสียงคุณภาพดี', 'Bass แน่น', 'เชื่อมต่อเสถียร'];
-
-const pros = [
-  'Bass แน่น ฟังเพลงเพลิน',
-  'เชื่อมต่อ Bluetooth 5.3 เสถียร',
-  'แบตเตอร์ทนใช้งานได้นาน',
-  'กันน้ำ IPX5 ดีเยี่ยม',
-];
-
-const cons = [
-  'ไม่มีระบบตัดเสียง ANC',
-  'เคสชาร์จวัสดุพลาสติก',
-];
-
-const ratingBars = [
-  { stars: 5, pct: 79 },
-  { stars: 4, pct: 16 },
-  { stars: 3, pct: 3 },
-  { stars: 2, pct: 1 },
-  { stars: 1, pct: 1 },
-];
+const dealerColors: Record<string, string> = {
+  shopee: 'bg-orange-500',
+  lazada: '#2E5BFF',
+  tiktok: 'bg-black',
+};
 
 export default function ProductPage() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const cheapest = shops.reduce((min, s) => (s.price < min.price ? s : min), shops[0]);
+  const params = useParams();
+  const router = useRouter();
+  const product = getProduct(params.id as string);
+
+  // Track view history
+  useEffect(() => {
+    if (product) {
+      const historyItem = { productId: product.id, viewedAt: new Date().toISOString() };
+      const saved = localStorage.getItem('deela_history');
+      const history = saved ? JSON.parse(saved) : [];
+      // Remove old entry for same product, add new
+      const filtered = history.filter((h: { productId: string }) => h.productId !== product.id);
+      const updated = [historyItem, ...filtered].slice(0, 50); // keep last 50
+      localStorage.setItem('deela_history', JSON.stringify(updated));
+    }
+  }, [product]);
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-[#F5F5FA] flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">🔍</div>
+          <h2 className="text-xl font-bold text-gray-700 mb-2">ไม่พบสินค้านี้</h2>
+          <Link href="/" className="text-violet-600 font-semibold">← กลับหน้าหลัก</Link>
+        </div>
+      </div>
+    );
+  }
+
+  const sortedPrices = comparePrices(product);
+  const bestPrice = sortedPrices[0];
+  const related = getRelatedProducts(product);
 
   return (
-    <div className="min-h-screen bg-[#F5F5FA] flex">
-      <aside className="w-[240px] bg-white border-r border-gray-100 p-6 flex flex-col h-screen sticky top-0 overflow-y-auto flex-shrink-0 hidden lg:flex">
-        <img src="/logo.png" alt="deela logo" className="h-16 mb-8 object-contain" />
-        <nav className="space-y-1 mb-8">
-          {[
-            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.jpg' },
-            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.jpg' },
-            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.jpg' },
-            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.jpg' },
-            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.jpg' },
-            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.jpg' },
-            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.jpg' },
-            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.jpg' },
-          ].map((item) => (
-            <a key={item.name} href={item.href} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition font-medium text-sm ${item.active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
-              <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />
-              <span>{item.name}</span>
-            </a>
-          ))}
-        </nav>
-        <div className="mt-auto mb-4">
-          <span className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 font-semibold cursor-default">หมวดหมู่</span>
-          <div className="space-y-1">
-            {['อิเล็กทรอนิกส์', 'มือถือ & แก็ดเจ็ต', 'คอมพิวเตอร์', 'หูฟัง & เสียง', 'เกมมิ่งเกียร์', 'บ้าน & ไลฟ์สไตล์', 'สุขภาพ & ความงาม', 'แฟชั่น'].map((cat) => (
-              <a key={cat} href="#" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-500 cursor-pointer hover:text-violet-600 hover:bg-violet-50 rounded-lg transition">{cat}</a>
-            ))}
+    <div className="min-h-screen bg-[#F5F5FA]">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-50 px-4 py-3">
+        <div className="max-w-5xl mx-auto flex items-center gap-3">
+          <Link href="/search" className="text-xl text-gray-600">←</Link>
+          <div className="flex-1 truncate">
+            <h1 className="font-bold text-sm text-gray-800 truncate">{product.name}</h1>
           </div>
+          <button className="p-2 text-gray-400 text-lg">🔔</button>
         </div>
-        <div className="bg-violet-50 rounded-2xl p-3 flex items-center gap-3">
-          <img src="/placeholder.jpg" alt="" className="w-10 h-10 rounded-full object-cover" />
-          <div>
-            <div className="font-semibold text-sm">Nattawat</div>
-            <div className="text-xs text-gray-500">Premium</div>
-          </div>
-        </div>
-      </aside>
+      </header>
 
-      <MobileSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activePage="/product" />
-
-      <main className="flex-1 min-w-0 pb-20">
-        {/* Mobile header */}
-        <div className="bg-white border-b border-gray-100 px-4 py-3 sticky top-0 z-30 lg:hidden">
-          <div className="flex items-center gap-3">
-            <a href="/" className="text-gray-500 text-xl">←</a>
-            <div className="flex-1" />
-            <button className="text-gray-500 text-lg">❤️</button>
-          </div>
-        </div>
-
-        <div className="max-w-5xl mx-auto p-4 lg:p-6">
-
-          {/* Breadcrumb */}
-          <div className="text-xs text-gray-400 mb-4">
-            <span className="text-gray-400">หน้าหลัก</span>
-                <span className="text-gray-300 mx-1">{' > '}</span>
-                <span className="text-gray-400">ค้นหา</span>
-                <span className="text-gray-300 mx-1">{' > '}</span>
-                <span className="text-gray-400">หูฟังบลูทูธ</span>
-                <span className="text-gray-300 mx-1">{' > '}</span>
-                <span className="text-gray-600 font-medium">Anker Soundcore P20i</span>
-          </div>
-
-          {/* Top section: image + info */}
-          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden mb-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-
-              {/* Left: image gallery */}
-              <div className="p-4 lg:p-6">
-                <div className="relative">
-                  <img src="/placeholder.jpg" alt="Product" className="w-full h-52 lg:h-72 object-cover rounded-2xl" />
-                  <button className="absolute top-3 right-3 w-9 h-9 bg-white/80 rounded-full flex items-center justify-center text-gray-500 text-lg backdrop-blur-sm">🤍</button>
-                </div>
-                {/* Thumbnails */}
-                <div className="flex gap-2 mt-3">
-                  {[1,2,3,4,5].map((_, i) => (
-                    <div key={i} className={`w-14 h-14 rounded-xl overflow-hidden border-2 ${i === 0 ? 'border-violet-500' : 'border-gray-100'}`}>
-                      <img src="/placeholder.jpg" alt="" className="w-full h-full object-cover" />
-                    </div>
-                  ))}
-                </div>
-
-                {/* Specs card */}
-                <div className="mt-4 bg-gray-50 rounded-2xl p-4 border border-gray-100">
-                  <div className="grid grid-cols-3 divide-x divide-gray-200">
-                    {specs.map((spec) => (
-                      <div key={spec.label} className="text-center px-2">
-                        <div className="font-black text-base text-gray-800">{spec.value}</div>
-                        <div className="text-[10px] text-gray-400">{spec.label}</div>
-                        <div className="text-[9px] text-gray-300 mt-0.5">{spec.sub}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Right: product info */}
-              <div className="p-4 lg:p-6 flex flex-col">
-                <div className="flex items-start justify-between mb-2">
-                  <h1 className="font-black text-lg lg:text-xl text-gray-800 leading-tight">Anker Soundcore P20i</h1>
-                  <div className="flex gap-2 ml-2">
-                    <button className="text-gray-400 text-lg">🔗</button>
-                    <button className="text-gray-400 text-lg">❤️</button>
-                  </div>
-                </div>
-
-                {/* Rating row */}
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-yellow-400 text-sm">⭐⭐⭐⭐⭐</span>
-                  <span className="font-bold text-sm text-gray-700">4.8</span>
-                  <span className="text-sm text-gray-400">({(12340).toLocaleString()} รีวิว)</span>
-                  <span className="ml-2 bg-violet-100 text-violet-700 text-xs font-bold px-2 py-0.5 rounded-full">50K+ ขายแล้ว</span>
-                </div>
-
-                {/* Feature tags */}
-                <div className="flex flex-wrap gap-2 mb-5">
-                  {tags.map((tag) => (
-                    <span key={tag} className="bg-violet-50 text-violet-700 text-xs font-semibold px-3 py-1 rounded-full">{tag}</span>
-                  ))}
-                </div>
-
-                {/* Price comparison */}
-                <div className="mb-2">
-                  <h3 className="text-xs font-semibold text-gray-500 mb-2">💰 เปรียบเทียบราคาจากทุกแพลตฟอร์ม</h3>
-                </div>
-                <div className="space-y-2 flex-1">
-                  {shops.map((shop) => (
-                    <div key={shop.name} className={`flex items-center justify-between p-3 rounded-xl border ${shop.price === cheapest.price ? 'border-violet-300 bg-violet-50' : 'border-gray-100 bg-gray-50/50'}`}>
-                      <div className="flex items-center gap-2">
-                        <img src={shop.logo} alt={shop.name} className="w-7 h-7 object-contain" />
-                        <div>
-                          <span className="text-sm font-semibold">{shop.name}</span>
-                          <div className="flex items-center gap-1">
-                            <span className="text-xs text-gray-400">⭐ {shop.rating}</span>
-                            <span className="text-xs text-gray-300">·</span>
-                            <span className={`text-xs ${shop.shipping === 'ฟรี' ? 'text-green-600' : 'text-gray-400'}`}>{shop.shipping}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="text-right">
-                          <span className="font-black text-sm text-gray-800">฿{shop.price}</span>
-                          <span className="text-xs text-gray-400 line-through ml-1">฿{shop.originalPrice}</span>
-                          <span className="text-xs text-red-500 ml-1">-{shop.discount}%</span>
-                        </div>
-                        <a href="#" className="bg-violet-600 text-white px-3 py-1.5 rounded-xl font-semibold text-xs">ไปร้านค้า</a>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <p className="text-[10px] text-gray-300 mt-3">* ลิงก์ในหน้านี้เป็นลิงก์พันธมิตร (Affiliate Links)</p>
-              </div>
+      <div className="max-w-5xl mx-auto p-4">
+        {/* Product Info */}
+        <div className="bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-100">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="relative">
+              <img src={product.image} alt={product.name} className="w-full aspect-square object-cover rounded-xl" />
+              <span className="absolute top-3 left-3 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-lg">
+                -{bestPrice.discount}%
+              </span>
             </div>
-          </div>
-
-          {/* Bottom: AI Summary + Rating Distribution */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-            {/* AI Summary */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-lg">🤖</span>
-                <h3 className="font-bold text-gray-800">สรุปจากผู้ใช้งาน (AI)</h3>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-green-50 rounded-xl p-4">
-                  <h4 className="font-bold text-green-700 text-xs mb-2">✅ ข้อดี</h4>
-                  <ul className="space-y-1">
-                    {pros.map((p, i) => (
-                      <li key={i} className="text-xs text-gray-600 flex items-start gap-1">
-                        <span className="text-green-500 mt-0.5 shrink-0">✓</span>
-                        <span>{p}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="bg-red-50 rounded-xl p-4">
-                  <h4 className="font-bold text-red-700 text-xs mb-2">⚠️ ข้อควรพิจารณา</h4>
-                  <ul className="space-y-1">
-                    {cons.map((c, i) => (
-                      <li key={i} className="text-xs text-gray-600 flex items-start gap-1">
-                        <span className="text-red-400 mt-0.5 shrink-0">✗</span>
-                        <span>{c}</span>
-                      </li>
-                    ))}
-                  </ul>
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="bg-violet-100 text-violet-700 text-xs px-2 py-1 rounded-lg font-semibold">
+                  {product.category}
+                </span>
+                <div className="flex items-center gap-1 text-xs text-gray-500">
+                  ⭐ {bestPrice.rating} · ขายแล้ว {bestPrice.sold.toLocaleString()} ชิ้น
                 </div>
               </div>
-            </div>
-
-            {/* Rating Distribution */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-5">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-3xl font-black text-gray-800">4.8</span>
-                <div>
-                  <div className="flex text-yellow-400 text-sm">⭐⭐⭐⭐⭐</div>
-                  <span className="text-xs text-gray-400">{(12340).toLocaleString()} รีวิว</span>
-                </div>
-              </div>
-              <div className="space-y-1.5">
-                {ratingBars.map((r) => (
-                  <div key={r.stars} className="flex items-center gap-2">
-                    <span className="text-xs text-gray-500 w-5">{r.stars}⭐</span>
-                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden flex-1">
-                      <div className="h-full bg-violet-500 rounded-full" style={{width: `${r.pct}%`}} />
-                    </div>
-                    <span className="text-xs text-gray-400 w-8">{r.pct}%</span>
-                  </div>
+              <h1 className="text-xl font-black text-gray-800 mb-3">{product.name}</h1>
+              <p className="text-sm text-gray-600 mb-4">{product.description}</p>
+              <div className="flex flex-wrap gap-1 mb-4">
+                {product.tags.map(tag => (
+                  <span key={tag} className="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-full">#{tag}</span>
                 ))}
               </div>
-              <button className="w-full mt-4 bg-violet-100 hover:bg-violet-200 text-violet-700 font-semibold text-xs py-2 rounded-xl transition">
-                อ่านรีวิวทั้งหมด
-              </button>
+
+              {/* Specs */}
+              <div className="bg-gray-50 rounded-xl p-3 mb-4">
+                <div className="text-xs font-bold text-gray-500 mb-2">สเปค</div>
+                <div className="grid grid-cols-2 gap-2">
+                  {Object.entries(product.specs).map(([key, val]) => (
+                    <div key={key} className="flex items-start gap-2">
+                      <span className="text-xs text-gray-400 shrink-0">{key}:</span>
+                      <span className="text-xs font-semibold text-gray-700">{val}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
-      </main>
+
+        {/* Price Comparison */}
+        <div className="bg-white rounded-2xl p-4 mb-4 shadow-sm border border-gray-100">
+          <h2 className="text-lg font-black text-gray-800 mb-4 flex items-center gap-2">
+            💰 เปรียบเทียบราคา
+            <span className="text-sm font-normal text-gray-400">({sortedPrices.length} ร้าน)</span>
+          </h2>
+
+          <div className="space-y-3">
+            {sortedPrices.map((price, index) => (
+              <a
+                key={price.dealer}
+                href={price.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center gap-4 p-4 rounded-xl border-2 transition cursor-pointer hover:shadow-md ${
+                  index === 0 ? 'border-violet-500 bg-violet-50' : 'border-gray-100 bg-white hover:border-violet-200'
+                }`}
+              >
+                <div className={`w-10 h-10 rounded-full ${dealerColors[price.dealer]} flex items-center justify-center text-white text-sm font-bold shrink-0`}>
+                  {price.dealer[0].toUpperCase()}
+                </div>
+                <div className="flex-1">
+                  <div className="font-bold text-sm text-gray-800">{dealerLabels[price.dealer]}</div>
+                  <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
+                    <span>⭐ {price.rating}</span>
+                    <span>·</span>
+                    <span>ขายแล้ว {price.sold.toLocaleString()}</span>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className={`text-xl font-black ${index === 0 ? 'text-violet-600' : 'text-gray-800'}`}>
+                    {formatPrice(price.price)}
+                  </div>
+                  <div className="flex items-center gap-1 text-xs">
+                    <span className="text-gray-400 line-through">{formatPrice(price.oldPrice)}</span>
+                    <span className="text-red-500 font-bold">-{price.discount}%</span>
+                  </div>
+                </div>
+                {index === 0 && (
+                  <div className="bg-violet-600 text-white text-xs font-bold px-3 py-1 rounded-lg shrink-0">
+                    ถูกสุด ✓
+                  </div>
+                )}
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-4 bg-gradient-to-r from-violet-600 to-fuchsia-500 rounded-xl p-4 text-center">
+            <a
+              href={bestPrice.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white font-bold text-lg"
+            >
+              ซื้อจาก {dealerLabels[bestPrice.dealer]} → ราคา {formatPrice(bestPrice.price)}
+            </a>
+          </div>
+        </div>
+
+        {/* Related Products */}
+        {related.length > 0 && (
+          <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+            <h2 className="text-lg font-black text-gray-800 mb-4">📦 สินค้าที่เกี่ยวข้อง</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {related.map(p => {
+                const best = p.prices.reduce((a, b) => a.price < b.price ? a : b);
+                return (
+                  <Link key={p.id} href={`/product/${p.id}`}>
+                    <div className="bg-gray-50 rounded-xl p-3 hover:bg-violet-50 transition cursor-pointer">
+                      <img src={p.image} alt={p.name} className="w-full h-20 object-cover rounded-lg mb-2" />
+                      <h3 className="font-bold text-xs text-gray-800 line-clamp-2 mb-1">{p.name}</h3>
+                      <div className="text-sm font-black text-violet-600">{formatPrice(best.price)}</div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
