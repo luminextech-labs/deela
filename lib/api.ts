@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://thorough-clarity-production-b8ca.up.railway.app';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://deela-foa0.onrender.com';
 
 export async function fetchProducts() {
   const res = await fetch(`${API_BASE}/api/products`);
