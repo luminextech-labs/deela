@@ -1,28 +1,48 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { fetchProducts } from '@/lib/api';
 import MobileSidebar from '../components/MobileSidebar';
 
-// Fetch products from API
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://deela-foa0.onrender.com';
+
+// Fetch products from API - uses slug-based detail endpoint to get prices
 async function getTrackedProducts() {
   try {
-    const products = await fetchProducts();
-    return products.slice(0, 10).map((p: any) => ({
-      id: p.id,
-      name: p.name,
-      currentPrice: p.lowest_price || 0,
-      originalPrice: p.highest_price || p.lowest_price || 0,
-      drop: p.original_price ? p.original_price - (p.lowest_price || 0) : 0,
-      dropPercent: p.original_price && p.lowest_price 
-        ? Math.round((1 - (p.lowest_price / p.original_price)) * 100) : 0,
-      cheapestShop: p.prices?.[0]?.platform || 'N/A',
-      cheapestLogo: getLogoForPlatform(p.prices?.[0]?.platform),
-      history: generateMockHistory(p.lowest_price || 25000),
-      lowestPrice: p.lowest_price || 0,
-      slug: p.slug,
-      imageUrl: p.image_url,
-    }));
+    // Fetch product list first
+    const listRes = await fetch(`${API_BASE}/api/products/`);
+    if (!listRes.ok) throw new Error('Failed to fetch products');
+    const productList = await listRes.json();
+    
+    // For each product, fetch detail to get prices (prices not included in list endpoint)
+    const withPrices = await Promise.all(
+      productList.slice(0, 10).map(async (p: any) => {
+        try {
+          const detailRes = await fetch(`${API_BASE}/api/products/${p.slug}`);
+          if (!detailRes.ok) return null;
+          const detail = await detailRes.json();
+          const prices = detail.prices || [];
+          const cheapest = prices.sort((a: any, b: any) => Number(a.price) - Number(b.price))[0] || {};
+          return {
+            id: p.id,
+            name: p.name,
+            currentPrice: Number(p.lowest_price) || 0,
+            originalPrice: Number(p.lowest_price) || 0,
+            drop: 0,
+            dropPercent: 0,
+            cheapestShop: cheapest.platform ? cheapest.platform.charAt(0).toUpperCase() + cheapest.platform.slice(1) : 'N/A',
+            cheapestLogo: getLogoForPlatform(cheapest.platform),
+            history: generateMockHistory(Number(p.lowest_price) || 25000),
+            lowestPrice: Number(p.lowest_price) || 0,
+            slug: p.slug,
+            imageUrl: p.image_url,
+          };
+        } catch {
+          return null;
+        }
+      })
+    );
+    
+    return withPrices.filter(Boolean);
   } catch (e) {
     console.error('Failed to fetch products:', e);
     return [];
