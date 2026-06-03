@@ -1,70 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { fetchProducts } from '@/lib/api';
 import MobileSidebar from '../components/MobileSidebar';
 
-const trackedProducts = [
-  {
-    id: 1,
-    name: 'iPhone 15 (128GB)',
-    currentPrice: 27900,
-    originalPrice: 30900,
-    drop: 3100,
-    dropPercent: 10,
-    cheapestShop: 'Shopee',
-    cheapestLogo: '/logo_shopee.png',
-    history: [30900,30500,31000,30800,29500,28900,28500,28900,28200,27900],
-    lowestPrice: 27500,
-  },
-  {
-    id: 2,
-    name: 'Dyson V12 Detect Slim',
-    currentPrice: 18900,
-    originalPrice: 21900,
-    drop: 3000,
-    dropPercent: 14,
-    cheapestShop: 'Lazada',
-    cheapestLogo: '/logo_lazada.png',
-    history: [21900,21500,21000,20500,19900,19500,19200,19500,19100,18900],
-    lowestPrice: 18500,
-  },
-  {
-    id: 3,
-    name: 'Sony WH-1000XM5',
-    currentPrice: 11490,
-    originalPrice: 12990,
-    drop: 1500,
-    dropPercent: 12,
-    cheapestShop: 'TikTok',
-    cheapestLogo: '/logo_tiktok.png',
-    history: [12990,12700,12500,12200,11800,11600,11500,11600,11500,11490],
-    lowestPrice: 11200,
-  },
-  {
-    id: 4,
-    name: 'Apple AirPods Pro 2',
-    currentPrice: 6390,
-    originalPrice: 7290,
-    drop: 900,
-    dropPercent: 12,
-    cheapestShop: 'Shopee',
-    cheapestLogo: '/logo_shopee.png',
-    history: [7290,7200,7100,7000,6800,6600,6500,6490,6400,6390],
-    lowestPrice: 6200,
-  },
-  {
-    id: 5,
-    name: 'Samsung Galaxy S23',
-    currentPrice: 16900,
-    originalPrice: 18900,
-    drop: 2000,
-    dropPercent: 11,
-    cheapestShop: 'Lazada',
-    cheapestLogo: '/logo_lazada.png',
-    history: [18900,18500,17900,17200,17000,17000,17000,17000,16900,16900],
-    lowestPrice: 16500,
-  },
-];
+// Fetch products from API
+async function getTrackedProducts() {
+  try {
+    const products = await fetchProducts();
+    return products.slice(0, 10).map((p: any) => ({
+      id: p.id,
+      name: p.name,
+      currentPrice: p.lowest_price || 0,
+      originalPrice: p.highest_price || p.lowest_price || 0,
+      drop: p.original_price ? p.original_price - (p.lowest_price || 0) : 0,
+      dropPercent: p.original_price && p.lowest_price 
+        ? Math.round((1 - (p.lowest_price / p.original_price)) * 100) : 0,
+      cheapestShop: p.prices?.[0]?.platform || 'N/A',
+      cheapestLogo: getLogoForPlatform(p.prices?.[0]?.platform),
+      history: generateMockHistory(p.lowest_price || 25000),
+      lowestPrice: p.lowest_price || 0,
+      slug: p.slug,
+      imageUrl: p.image_url,
+    }));
+  } catch (e) {
+    console.error('Failed to fetch products:', e);
+    return [];
+  }
+}
+
+function getLogoForPlatform(platform: string) {
+  switch (platform) {
+    case 'shopee': return '/logo_shopee.png';
+    case 'lazada': return '/logo_lazada.png';
+    case 'tiktok': return '/logo_tiktok.png';
+    default: return '/placeholder.jpg';
+  }
+}
+
+function generateMockHistory(currentPrice: number) {
+  // Generate realistic price history that ends at current price
+  const history = [];
+  let price = currentPrice * 1.15; // Start 15% higher
+  for (let i = 0; i < 10; i++) {
+    history.push(Math.round(price));
+    price = price * (0.95 + Math.random() * 0.08); // Fluctuate downward
+  }
+  history[history.length - 1] = currentPrice; // End at current price
+  return history;
+}
 
 function PriceChart({ data }: { data: number[] }) {
   const min = Math.min(...data);
@@ -100,6 +84,17 @@ export default function AlertsPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('tracking');
   const [activeRange, setActiveRange] = useState('30 วัน');
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      const data = await getTrackedProducts();
+      setProducts(data);
+      setLoading(false);
+    }
+    load();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#F5F5FA] flex">
@@ -164,7 +159,7 @@ export default function AlertsPage() {
                     : 'border-transparent text-gray-400'
                 }`}
               >
-                สินค้าที่ติดตาม ({trackedProducts.length})
+                สินค้าที่ติดตาม ({products.length})
               </button>
               <button
                 onClick={() => setActiveTab('alerts')}
@@ -202,13 +197,19 @@ export default function AlertsPage() {
 
           {/* Product list */}
           <div className="space-y-3">
-            {trackedProducts.map((product) => (
+            {loading ? (
+              <div className="text-center py-12 text-gray-400">กำลังโหลดข้อมูล...</div>
+            ) : products.length === 0 ? (
+              <div className="text-center py-12 text-gray-400">ยังไม่มีสินค้าที่ติดตาม</div>
+            ) : (
+            products.map((product) => (
               <div key={product.id} className="bg-white rounded-2xl border border-gray-100 px-5 py-4 flex items-center gap-4">
                 {/* Product image */}
                 <img
-                  src="/placeholder.jpg"
+                  src={product.imageUrl || '/placeholder.jpg'}
                   alt={product.name}
                   className="w-20 h-20 rounded-2xl object-cover shrink-0"
+                  onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.jpg'; }}
                 />
 
                 {/* Product info */}
@@ -242,6 +243,7 @@ export default function AlertsPage() {
                 </button>
               </div>
             ))}
+            )}
           </div>
         </div>
       </main>
