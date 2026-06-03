@@ -242,7 +242,6 @@ export default function AlertsPage() {
                 </button>
               </div>
             ))}
-            )}
           </div>
         </div>
       </main>
