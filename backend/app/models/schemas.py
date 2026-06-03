@@ -128,3 +128,10 @@ class SearchResponse(BaseModel):
 class AffiliateRedirectResponse(BaseModel):
     redirect_url: str
     platform: Platform
+
+
+class AffiliateLinkResponse(BaseModel):
+    price_id: str
+    platform: Platform
+    original_url: str
+    affiliate_url: str
