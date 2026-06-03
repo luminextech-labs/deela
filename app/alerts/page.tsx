@@ -201,8 +201,7 @@ export default function AlertsPage() {
               <div className="text-center py-12 text-gray-400">กำลังโหลดข้อมูล...</div>
             ) : products.length === 0 ? (
               <div className="text-center py-12 text-gray-400">ยังไม่มีสินค้าที่ติดตาม</div>
-            ) : (
-            products.map((product) => (
+            ) : products.map((product: any) => (
               <div key={product.id} className="bg-white rounded-2xl border border-gray-100 px-5 py-4 flex items-center gap-4">
                 {/* Product image */}
                 <img
