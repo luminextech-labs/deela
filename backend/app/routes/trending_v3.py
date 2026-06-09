@@ -19,6 +19,7 @@ from sqlalchemy import func
 
 from app.database import get_db
 from app.models.models import Product, Price
+from app.services.image_service import get_product_image_url, generate_affiliate_image_url
 
 router = APIRouter()
 
@@ -192,11 +193,16 @@ async def get_trending_v3(
             discount = float(r.discount) if r.discount else 0
             score = calculate_score(sold, rating, discount)
             
+            # Use better image if current is placeholder
+            image_url = r.image_url
+            if not image_url or 'unsplash' in str(image_url).lower() or image_url == '':
+                image_url = get_product_image_url(r.name)
+            
             products.append({
                 "id": str(r.id),
                 "name": r.name,
                 "slug": r.slug,
-                "image_url": r.image_url,
+                "image_url": image_url,
                 "description": r.description,
                 "price": float(r.price) if r.price else 0,
                 "rating": rating,
@@ -291,6 +297,40 @@ async def refresh_trending(
         "results": results,
         "timestamp": datetime.now(timezone.utc).isoformat(),
     }
+
+
+@router.post("/trending/v3/update-images")
+async def update_product_images(db: Session = Depends(get_db)):
+    """
+    Update all product images using the image service.
+    Replaces placeholder images with categorized images.
+    """
+    try:
+        products = db.query(Product).all()
+        updated = 0
+        
+        for product in products:
+            old_image = product.image_url or ""
+            # Only update if current image is placeholder or empty
+            if not old_image or 'unsplash' in old_image.lower() or old_image == '':
+                new_image = get_product_image_url(product.name)
+                product.image_url = new_image
+                updated += 1
+        
+        db.commit()
+        
+        return {
+            "status": "ok",
+            "message": f"Updated {updated} product images",
+            "updated_count": updated,
+            "total_products": len(products),
+        }
+    except Exception as e:
+        db.rollback()
+        return {
+            "status": "error",
+            "message": str(e),
+        }
 
 
 @router.get("/trending/v3/status")
