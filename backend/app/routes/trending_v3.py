@@ -5,11 +5,10 @@ Ranking: Score = (sold×50%) + (rating×30%) + (discount×20%)
 """
 
 from datetime import datetime, timezone
-from typing import Optional, List
-from fastapi import APIRouter, Query, HTTPException
+from typing import Optional
+from fastapi import APIRouter, Query, HTTPException, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import func, desc
-import os
 
 from app.database import get_db
 from app.models.models import Product, Price
@@ -46,7 +45,7 @@ async def get_trending_v3(
     Score = (sold_count × 50%) + (rating × 30%) + (discount × 20%)
     """
     try:
-        # Build query with price joins
+        # Build query - join Product with Price
         query = db.query(
             Product.id,
             Product.name,
@@ -54,8 +53,8 @@ async def get_trending_v3(
             Product.image_url,
             Product.description,
             func.max(Price.price).label("price"),
-            func.max(Price.rating).label("rating"),
             func.max(Price.discount_percent).label("discount"),
+            func.max(Price.rating).label("rating"),
             func.max(Price.sold_count).label("sold_count"),
         ).join(Price, Product.id == Price.product_id, isouter=True)
 
@@ -68,9 +67,8 @@ async def get_trending_v3(
         if platform:
             query = query.filter(Price.platform == platform)
 
-        # Group by product and order
+        # Group by product
         query = query.group_by(Product.id, Product.name, Product.slug, Product.image_url, Product.description)
-        query = query.order_by(desc(func.coalesce(func.max(Price.score), 0)))
 
         # Apply limit
         query = query.limit(limit)
@@ -78,14 +76,14 @@ async def get_trending_v3(
         # Execute
         results = query.all()
 
-        # Format response
+        # Format response with calculated score
         products = []
         for r in results:
-            score = calculate_score(
-                sold_count=r.sold_count or 0,
-                rating=r.rating or 0,
-                discount=r.discount or 0
-            )
+            sold = r.sold_count or 0
+            rating = float(r.rating) if r.rating else 0
+            discount = float(r.discount) if r.discount else 0
+            score = calculate_score(sold, rating, discount)
+            
             products.append({
                 "id": str(r.id),
                 "name": r.name,
@@ -93,11 +91,14 @@ async def get_trending_v3(
                 "image_url": r.image_url,
                 "description": r.description,
                 "price": float(r.price) if r.price else 0,
-                "rating": float(r.rating) if r.rating else 0,
-                "discount": float(r.discount) if r.discount else 0,
-                "sold_count": r.sold_count or 0,
+                "rating": rating,
+                "discount": discount,
+                "sold_count": sold,
                 "score": score,
             })
+
+        # Sort by score descending
+        products.sort(key=lambda x: x["score"], reverse=True)
 
         return {
             "status": "ok",
@@ -127,14 +128,10 @@ async def refresh_trending(
     Manually trigger a refresh of trending products.
     In production, this would be called by a cron job.
     """
-    # For MVP, this just recalculates scores for existing products
-    # In production, this would fetch from Lazada/TikTok APIs and store to DB
-
     refresh_keywords = [keyword] if keyword else POPULAR_KEYWORDS
     results = []
 
     for kw in refresh_keywords:
-        # Count products matching keyword
         count = db.query(Product).filter(
             Product.name.ilike(f"%{kw}%")
         ).count()
@@ -156,10 +153,8 @@ async def refresh_trending(
 async def get_status(db: Session = Depends(get_db)):
     """Get system status and statistics."""
     try:
-        # Count products
         total_products = db.query(Product).count()
 
-        # Count by platform
         platform_counts = db.query(
             Price.platform,
             func.count(Price.id).label("count")
