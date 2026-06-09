@@ -22,7 +22,7 @@ LAZADA_USER_TOKEN = "1b50f4e90bf44f7b8bf3a1c67d3cd4cf"
 TIKTOK_APP_KEY = "6k6fni5mt91k1"
 TIKTOK_APP_SECRET = "e9a07b4299f91f23347df80a86f26a5148d54bf5"
 
-SUPABASE_URL = "https://dtdkjqtqwnqvzokapyeps.supabase.co"
+SUPABASE_URL = "https://dylbygcuwigngtkiekylg.supabase.co"
 SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0ZGtqdHF3bndxdm96a2F5ZXBzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTk2MTY5MywiZXhwIjoyMDk1NTM3NjkzfQ.j2lPuJPiPvhUKd3LzQpD9G38--2Xr2qxsESqA8eH0sM"
 
 POPULAR_KEYWORDS = ["iphone", "samsung", "airpods", "xiaomi", "dyson", "ipad", "macbook"]

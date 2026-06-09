@@ -14,7 +14,7 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
-SUPABASE_URL = "https://dtdkjqtqwnqvzokapyeps.supabase.co"
+SUPABASE_URL = "https://dylbygcuwigngtkiekylg.supabase.co"
 SERVICE_KEY = "eyJhbG…H0sM"
 HEADERS = {
     "apikey": SERVICE_KEY,
