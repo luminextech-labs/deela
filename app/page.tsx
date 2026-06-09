@@ -35,11 +35,23 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch(`${API_BASE}/api/products`);
+        // Use trending/v3 instead of products (products API has DNS issues from Render)
+        const res = await fetch(`${API_BASE}/api/trending/v3?limit=12`);
         if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
-        // Take first 12 products
-        setProducts(data.slice(0, 12));
+        // trending/v3 returns {status, count, products} - extract products array
+        const productsData = data.products || [];
+        // Transform to match Product interface
+        const transformed = productsData.map((p: any) => ({
+          id: p.id,
+          name: p.name,
+          slug: p.slug || '',
+          description: p.description || '',
+          image_url: p.image_url,
+          lowest_price: p.price ? p.price.toString() : '0',
+          highest_rating: p.rating ? p.rating.toString() : '0',
+        }));
+        setProducts(transformed.slice(0, 12));
       } catch (err) {
         console.error('API error:', err);
         setError('ไม่สามารถโหลดข้อมูลได้');
