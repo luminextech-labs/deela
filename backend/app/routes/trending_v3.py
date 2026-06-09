@@ -6,6 +6,7 @@ Ranking: Score = (sold×50%) + (rating×30%) + (discount×20%)
 
 import ssl
 import urllib.request
+import urllib.parse
 import json
 import time
 from datetime import datetime, timezone
