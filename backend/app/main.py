@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
-from app.routes import auth, products, categories, favorites, affiliate, trending, seed, products_rest, debug, standalone, scraper_images, trending_phones
+from app.routes import auth, products, categories, favorites, affiliate, trending, seed, products_rest, debug, standalone, scraper_images, trending_phones, trending_v3
 
 settings = get_settings()
 
@@ -31,6 +31,7 @@ app.include_router(debug.router, prefix="/api", tags=["Debug"])
 app.include_router(standalone.router, prefix="/api", tags=["Standalone"])
 app.include_router(scraper_images.router, prefix="/api", tags=["Scraper"])
 app.include_router(trending_phones.router, prefix="/api", tags=["Trending"])
+app.include_router(trending_v3.router, prefix="/api", tags=["TrendingV3"])
 
 
 @app.get("/")
