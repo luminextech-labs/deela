@@ -26,18 +26,18 @@ const sortOptions = [
 ];
 
 const mockProducts = [
-  { id: '1', name: 'หูฟังบลูทูธ Anker Soundcore P20i รุ่นใหม่ล่าสุด TWS', price: 690, oldPrice: 1290, discount: 47, shop: 'Shopee', rating: 4.7, reviews: 1234, sold: 5600, image: '/placeholder.jpg' },
-  { id: '2', name: 'QCY T13X หูฟังบลูทูธ ราคาถูก คุณภาพดี', price: 399, oldPrice: 699, discount: 43, shop: 'Lazada', rating: 4.5, reviews: 856, sold: 3400, image: '/placeholder.jpg' },
-  { id: '3', name: 'Redmi Buds 4 Lite หูฟังไร้สาย รุ่นจีน', price: 599, oldPrice: 999, discount: 40, shop: 'Shopee', rating: 4.3, reviews: 2341, sold: 12000, image: '/placeholder.jpg' },
-  { id: '4', name: 'Sony WF-C500 หูฟังไร้สาย วงเสียงใส', price: 1490, oldPrice: 2490, discount: 40, shop: 'Lazada', rating: 4.6, reviews: 1567, sold: 3200, image: '/placeholder.jpg' },
-  { id: '5', name: 'JBL Tune 230NC หูฟัง TWS พร้อม ANC', price: 1990, oldPrice: 3990, discount: 50, shop: 'TikTok', rating: 4.4, reviews: 892, sold: 2100, image: '/placeholder.jpg' },
-  { id: '6', name: 'Samsung Galaxy Buds2 หูฟังไร้สาย ANC', price: 2990, oldPrice: 4990, discount: 40, shop: 'Shopee', rating: 4.7, reviews: 3456, sold: 8700, image: '/placeholder.jpg' },
-  { id: '7', name: 'Apple AirPods Pro 2 (USB-C) รุ่นใหม่', price: 7990, oldPrice: 9990, discount: 20, shop: 'Lazada', rating: 4.8, reviews: 5670, sold: 15000, image: '/placeholder.jpg' },
-  { id: '8', name: 'Sony WH-1000XM5 หูฟังครอบหู ANC ระดับท็อป', price: 8990, oldPrice: 12900, discount: 30, shop: 'Shopee', rating: 4.9, reviews: 2340, sold: 4500, image: '/placeholder.jpg' },
-  { id: '9', name: 'Logitech G Pro X Superlight 2 เมาส์ไร้สาย', price: 4590, oldPrice: 5990, discount: 23, shop: 'Lazada', rating: 4.9, reviews: 1230, sold: 2100, image: '/placeholder.jpg' },
-  { id: '10', name: 'MacBook Air M3 13" 8GB/256GB สีใหม่', price: 36900, oldPrice: 44900, discount: 18, shop: 'Shopee', rating: 4.8, reviews: 2340, sold: 1800, image: '/placeholder.jpg' },
-  { id: '11', name: 'iPhone 15 Pro Max 256GB ราคาพิเศษ', price: 41900, oldPrice: 54900, discount: 24, shop: 'Lazada', rating: 4.9, reviews: 8560, sold: 12000, image: '/placeholder.jpg' },
-  { id: '12', name: 'Nintendo Switch OLED พร้อมเกมติดตั้ง', price: 10900, oldPrice: 13900, discount: 22, shop: 'TikTok', rating: 4.7, reviews: 4560, sold: 6700, image: '/placeholder.jpg' },
+  { id: '1', name: 'หูฟังบลูทูธ Anker Soundcore P20i รุ่นใหม่ล่าสุด TWS', price: 690, oldPrice: 1290, discount: 47, shop: 'Shopee', rating: 4.7, reviews: 1234, sold: 5600, image: '/placeholder.png' },
+  { id: '2', name: 'QCY T13X หูฟังบลูทูธ ราคาถูก คุณภาพดี', price: 399, oldPrice: 699, discount: 43, shop: 'Lazada', rating: 4.5, reviews: 856, sold: 3400, image: '/placeholder.png' },
+  { id: '3', name: 'Redmi Buds 4 Lite หูฟังไร้สาย รุ่นจีน', price: 599, oldPrice: 999, discount: 40, shop: 'Shopee', rating: 4.3, reviews: 2341, sold: 12000, image: '/placeholder.png' },
+  { id: '4', name: 'Sony WF-C500 หูฟังไร้สาย วงเสียงใส', price: 1490, oldPrice: 2490, discount: 40, shop: 'Lazada', rating: 4.6, reviews: 1567, sold: 3200, image: '/placeholder.png' },
+  { id: '5', name: 'JBL Tune 230NC หูฟัง TWS พร้อม ANC', price: 1990, oldPrice: 3990, discount: 50, shop: 'TikTok', rating: 4.4, reviews: 892, sold: 2100, image: '/placeholder.png' },
+  { id: '6', name: 'Samsung Galaxy Buds2 หูฟังไร้สาย ANC', price: 2990, oldPrice: 4990, discount: 40, shop: 'Shopee', rating: 4.7, reviews: 3456, sold: 8700, image: '/placeholder.png' },
+  { id: '7', name: 'Apple AirPods Pro 2 (USB-C) รุ่นใหม่', price: 7990, oldPrice: 9990, discount: 20, shop: 'Lazada', rating: 4.8, reviews: 5670, sold: 15000, image: '/placeholder.png' },
+  { id: '8', name: 'Sony WH-1000XM5 หูฟังครอบหู ANC ระดับท็อป', price: 8990, oldPrice: 12900, discount: 30, shop: 'Shopee', rating: 4.9, reviews: 2340, sold: 4500, image: '/placeholder.png' },
+  { id: '9', name: 'Logitech G Pro X Superlight 2 เมาส์ไร้สาย', price: 4590, oldPrice: 5990, discount: 23, shop: 'Lazada', rating: 4.9, reviews: 1230, sold: 2100, image: '/placeholder.png' },
+  { id: '10', name: 'MacBook Air M3 13" 8GB/256GB สีใหม่', price: 36900, oldPrice: 44900, discount: 18, shop: 'Shopee', rating: 4.8, reviews: 2340, sold: 1800, image: '/placeholder.png' },
+  { id: '11', name: 'iPhone 15 Pro Max 256GB ราคาพิเศษ', price: 41900, oldPrice: 54900, discount: 24, shop: 'Lazada', rating: 4.9, reviews: 8560, sold: 12000, image: '/placeholder.png' },
+  { id: '12', name: 'Nintendo Switch OLED พร้อมเกมติดตั้ง', price: 10900, oldPrice: 13900, discount: 22, shop: 'TikTok', rating: 4.7, reviews: 4560, sold: 6700, image: '/placeholder.png' },
 ];
 
 interface Product {
@@ -171,7 +171,7 @@ export default function SearchPage() {
         {/* Sidebar user */}
         <div className="mt-auto pt-4 border-t border-gray-100">
           <div className="bg-violet-50 rounded-2xl p-3 flex items-center gap-3">
-            <img src="/placeholder.jpg" alt="" className="w-10 h-10 rounded-full object-cover" />
+            <img src="/placeholder.png" alt="" className="w-10 h-10 rounded-full object-cover" />
             <div>
               <div className="font-semibold text-sm">Nattawat</div>
               <div className="text-xs text-gray-500">Premium</div>

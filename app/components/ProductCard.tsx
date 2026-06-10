@@ -38,7 +38,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const rating = product.rating ?? Number(product.highest_rating) ?? 0;
   const reviews = product.reviews ?? 0;
   const sold = product.sold ?? 0;
-  const image = product.image || product.image_url || '/placeholder.jpg';
+  const image = product.image || product.image_url || '/placeholder.png';
   const shop = product.shop || 'Shopee';
 
   return (
@@ -52,7 +52,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           src={image}
           alt={product.name}
           className="w-full h-28 object-cover rounded-lg group-hover:scale-105 transition-transform duration-200"
-          onError={(e) => { e.currentTarget.src = '/placeholder.jpg'; }}
+          onError={(e) => { e.currentTarget.src = '/placeholder.png'; }}
         />
         {discount > 0 && (
           <span className="absolute top-1.5 left-1.5 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">

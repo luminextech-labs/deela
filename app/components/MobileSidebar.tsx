@@ -5,14 +5,14 @@ import { useState } from 'react';
 const categories = ['อิเล็กทรอนิกส์', 'มือถือ & แก็ดเจ็ต', 'คอมพิวเตอร์', 'หูฟัง & เสียง', 'เกมมิ่งเกียร์', 'บ้าน & ไลฟ์สไตล์', 'สุขภาพ & ความงาม', 'แฟชั่น'];
 
 const navItems = [
-  { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.jpg' },
-  { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.jpg' },
-  { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.jpg' },
-  { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.jpg' },
-  { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.jpg' },
-  { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.jpg' },
-  { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.jpg' },
-  { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.jpg' },
+  { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.png' },
+  { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.png' },
+  { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.png' },
+  { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.png' },
+  { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.png' },
+  { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.png' },
+  { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.png' },
+  { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.png' },
 ];
 
 interface MobileSidebarProps {
@@ -63,7 +63,7 @@ export default function MobileSidebar({ isOpen, onClose, activePage }: MobileSid
 
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-violet-50 mx-4 mb-4 rounded-2xl">
           <div className="flex items-center gap-3">
-            <img src="/placeholder.jpg" alt="" className="w-10 h-10 rounded-full object-cover" />
+            <img src="/placeholder.png" alt="" className="w-10 h-10 rounded-full object-cover" />
             <div>
               <div className="font-semibold text-sm">Nattawat</div>
               <div className="text-xs text-gray-500">Premium</div>

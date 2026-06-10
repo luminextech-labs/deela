@@ -54,7 +54,7 @@ function getLogoForPlatform(platform: string) {
     case 'shopee': return '/logo_shopee.png';
     case 'lazada': return '/logo_lazada.png';
     case 'tiktok': return '/logo_tiktok.png';
-    default: return '/placeholder.jpg';
+    default: return '/placeholder.png';
   }
 }
 
@@ -122,14 +122,14 @@ export default function AlertsPage() {
         <img src="/logo.png" alt="deela logo" className="h-16 mb-8 object-contain" />
         <nav className="space-y-1 mb-8">
           {[
-            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.jpg' },
-            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.jpg' },
-            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.jpg' },
-            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.jpg' },
-            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.jpg' },
-            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.jpg', active: true },
-            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.jpg' },
-            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.jpg' },
+            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.png' },
+            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.png' },
+            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.png' },
+            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.png' },
+            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.png' },
+            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.png', active: true },
+            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.png' },
+            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.png' },
           ].map((item) => (
             <a key={item.name} href={item.href} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition font-medium text-sm ${item.active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
               <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />
@@ -146,7 +146,7 @@ export default function AlertsPage() {
           </div>
         </div>
         <div className="bg-violet-50 rounded-2xl p-3 flex items-center gap-3">
-          <img src="/placeholder.jpg" alt="" className="w-10 h-10 rounded-full object-cover" />
+          <img src="/placeholder.png" alt="" className="w-10 h-10 rounded-full object-cover" />
           <div>
             <div className="font-semibold text-sm">Nattawat</div>
             <div className="text-xs text-gray-500">Premium</div>
@@ -225,10 +225,10 @@ export default function AlertsPage() {
               <div key={product.id} className="bg-white rounded-2xl border border-gray-100 px-5 py-4 flex items-center gap-4">
                 {/* Product image */}
                 <img
-                  src={product.imageUrl || '/placeholder.jpg'}
+                  src={product.imageUrl || '/placeholder.png'}
                   alt={product.name}
                   className="w-20 h-20 rounded-2xl object-cover shrink-0"
-                  onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.jpg'; }}
+                  onError={(e) => { (e.target as HTMLImageElement).src = '/placeholder.png'; }}
                 />
 
                 {/* Product info */}

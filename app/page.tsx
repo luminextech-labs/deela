@@ -24,26 +24,26 @@ const topCategories = [
 
 // Category icons for the horizontal row
 const categoryIcons = [
-  { name: 'มือถือ', icon: '/icons/mobile.jpg', href: '/categories?cat=mobile' },
-  { name: 'คอมพิวเตอร์', icon: '/icons/computer.jpg', href: '/categories?cat=computer' },
-  { name: 'หูฟัง', icon: '/icons/audio.jpg', href: '/categories?cat=audio' },
-  { name: 'เกมมิ่ง', icon: '/icons/auto.jpg', href: '/categories?cat=gaming' },
-  { name: 'เครื่องใช้', icon: '/icons/home_new.jpg', href: '/categories?cat=home' },
-  { name: 'สุขภาพ', icon: '/icons/beauty.jpg', href: '/categories?cat=beauty' },
-  { name: 'แม่ & เด็ก', icon: '/icons/mother.jpg', href: '/categories?cat=mother' },
-  { name: 'กีฬา', icon: '/icons/sports.jpg', href: '/categories?cat=sports' },
-  { name: 'ยานยนต์', icon: '/icons/icon3.jpg', href: '/categories?cat=auto' },
-  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.jpg', href: '/categories?cat=pet' },
+  { name: 'มือถือ', icon: '/icons/mobile.png', href: '/categories?cat=mobile' },
+  { name: 'คอมพิวเตอร์', icon: '/icons/computer.png', href: '/categories?cat=computer' },
+  { name: 'หูฟัง', icon: '/icons/audio.png', href: '/categories?cat=audio' },
+  { name: 'เกมมิ่ง', icon: '/icons/auto.png', href: '/categories?cat=gaming' },
+  { name: 'เครื่องใช้', icon: '/icons/home_new.png', href: '/categories?cat=home' },
+  { name: 'สุขภาพ', icon: '/icons/beauty.png', href: '/categories?cat=beauty' },
+  { name: 'แม่ & เด็ก', icon: '/icons/mother.png', href: '/categories?cat=mother' },
+  { name: 'กีฬา', icon: '/icons/sports.png', href: '/categories?cat=sports' },
+  { name: 'ยานยนต์', icon: '/icons/icon3.png', href: '/categories?cat=auto' },
+  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.png', href: '/categories?cat=pet' },
 ];
 
 // Flash sale products
 const flashSaleProducts = [
-  { id: 'flash-1', name: 'iPhone 15 Pro Max 256GB', price: 41900, oldPrice: 54900, discount: 24, shop: 'Shopee', rating: 4.9, reviews: 8560, sold: 1200, image: '/placeholder.jpg' },
-  { id: 'flash-2', name: 'MacBook Air M3 13"', price: 36900, oldPrice: 44900, discount: 18, shop: 'Lazada', rating: 4.8, reviews: 2340, sold: 450, image: '/placeholder.jpg' },
-  { id: 'flash-3', name: 'Sony WH-1000XM5', price: 8990, oldPrice: 12900, discount: 30, shop: 'Shopee', rating: 4.7, reviews: 3450, sold: 890, image: '/placeholder.jpg' },
-  { id: 'flash-4', name: 'iPad Pro M4 11"', price: 34900, oldPrice: 42900, discount: 19, shop: 'Lazada', rating: 4.9, reviews: 1560, sold: 320, image: '/placeholder.jpg' },
-  { id: 'flash-5', name: 'Dyson V12 Detect', price: 18900, oldPrice: 22900, discount: 17, shop: 'Shopee', rating: 4.8, reviews: 890, sold: 210, image: '/placeholder.jpg' },
-  { id: 'flash-6', name: 'Nintendo Switch OLED', price: 10900, oldPrice: 13900, discount: 22, shop: 'TikTok', rating: 4.7, reviews: 4560, sold: 670, image: '/placeholder.jpg' },
+  { id: 'flash-1', name: 'iPhone 15 Pro Max 256GB', price: 41900, oldPrice: 54900, discount: 24, shop: 'Shopee', rating: 4.9, reviews: 8560, sold: 1200, image: '/placeholder.png' },
+  { id: 'flash-2', name: 'MacBook Air M3 13"', price: 36900, oldPrice: 44900, discount: 18, shop: 'Lazada', rating: 4.8, reviews: 2340, sold: 450, image: '/placeholder.png' },
+  { id: 'flash-3', name: 'Sony WH-1000XM5', price: 8990, oldPrice: 12900, discount: 30, shop: 'Shopee', rating: 4.7, reviews: 3450, sold: 890, image: '/placeholder.png' },
+  { id: 'flash-4', name: 'iPad Pro M4 11"', price: 34900, oldPrice: 42900, discount: 19, shop: 'Lazada', rating: 4.9, reviews: 1560, sold: 320, image: '/placeholder.png' },
+  { id: 'flash-5', name: 'Dyson V12 Detect', price: 18900, oldPrice: 22900, discount: 17, shop: 'Shopee', rating: 4.8, reviews: 890, sold: 210, image: '/placeholder.png' },
+  { id: 'flash-6', name: 'Nintendo Switch OLED', price: 10900, oldPrice: 13900, discount: 22, shop: 'TikTok', rating: 4.7, reviews: 4560, sold: 670, image: '/placeholder.png' },
 ];
 
 // Mall / Official stores
@@ -58,18 +58,18 @@ const mallStores = [
 
 // Just for you products
 const fallbackProducts = [
-  { id: 'fallback-1', name: 'Anker Soundcore P20i หูฟัง TWS', price: 690, oldPrice: 1290, discount: 47, shop: 'Shopee', rating: 4.7, reviews: 1234, sold: 5600, image: '/placeholder.jpg' },
-  { id: 'fallback-2', name: 'iPhone 15 (128GB) สีใหม่', price: 27900, oldPrice: 31900, discount: 12, shop: 'Lazada', rating: 4.9, reviews: 8560, sold: 12000, image: '/placeholder.jpg' },
-  { id: 'fallback-3', name: 'Dyson V12 Detect Slim', price: 18900, oldPrice: 22900, discount: 17, shop: 'Shopee', rating: 4.8, reviews: 890, sold: 1200, image: '/placeholder.jpg' },
-  { id: 'fallback-4', name: 'Logitech G304 HERO Mouse', price: 890, oldPrice: 1390, discount: 36, shop: 'Lazada', rating: 4.6, reviews: 3450, sold: 8900, image: '/placeholder.jpg' },
-  { id: 'fallback-5', name: 'Samsung Galaxy Buds FE', price: 2990, oldPrice: 3990, discount: 25, shop: 'TikTok', rating: 4.5, reviews: 2340, sold: 4300, image: '/placeholder.jpg' },
-  { id: 'fallback-6', name: 'iPad Pro M4 11" 256GB WiFi', price: 34900, oldPrice: 38900, discount: 10, shop: 'Shopee', rating: 4.9, reviews: 1560, sold: 2100, image: '/placeholder.jpg' },
-  { id: 'fallback-7', name: 'Sony WF-1000XM5 หูฟัง ANC', price: 8990, oldPrice: 12900, discount: 30, shop: 'Lazada', rating: 4.8, reviews: 1670, sold: 3200, image: '/placeholder.jpg' },
-  { id: 'fallback-8', name: 'MacBook Air M3 13" 8GB/256GB', price: 36900, oldPrice: 44900, discount: 18, shop: 'Shopee', rating: 4.8, reviews: 2340, sold: 1800, image: '/placeholder.jpg' },
-  { id: 'fallback-9', name: 'Nintendo Switch OLED', price: 10900, oldPrice: 13900, discount: 22, shop: 'TikTok', rating: 4.7, reviews: 4560, sold: 6700, image: '/placeholder.jpg' },
-  { id: 'fallback-10', name: 'JBL Tune 230NC TWS หูฟัง', price: 1990, oldPrice: 3990, discount: 50, shop: 'Shopee', rating: 4.4, reviews: 892, sold: 3400, image: '/placeholder.jpg' },
-  { id: 'fallback-11', name: 'Logitech G Pro X Superlight 2', price: 4590, oldPrice: 5990, discount: 23, shop: 'Lazada', rating: 4.9, reviews: 1230, sold: 2100, image: '/placeholder.jpg' },
-  { id: 'fallback-12', name: 'AirPods Pro 2 (USB-C)', price: 7990, oldPrice: 9990, discount: 20, shop: 'Shopee', rating: 4.8, reviews: 5670, sold: 12000, image: '/placeholder.jpg' },
+  { id: 'fallback-1', name: 'Anker Soundcore P20i หูฟัง TWS', price: 690, oldPrice: 1290, discount: 47, shop: 'Shopee', rating: 4.7, reviews: 1234, sold: 5600, image: '/placeholder.png' },
+  { id: 'fallback-2', name: 'iPhone 15 (128GB) สีใหม่', price: 27900, oldPrice: 31900, discount: 12, shop: 'Lazada', rating: 4.9, reviews: 8560, sold: 12000, image: '/placeholder.png' },
+  { id: 'fallback-3', name: 'Dyson V12 Detect Slim', price: 18900, oldPrice: 22900, discount: 17, shop: 'Shopee', rating: 4.8, reviews: 890, sold: 1200, image: '/placeholder.png' },
+  { id: 'fallback-4', name: 'Logitech G304 HERO Mouse', price: 890, oldPrice: 1390, discount: 36, shop: 'Lazada', rating: 4.6, reviews: 3450, sold: 8900, image: '/placeholder.png' },
+  { id: 'fallback-5', name: 'Samsung Galaxy Buds FE', price: 2990, oldPrice: 3990, discount: 25, shop: 'TikTok', rating: 4.5, reviews: 2340, sold: 4300, image: '/placeholder.png' },
+  { id: 'fallback-6', name: 'iPad Pro M4 11" 256GB WiFi', price: 34900, oldPrice: 38900, discount: 10, shop: 'Shopee', rating: 4.9, reviews: 1560, sold: 2100, image: '/placeholder.png' },
+  { id: 'fallback-7', name: 'Sony WF-1000XM5 หูฟัง ANC', price: 8990, oldPrice: 12900, discount: 30, shop: 'Lazada', rating: 4.8, reviews: 1670, sold: 3200, image: '/placeholder.png' },
+  { id: 'fallback-8', name: 'MacBook Air M3 13" 8GB/256GB', price: 36900, oldPrice: 44900, discount: 18, shop: 'Shopee', rating: 4.8, reviews: 2340, sold: 1800, image: '/placeholder.png' },
+  { id: 'fallback-9', name: 'Nintendo Switch OLED', price: 10900, oldPrice: 13900, discount: 22, shop: 'TikTok', rating: 4.7, reviews: 4560, sold: 6700, image: '/placeholder.png' },
+  { id: 'fallback-10', name: 'JBL Tune 230NC TWS หูฟัง', price: 1990, oldPrice: 3990, discount: 50, shop: 'Shopee', rating: 4.4, reviews: 892, sold: 3400, image: '/placeholder.png' },
+  { id: 'fallback-11', name: 'Logitech G Pro X Superlight 2', price: 4590, oldPrice: 5990, discount: 23, shop: 'Lazada', rating: 4.9, reviews: 1230, sold: 2100, image: '/placeholder.png' },
+  { id: 'fallback-12', name: 'AirPods Pro 2 (USB-C)', price: 7990, oldPrice: 9990, discount: 20, shop: 'Shopee', rating: 4.8, reviews: 5670, sold: 12000, image: '/placeholder.png' },
 ];
 
 interface Product {
@@ -228,7 +228,7 @@ function FlashSaleSection() {
           {flashSaleProducts.map((p) => (
             <a key={p.id} href={`/product/${p.id}`} className="shrink-0 w-[150px] bg-gray-50 rounded-xl p-2.5 hover:shadow-md transition cursor-pointer block border border-gray-100 hover:border-red-200">
               <div className="relative mb-2">
-                <img src={p.image} alt={p.name} className="w-full h-24 object-cover rounded-lg" onError={(e) => { e.currentTarget.src = '/placeholder.jpg'; }} />
+                <img src={p.image} alt={p.name} className="w-full h-24 object-cover rounded-lg" onError={(e) => { e.currentTarget.src = '/placeholder.png'; }} />
                 <span className="absolute top-1 left-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">-{p.discount}%</span>
               </div>
               <h3 className="font-bold text-[11px] text-gray-800 line-clamp-2 mb-1 leading-tight">{p.name}</h3>

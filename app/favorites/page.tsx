@@ -18,14 +18,14 @@ export default function FavoritesPage() {
         <img src="/logo.png" alt="deela logo" className="h-16 mb-8 object-contain" />
         <nav className="space-y-1 mb-8">
           {[
-            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.jpg' },
-            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.jpg' },
-            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.jpg' },
-            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.jpg' },
-            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.jpg' },
-            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.jpg' },
-            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.jpg' },
-            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.jpg', active: true },
+            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.png' },
+            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.png' },
+            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.png' },
+            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.png' },
+            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.png' },
+            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.png' },
+            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.png' },
+            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.png', active: true },
           ].map((item) => (
             <a key={item.name} href={item.href} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition font-medium text-sm ${item.active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
               <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />
@@ -42,7 +42,7 @@ export default function FavoritesPage() {
           </div>
         </div>
         <div className="bg-violet-50 rounded-2xl p-3 flex items-center gap-3">
-          <img src="/placeholder.jpg" alt="" className="w-10 h-10 rounded-full object-cover" />
+          <img src="/placeholder.png" alt="" className="w-10 h-10 rounded-full object-cover" />
           <div>
             <div className="font-semibold text-sm">Nattawat</div>
             <div className="text-xs text-gray-500">Premium</div>
@@ -66,7 +66,7 @@ export default function FavoritesPage() {
             {favorites.map((item) => (
               <div key={item.id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer">
                 <div className="relative">
-                  <img src="/placeholder.jpg" alt={item.name} className="w-full h-32 object-cover" />
+                  <img src="/placeholder.png" alt={item.name} className="w-full h-32 object-cover" />
                   <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded">-{item.discount}%</span>
                   <button className="absolute top-2 right-2 w-7 h-7 bg-white rounded-full shadow flex items-center justify-center text-red-500">❤️</button>
                 </div>
