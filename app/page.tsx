@@ -48,10 +48,9 @@ const flashSaleProducts = [
 
 // Mall / Official stores
 const mallStores = [
-  { name: 'Apple Authorized', logo: '/logo_apple.png', tag: 'Official' },
+  { name: 'Apple Authorized', logo: '/logo_apple.svg', tag: 'Official' },
   { name: 'Samsung Official', logo: '/logo_samsung.png', tag: 'Official' },
-  { name: 'Sony Thailand', logo: '/logo_sony.png', tag: 'Official' },
-  { name: 'Logitech Official', logo: '/logo_logitech.png', tag: 'Official' },
+  { name: 'Logitech Official', logo: '/logo_logitech.svg', tag: 'Official' },
   { name: 'Anker Official', logo: '/logo_anker.png', tag: 'Official' },
   { name: 'Dyson Official', logo: '/logo_dyson.png', tag: 'Official' },
 ];
@@ -274,10 +273,9 @@ function MallSection() {
 
 function PopularBrands() {
   const brands = [
-    { name: 'Apple', logo: '/logo_apple.png' },
+    { name: 'Apple', logo: '/logo_apple.svg' },
     { name: 'Samsung', logo: '/logo_samsung.png' },
-    { name: 'Sony', logo: '/logo_sony.png' },
-    { name: 'Logitech', logo: '/logo_logitech.png' },
+    { name: 'Logitech', logo: '/logo_logitech.svg' },
     { name: 'Anker', logo: '/logo_anker.png' },
     { name: 'Dyson', logo: '/logo_dyson.png' },
     { name: 'JBL', logo: '/logo_jbl.png' },
