@@ -24,16 +24,16 @@ const topCategories = [
 
 // Category icons for the horizontal row
 const categoryIcons = [
-  { name: 'มือถือ',    icon: '/icons/mobile.png',    href: '/categories?cat=mobile',    bg: 'bg-gray-900' },
-  { name: 'คอมพิวเตอร์', icon: '/icons/computer.png',  href: '/categories?cat=computer',  bg: 'bg-gray-800' },
-  { name: 'หูฟัง',     icon: '/icons/audio.png',     href: '/categories?cat=audio',     bg: 'bg-sky-500' },
-  { name: 'เกมมิ่ง',   icon: '/icons/auto.png',      href: '/categories?cat=gaming',   bg: 'bg-violet-600' },
-  { name: 'เครื่องใช้', icon: '/icons/home_new.png',  href: '/categories?cat=home',     bg: 'bg-gray-700' },
-  { name: 'สุขภาพ',    icon: '/icons/beauty.png',    href: '/categories?cat=beauty',   bg: 'bg-pink-500' },
-  { name: 'แม่ & เด็ก', icon: '/icons/mother.png',    href: '/categories?cat=mother',   bg: 'bg-pink-400' },
-  { name: 'กีฬา',      icon: '/icons/sports.png',    href: '/categories?cat=sports',   bg: 'bg-green-600' },
-  { name: 'ยานยนต์',   icon: '/icons/icon3.png',     href: '/categories?cat=auto',     bg: 'bg-blue-700' },
-  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.png',       href: '/categories?cat=pet',      bg: 'bg-amber-500' },
+  { name: 'มือถือ',    icon: '/icons/mobile.png',    href: '/categories?cat=mobile',    bg: 'bg-white' },
+  { name: 'คอมพิวเตอร์', icon: '/icons/computer.png',  href: '/categories?cat=computer',  bg: 'bg-white' },
+  { name: 'หูฟัง',     icon: '/icons/audio.png',     href: '/categories?cat=audio',     bg: 'bg-white' },
+  { name: 'เกมมิ่ง',   icon: '/icons/auto.png',      href: '/categories?cat=gaming',   bg: 'bg-white' },
+  { name: 'เครื่องใช้', icon: '/icons/home_new.png',  href: '/categories?cat=home',     bg: 'bg-white' },
+  { name: 'สุขภาพ',    icon: '/icons/beauty.png',    href: '/categories?cat=beauty',   bg: 'bg-white' },
+  { name: 'แม่ & เด็ก', icon: '/icons/mother.png',    href: '/categories?cat=mother',   bg: 'bg-white' },
+  { name: 'กีฬา',      icon: '/icons/sports.png',    href: '/categories?cat=sports',   bg: 'bg-white' },
+  { name: 'ยานยนต์',   icon: '/icons/icon3.png',     href: '/categories?cat=auto',     bg: 'bg-white' },
+  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.png',       href: '/categories?cat=pet',      bg: 'bg-white' },
 ];
 
 // Flash sale products
