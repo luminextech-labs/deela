@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import MobileSidebar from './components/MobileSidebar';
 import ProductCard from './components/ProductCard';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://deela-production.up.railway.app';
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://deela-foa0.onrender.com').replace(/\/$/, '');
 
 // Full category hierarchy like Lazada
 const topCategories = [
@@ -308,7 +308,7 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch(`${API_BASE}/api/products`);
+        const res = await fetch(`${API_BASE}/api/products/`);
         if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
         setProducts(data.slice(0, 24));

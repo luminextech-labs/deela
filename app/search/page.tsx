@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import MobileSidebar from '../components/MobileSidebar';
 import ProductCard from '../components/ProductCard';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://deela-production.up.railway.app';
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://deela-foa0.onrender.com').replace(/\/$/, '');
 
 const filterCategories = [
   { name: 'หูฟังบลูทูธ', count: 856 },
@@ -67,7 +67,7 @@ export default function SearchPage() {
 
     async function fetchProducts() {
       try {
-        const url = q ? `${API_BASE}/api/products/search?q=${encodeURIComponent(q)}` : `${API_BASE}/api/products`;
+        const url = q ? `${API_BASE}/api/products/search?q=${encodeURIComponent(q)}` : `${API_BASE}/api/products/`;
         const res = await fetch(url);
         if (!res.ok) throw new Error('Failed');
         const data = await res.json();
