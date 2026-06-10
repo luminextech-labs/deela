@@ -3,19 +3,19 @@
 import { useState } from 'react';
 
 const menuItems = [
-  { name: 'ข้อมูลส่วนตัว', icon: '/icons/menu_profile.svg' },
-  { name: 'ที่อยู่จัดส่ง', icon: '/icons/menu_location.svg' },
-  { name: 'การชำระเงิน', icon: '/icons/menu_payment.svg' },
-  { name: 'ประวัติคำสั่งซื้อ', icon: '/icons/menu_order.svg' },
-  { name: 'คูปองของฉัน', icon: '/icons/menu_coupon.svg' },
-  { name: 'สินค้าที่ดูล่าสุด', icon: '/icons/menu_history2.svg' },
+  { name: 'ข้อมูลส่วนตัว', icon: '/icons/menu_profile.png' },
+  { name: 'ที่อยู่จัดส่ง', icon: '/icons/menu_location.png' },
+  { name: 'การชำระเงิน', icon: '/icons/menu_payment.png' },
+  { name: 'ประวัติคำสั่งซื้อ', icon: '/icons/menu_order.png' },
+  { name: 'คูปองของฉัน', icon: '/icons/menu_coupon.png' },
+  { name: 'สินค้าที่ดูล่าสุด', icon: '/icons/menu_history2.png' },
 ];
 
 const bottomItems = [
-  { name: 'นโยบาย', icon: '/icons/menu_policy.svg' },
-  { name: 'การตั้งค่า', icon: '/icons/menu_settings.svg' },
-  { name: 'ช่วยเหลือ & ติดต่อเรา', icon: '/icons/menu_help.svg' },
-  { name: 'ออกจากระบบ', icon: '/icons/menu_logout.svg' },
+  { name: 'นโยบาย', icon: '/icons/menu_policy.png' },
+  { name: 'การตั้งค่า', icon: '/icons/menu_settings.png' },
+  { name: 'ช่วยเหลือ & ติดต่อเรา', icon: '/icons/menu_help.png' },
+  { name: 'ออกจากระบบ', icon: '/icons/menu_logout.png' },
 ];
 
 const bottomNavItems = [
@@ -23,7 +23,7 @@ const bottomNavItems = [
   { name: 'ค้นหา', href: '/search', icon: '🔍' },
   { name: 'รายการโปรด', href: '/favorites', icon: '❤️' },
   { name: 'แจ้งเตือน', href: '/alerts', icon: '🔔' },
-  { name: 'บัญชี', href: '/profile', icon: '/icons/menu_profile.svg', active: true },
+  { name: 'บัญชี', href: '/profile', icon: '/icons/menu_profile.png', active: true },
 ];
 
 const categories = ['อิเล็กทรอนิกส์', 'มือถือ & แก็ดเจ็ต', 'คอมพิวเตอร์', 'หูฟัง & เสียง', 'เกมมิ่งเกียร์', 'บ้าน & ไลฟ์สไตล์', 'สุขภาพ & ความงาม', 'แฟชั่น'];
@@ -41,14 +41,14 @@ export default function ProfilePage() {
 
         <nav className="space-y-1 mb-8">
           {[
-            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.svg', active: true },
-            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.svg' },
-            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.svg' },
-            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.svg' },
-            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.svg' },
-            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.svg' },
-            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.svg' },
-            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.svg' },
+            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.png', active: true },
+            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.png' },
+            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.png' },
+            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.png' },
+            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.png' },
+            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.png' },
+            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.png' },
+            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.png' },
           ].map((item) => (
             <a key={item.name} href={item.href} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition font-medium text-sm ${item.active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
               <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />

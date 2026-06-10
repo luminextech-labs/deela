@@ -8,32 +8,32 @@ const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://deela-foa0.onrende
 
 // Full category hierarchy like Lazada
 const topCategories = [
-  { name: 'อิเล็กทรอนิกส์', icon: '/icons/computer.svg', sub: ['มือถือ', 'แล็ปท็อป', 'กล้อง', 'จอมอนิเตอร์', 'พริ้นเตอร์'] },
-  { name: 'มือถือ & แก็ดเจ็ต', icon: '/icons/mobile.svg', sub: ['สมาร์ทโฟน', 'แท็บเล็ต', 'สมาร์ทวอทช์', 'หูฟัง', 'แบตเตอร์สำรอง'] },
-  { name: 'คอมพิวเตอร์', icon: '/icons/computer.svg', sub: ['เดสก์ท็อป', 'โน้ตบุ๊ก', 'คีย์บอร์ด', 'เมาส์', 'อุปกรณ์เสริม'] },
-  { name: 'หูฟัง & เสียง', icon: '/icons/audio.svg', sub: ['หูฟังบลูทูธ', 'หูฟังแบบเกม', 'ลำโพง', 'Soundbar', 'ไมค์'] },
-  { name: 'เกมมิ่งเกียร์', icon: '/icons/auto.svg', sub: ['คอนโซล', 'เกมพีซี', 'เมาส์เกม', 'คีย์บอร์ดเกม', 'หูฟังเกม'] },
-  { name: 'เครื่องใช้ในบ้าน', icon: '/icons/home.svg', sub: ['เครื่องดูดฝุ่น', 'เครื่องปรับอากาศ', 'พัดลม', 'กระทะไฟฟ้า', 'เครื่องชงกาแฟ'] },
-  { name: 'สุขภาพ & ความงาม', icon: '/icons/beauty.svg', sub: ['สกินแคร์', 'เครื่องมือความงาม', 'วิตามิน', 'อาหารเสริม'] },
-  { name: 'แม่ & เด็ก', icon: '/icons/mother.svg', sub: ['ของเล่น', 'เสื้อผ้าเด็ก', 'รถเข็น', 'อุปกรณ์ให้นม'] },
-  { name: 'กีฬา & กิจกรรม', icon: '/icons/sports.svg', sub: ['รองเท้าวิ่ง', 'ฟิตเนส', 'จักรยาน', 'อุปกรณ์เล่นกีฬา'] },
-  { name: 'ยานยนต์', icon: '/icons/auto.svg', sub: ['อุปกรณ์ตกแต่ง', 'กล้องติดรถ', 'เครื่องเสียงรถยนต์'] },
-  { name: 'สัตว์เลี้ยง', icon: '/icons/pets.svg', sub: ['อาหารสัตว์', 'เตียงสัตว์', 'ของเล่นสัตว์'] },
-  { name: 'หนังสือ & สื่อ', icon: '/icons/books.svg', sub: ['นิยาย', 'หนังสือเรียน', 'วารสาร'] },
+  { name: 'อิเล็กทรอนิกส์', icon: '/icons/computer.png', sub: ['มือถือ', 'แล็ปท็อป', 'กล้อง', 'จอมอนิเตอร์', 'พริ้นเตอร์'] },
+  { name: 'มือถือ & แก็ดเจ็ต', icon: '/icons/mobile.png', sub: ['สมาร์ทโฟน', 'แท็บเล็ต', 'สมาร์ทวอทช์', 'หูฟัง', 'แบตเตอร์สำรอง'] },
+  { name: 'คอมพิวเตอร์', icon: '/icons/computer.png', sub: ['เดสก์ท็อป', 'โน้ตบุ๊ก', 'คีย์บอร์ด', 'เมาส์', 'อุปกรณ์เสริม'] },
+  { name: 'หูฟัง & เสียง', icon: '/icons/audio.png', sub: ['หูฟังบลูทูธ', 'หูฟังแบบเกม', 'ลำโพง', 'Soundbar', 'ไมค์'] },
+  { name: 'เกมมิ่งเกียร์', icon: '/icons/auto.png', sub: ['คอนโซล', 'เกมพีซี', 'เมาส์เกม', 'คีย์บอร์ดเกม', 'หูฟังเกม'] },
+  { name: 'เครื่องใช้ในบ้าน', icon: '/icons/home.png', sub: ['เครื่องดูดฝุ่น', 'เครื่องปรับอากาศ', 'พัดลม', 'กระทะไฟฟ้า', 'เครื่องชงกาแฟ'] },
+  { name: 'สุขภาพ & ความงาม', icon: '/icons/beauty.png', sub: ['สกินแคร์', 'เครื่องมือความงาม', 'วิตามิน', 'อาหารเสริม'] },
+  { name: 'แม่ & เด็ก', icon: '/icons/mother.png', sub: ['ของเล่น', 'เสื้อผ้าเด็ก', 'รถเข็น', 'อุปกรณ์ให้นม'] },
+  { name: 'กีฬา & กิจกรรม', icon: '/icons/sports.png', sub: ['รองเท้าวิ่ง', 'ฟิตเนส', 'จักรยาน', 'อุปกรณ์เล่นกีฬา'] },
+  { name: 'ยานยนต์', icon: '/icons/auto.png', sub: ['อุปกรณ์ตกแต่ง', 'กล้องติดรถ', 'เครื่องเสียงรถยนต์'] },
+  { name: 'สัตว์เลี้ยง', icon: '/icons/pets.png', sub: ['อาหารสัตว์', 'เตียงสัตว์', 'ของเล่นสัตว์'] },
+  { name: 'หนังสือ & สื่อ', icon: '/icons/books.png', sub: ['นิยาย', 'หนังสือเรียน', 'วารสาร'] },
 ];
 
 // Category icons for the horizontal row
 const categoryIcons = [
-  { name: 'มือถือ', icon: '/icons/mobile.svg', href: '/categories?cat=mobile' },
-  { name: 'คอมพิวเตอร์', icon: '/icons/computer.svg', href: '/categories?cat=computer' },
-  { name: 'หูฟัง', icon: '/icons/audio.svg', href: '/categories?cat=audio' },
-  { name: 'เกมมิ่ง', icon: '/icons/auto.svg', href: '/categories?cat=gaming' },
-  { name: 'เครื่องใช้', icon: '/icons/home_new.svg', href: '/categories?cat=home' },
-  { name: 'สุขภาพ', icon: '/icons/beauty.svg', href: '/categories?cat=beauty' },
-  { name: 'แม่ & เด็ก', icon: '/icons/mother.svg', href: '/categories?cat=mother' },
-  { name: 'กีฬา', icon: '/icons/sports.svg', href: '/categories?cat=sports' },
-  { name: 'ยานยนต์', icon: '/icons/icon3.svg', href: '/categories?cat=auto' },
-  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.svg', href: '/categories?cat=pet' },
+  { name: 'มือถือ', icon: '/icons/mobile.png', href: '/categories?cat=mobile' },
+  { name: 'คอมพิวเตอร์', icon: '/icons/computer.png', href: '/categories?cat=computer' },
+  { name: 'หูฟัง', icon: '/icons/audio.png', href: '/categories?cat=audio' },
+  { name: 'เกมมิ่ง', icon: '/icons/auto.png', href: '/categories?cat=gaming' },
+  { name: 'เครื่องใช้', icon: '/icons/home_new.png', href: '/categories?cat=home' },
+  { name: 'สุขภาพ', icon: '/icons/beauty.png', href: '/categories?cat=beauty' },
+  { name: 'แม่ & เด็ก', icon: '/icons/mother.png', href: '/categories?cat=mother' },
+  { name: 'กีฬา', icon: '/icons/sports.png', href: '/categories?cat=sports' },
+  { name: 'ยานยนต์', icon: '/icons/icon3.png', href: '/categories?cat=auto' },
+  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.png', href: '/categories?cat=pet' },
 ];
 
 // Flash sale products

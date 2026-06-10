@@ -7,7 +7,7 @@ import ProductCard from '../components/ProductCard';
 const categoryData = [
   {
     name: 'มือถือ & แก็ดเจ็ต',
-    icon: '/icons/mobile.svg',
+    icon: '/icons/mobile.png',
     color: 'from-blue-500 to-blue-600',
     sub: ['สมาร์ทโฟน', 'แท็บเล็ต', 'สมาร์ทวอทช์', 'หูฟัง', 'แบตเตอร์สำรอง', 'เคสมือถือ', 'ฟิล์มกระจก', 'สายชาร์จ'],
     popular: ['iPhone 16', 'Samsung S25', 'Xiaomi 14', 'OPPO Find X8', 'vivo X200'],
@@ -15,7 +15,7 @@ const categoryData = [
   },
   {
     name: 'คอมพิวเตอร์',
-    icon: '/icons/computer.svg',
+    icon: '/icons/computer.png',
     color: 'from-violet-500 to-violet-600',
     sub: ['โน้ตบุ๊ก', 'PC / คอมเดสก์', 'จอมอนิเตอร์', 'คีย์บอร์ด', 'เมาส์', 'สิ่งของต่อพีซี', 'เครื่องพิมพ์', 'อัพเกรด PC'],
     popular: ['MacBook Pro M4', 'ThinkPad X1', 'Dell XPS', 'ASUS ROG', 'MSI Gaming'],
@@ -23,7 +23,7 @@ const categoryData = [
   },
   {
     name: 'หูฟัง & เสียง',
-    icon: '/icons/audio.svg',
+    icon: '/icons/audio.png',
     color: 'from-pink-500 to-pink-600',
     sub: ['หูฟังบลูทูธ TWS', 'หูฟังแบบเกม', 'หูฟังครอบหู', 'ลำโพงบลูทูธ', 'Soundbar', 'ไมค์', 'DAC/Amplifier'],
     popular: ['AirPods Pro 2', 'Sony WF-1000XM5', 'Samsung Buds2 Pro', 'JBL Tune', 'Anker'],
@@ -31,7 +31,7 @@ const categoryData = [
   },
   {
     name: 'เกมมิ่งเกียร์',
-    icon: '/icons/auto.svg',
+    icon: '/icons/auto.png',
     color: 'from-green-500 to-green-600',
     sub: ['คอนโซล', 'เกม PC', 'เมาส์เกม', 'คีย์บอร์ดเกม', 'หูฟังเกม', 'จอเล่นเกม', 'เกมพอร์ตี้'],
     popular: ['PlayStation 5', 'Nintendo Switch OLED', 'Xbox Series X', 'Steam Deck', 'ROG Ally'],
@@ -39,7 +39,7 @@ const categoryData = [
   },
   {
     name: 'เครื่องใช้ในบ้าน',
-    icon: '/icons/home_new.svg',
+    icon: '/icons/home_new.png',
     color: 'from-teal-500 to-teal-600',
     sub: ['เครื่องดูดฝุ่น', 'เครื่องปรับอากาศ', 'พัดลม', 'กระทะไฟฟ้า', 'เครื่องชงกาแฟ', 'หุงข้าว', 'เครื่องเป่าผม'],
     popular: ['Dyson V15', 'Electrolux', 'Xiaomi Vacuum', 'Phillips Airfryer', 'Coway'],
@@ -47,7 +47,7 @@ const categoryData = [
   },
   {
     name: 'สุขภาพ & ความงาม',
-    icon: '/icons/beauty.svg',
+    icon: '/icons/beauty.png',
     color: 'from-rose-500 to-rose-600',
     sub: ['สกินแคร์', 'เครื่องมือความงาม', 'วิตามิน', 'อาหารเสริม', 'มาส์กหน้า', 'น้ำหอม', 'เครื่องสำอาง'],
     popular: ['SK-II', 'La Mer', 'The Ordinary', 'Olay', 'Sulwhasoo'],
@@ -55,7 +55,7 @@ const categoryData = [
   },
   {
     name: 'แม่ & เด็ก',
-    icon: '/icons/mother.svg',
+    icon: '/icons/mother.png',
     color: 'from-amber-500 to-amber-600',
     sub: ['ของเล่นเด็ก', 'เสื้อผ้าเด็ก', 'รถเข็น', 'อุปกรณ์ให้นม', 'เป้ออ่อน', 'ของใช้เบบี๋'],
     popular: ['Huggies', 'Pampers', 'Medela', 'Chicco', 'Aprica'],
@@ -63,7 +63,7 @@ const categoryData = [
   },
   {
     name: 'กีฬา & กิจกรรม',
-    icon: '/icons/sports.svg',
+    icon: '/icons/sports.png',
     color: 'from-emerald-500 to-emerald-600',
     sub: ['รองเท้าวิ่ง', 'ฟิตเนส', 'จักรยาน', 'อุปกรณ์เล่นกีฬา', 'เสื้อผ้ากีฬา', 'กระเป๋า', 'นาฬิกา'],
     popular: ['Nike', 'Adidas', 'Under Armour', 'Asics', 'Puma'],
@@ -71,7 +71,7 @@ const categoryData = [
   },
   {
     name: 'ยานยนต์',
-    icon: '/icons/icon3.svg',
+    icon: '/icons/icon3.png',
     color: 'from-slate-500 to-slate-600',
     sub: ['อุปกรณ์ตกแต่ง', 'กล้องติดรถ', 'เครื่องเสียงรถยนต์', 'ยางรถยนต์', 'น้ำมันเครื่อง', 'เบาะรถ'],
     popular: ['JBL Car', 'Pioneer', 'Michelin', 'Castrol', '3M'],
@@ -79,7 +79,7 @@ const categoryData = [
   },
   {
     name: 'สัตว์เลี้ยง',
-    icon: '/icons/pet.svg',
+    icon: '/icons/pet.png',
     color: 'from-orange-500 to-orange-600',
     sub: ['อาหารสุนัข', 'อาหารแมว', 'เตียงสัตว์', 'ของเล่นสัตว์', 'อุปกรณ์ดูแล', 'ปลอกคอ', 'กระเป๋าใส่สัตว์'],
     popular: ['Royal Canin', "Hill's", 'Whiskas', 'Pedigree', 'Frontline'],
@@ -87,7 +87,7 @@ const categoryData = [
   },
   {
     name: 'หนังสือ & สื่อ',
-    icon: '/icons/books.svg',
+    icon: '/icons/books.png',
     color: 'from-indigo-500 to-indigo-600',
     sub: ['นิยาย', 'หนังสือเรียน', 'วารสาร', 'การ์ตูน', 'เพลง', 'ภาพยนตร์', 'ซอฟต์แวร์'],
     popular: ['Harry Potter', 'One Piece', 'Marvel', 'DC Comics', 'K-Pop'],
@@ -95,7 +95,7 @@ const categoryData = [
   },
   {
     name: 'แฟชั่น',
-    icon: '/icons/icon5.svg',
+    icon: '/icons/icon5.png',
     color: 'from-fuchsia-500 to-fuchsia-600',
     sub: ['เสื้อผ้าผู้หญิง', 'เสื้อผ้าผู้ชาย', 'รองเท้า', 'กระเป๋า', 'นาฬิกา', 'เครื่องประดับ'],
     popular: ['Zara', 'H&M', 'Uniqlo', 'Adidas', 'Nike'],
@@ -123,14 +123,14 @@ export default function CategoriesPage() {
         <img src="/logo.png" alt="deela logo" className="h-14 mb-6 object-contain" />
         <nav className="space-y-0.5 mb-6">
           {[
-            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.svg' },
-            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.svg' },
-            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.svg', active: true },
-            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.svg' },
-            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.svg' },
-            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.svg' },
-            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.svg' },
-            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.svg' },
+            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.png' },
+            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.png' },
+            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.png', active: true },
+            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.png' },
+            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.png' },
+            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.png' },
+            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.png' },
+            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.png' },
           ].map((item) => (
             <a key={item.name} href={item.href} className={`flex items-center gap-2 px-3 py-2.5 rounded-xl transition font-medium text-sm ${(item as any).active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
               <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />

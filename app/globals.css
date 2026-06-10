@@ -44,8 +44,4 @@
   .group-hover\:scale-105:hover {
     transform: scale(1.05);
   }
-  /* SVG icons via img - inherit currentColor */
-  img[src*="/icons/"] {
-    color: #6366F1;
-  }
 }

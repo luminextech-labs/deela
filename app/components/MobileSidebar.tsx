@@ -1,18 +1,16 @@
 'use client';
 
-import { useState } from 'react';
-
 const categories = ['อิเล็กทรอนิกส์', 'มือถือ & แก็ดเจ็ต', 'คอมพิวเตอร์', 'หูฟัง & เสียง', 'เกมมิ่งเกียร์', 'บ้าน & ไลฟ์สไตล์', 'สุขภาพ & ความงาม', 'แฟชั่น'];
 
 const navItems = [
-  { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.svg' },
-  { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.svg' },
-  { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.svg' },
-  { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.svg' },
-  { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.svg' },
-  { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.svg' },
-  { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.svg' },
-  { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.svg' },
+  { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.png' },
+  { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.png' },
+  { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.png' },
+  { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.png' },
+  { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.png' },
+  { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.png' },
+  { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.png' },
+  { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.png' },
 ];
 
 interface MobileSidebarProps {
@@ -21,13 +19,12 @@ interface MobileSidebarProps {
   activePage?: string;
 }
 
-function NavIcon({ src, active }: { src: string; active?: boolean }) {
+function NavIcon({ src }: { src: string }) {
   return (
     <img 
       src={src} 
       alt="" 
-      className="w-5 h-5 object-contain"
-      style={{ color: active ? '#7C3AED' : '#818184' }}
+      className="w-5 h-5 object-contain shrink-0"
     />
   );
 }
@@ -50,7 +47,7 @@ export default function MobileSidebar({ isOpen, onClose, activePage }: MobileSid
               onClick={onClose}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl transition font-medium ${item.href === activePage || (activePage === '/' && item.href === '/') ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}
             >
-              <NavIcon src={item.icon} active={item.href === activePage || (activePage === '/' && item.href === '/')} />
+              <NavIcon src={item.icon} />
               <span>{item.name}</span>
             </a>
           ))}

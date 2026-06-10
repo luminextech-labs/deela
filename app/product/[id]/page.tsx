@@ -47,14 +47,14 @@ export default function ProductPage() {
         <img src="/logo.png" alt="deela logo" className="h-16 mb-8 object-contain" />
         <nav className="space-y-1 mb-8">
           {([
-            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.svg', active: false },
-            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.svg', active: false },
-            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.svg', active: false },
-            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.svg', active: false },
-            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.svg', active: false },
-            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.svg', active: false },
-            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.svg', active: false },
-            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.svg', active: false },
+            { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.png', active: false },
+            { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.png', active: false },
+            { name: 'หมวดหมู่', href: '/categories', icon: '/icons/icon_categories.png', active: false },
+            { name: 'สินค้ายอดนิยม', href: '/popular', icon: '/icons/icon_popular.png', active: false },
+            { name: 'เปรียบเทียบ', href: '/compare', icon: '/icons/icon_compare.png', active: false },
+            { name: 'ติดตามราคา', href: '/alerts', icon: '/icons/icon_alerts.png', active: false },
+            { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.png', active: false },
+            { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.png', active: false },
           ] as {name:string;href:string;icon:string;active:boolean}[]).map((item) => (
             <a key={item.name} href={item.href} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition font-medium text-sm ${item.active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
               <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />
