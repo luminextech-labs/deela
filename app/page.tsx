@@ -275,8 +275,8 @@ function PopularBrands() {
   const brands = [
     { name: 'Apple',    logo: '/logo_apple.svg',    bg: 'bg-white' },      // Apple: white
     { name: 'Samsung',  logo: '/logo_samsung.png',  bg: 'bg-white' },      // Samsung: white
-    { name: 'Logitech',logo: '/logo_logitech.svg', bg: 'bg-sky-500' },     // Logitech: sky blue
-    { name: 'Anker',    logo: '/logo_anker.png',    bg: 'bg-gray-800' },    // Anker: dark
+    { name: 'Logitech',logo: '/logo_logitech.svg', bg: 'bg-white' },     // Logitech: white
+    { name: 'Anker',    logo: '/logo_anker.png',    bg: 'bg-white' },       // Anker: white
     { name: 'Dyson',    logo: '/logo_dyson.png',    bg: 'bg-white' },       // Dyson: white
     { name: 'JBL',      logo: '/logo_jbl.png',      bg: 'bg-orange-500' },  // JBL: orange
     { name: 'Nintendo', logo: '/logo_nintendo.png', bg: 'bg-red-600' },     // Nintendo: red
