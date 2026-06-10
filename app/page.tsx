@@ -366,24 +366,34 @@ export default function HomePage() {
         <div className="rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-500 p-6 lg:p-8 mb-4 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
-          {/* Hero Scrolling Text */}
-          <div className="overflow-hidden relative z-10 mb-3">
-            <div className="flex gap-6 animate-marquee whitespace-nowrap">
-              <span className="text-2xl lg:text-4xl font-black text-white">ค้นหาของที่ใช่</span>
-              <span className="text-2xl lg:text-4xl font-black text-yellow-300">•</span>
-              <span className="text-2xl lg:text-4xl font-black text-white">ในราคาที่คุ้มที่สุด</span>
-              <span className="text-2xl lg:text-4xl font-black text-yellow-300">•</span>
-              <span className="text-2xl lg:text-4xl font-black text-white">เปรียบเทียบ 3 ร้าน</span>
-              <span className="text-2xl lg:text-4xl font-black text-yellow-300">•</span>
-              <span className="text-2xl lg:text-4xl font-black text-white">ราคาต่ำสุด</span>
-              <span className="text-2xl lg:text-4xl font-black text-yellow-300">•</span>
-              <span className="text-2xl lg:text-4xl font-black text-white">ฟรี!</span>
-            </div>
-          </div>
+
+          {/* Headline */}
+          <h2 className="text-2xl lg:text-4xl font-black text-white leading-tight mb-1 relative z-10">ค้นหาของที่ใช่<br />ในราคาที่คุ้มที่สุด</h2>
           <p className="text-white/80 text-sm mb-4 relative z-10">เปรียบเทียบราคาจาก Shopee, Lazada และ TikTok Shop</p>
-          <div className="relative z-10 flex gap-2 max-w-md">
-            <input placeholder="ลองค้นหา เช่น iPhone 15, MacBook..." className="flex-1 bg-white rounded-xl px-4 py-2.5 text-sm text-black outline-none shadow-lg" />
-            <button className="bg-white text-violet-600 px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg">🔍</button>
+
+          {/* 2 Search Boxes - Auto Scroll */}
+          <div className="relative z-10 overflow-hidden">
+            <div className="flex gap-3 animate-marquee-slow">
+              {/* Set 1 */}
+              <div className="shrink-0 flex gap-2">
+                <input placeholder="ลองค้นหา เช่น iPhone 15..." className="w-52 bg-white rounded-xl px-4 py-2.5 text-sm text-black outline-none shadow-lg" />
+                <button className="bg-white text-violet-600 px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg">🔍</button>
+              </div>
+              {/* Set 2 */}
+              <div className="shrink-0 flex gap-2">
+                <input placeholder="หูฟัง, แล็ปท็อป, สมาร์ทโฟน..." className="w-52 bg-white rounded-xl px-4 py-2.5 text-sm text-black outline-none shadow-lg" />
+                <button className="bg-white text-violet-600 px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg">🔍</button>
+              </div>
+              {/* Duplicate for seamless loop */}
+              <div className="shrink-0 flex gap-2">
+                <input placeholder="ลองค้นหา เช่น iPhone 15..." className="w-52 bg-white rounded-xl px-4 py-2.5 text-sm text-black outline-none shadow-lg" />
+                <button className="bg-white text-violet-600 px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg">🔍</button>
+              </div>
+              <div className="shrink-0 flex gap-2">
+                <input placeholder="หูฟัง, แล็ปท็อป, สมาร์ทโฟน..." className="w-52 bg-white rounded-xl px-4 py-2.5 text-sm text-black outline-none shadow-lg" />
+                <button className="bg-white text-violet-600 px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg">🔍</button>
+              </div>
+            </div>
           </div>
         </div>
 
