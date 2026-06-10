@@ -8,7 +8,7 @@ const categoryData = [
   {
     name: 'มือถือ & แก็ดเจ็ต',
     icon: '/icons/mobile.png',
-    color: 'from-blue-500 to-blue-600',
+    color: 'bg-white',
     sub: ['สมาร์ทโฟน', 'แท็บเล็ต', 'สมาร์ทวอทช์', 'หูฟัง', 'แบตเตอร์สำรอง', 'เคสมือถือ', 'ฟิล์มกระจก', 'สายชาร์จ'],
     popular: ['iPhone 16', 'Samsung S25', 'Xiaomi 14', 'OPPO Find X8', 'vivo X200'],
     count: 856,
@@ -16,7 +16,7 @@ const categoryData = [
   {
     name: 'คอมพิวเตอร์',
     icon: '/icons/computer.png',
-    color: 'from-violet-500 to-violet-600',
+    color: 'bg-white',
     sub: ['โน้ตบุ๊ก', 'PC / คอมเดสก์', 'จอมอนิเตอร์', 'คีย์บอร์ด', 'เมาส์', 'สิ่งของต่อพีซี', 'เครื่องพิมพ์', 'อัพเกรด PC'],
     popular: ['MacBook Pro M4', 'ThinkPad X1', 'Dell XPS', 'ASUS ROG', 'MSI Gaming'],
     count: 2341,
@@ -24,7 +24,7 @@ const categoryData = [
   {
     name: 'หูฟัง & เสียง',
     icon: '/icons/audio.png',
-    color: 'from-pink-500 to-pink-600',
+    color: 'bg-white',
     sub: ['หูฟังบลูทูธ TWS', 'หูฟังแบบเกม', 'หูฟังครอบหู', 'ลำโพงบลูทูธ', 'Soundbar', 'ไมค์', 'DAC/Amplifier'],
     popular: ['AirPods Pro 2', 'Sony WF-1000XM5', 'Samsung Buds2 Pro', 'JBL Tune', 'Anker'],
     count: 1567,
@@ -32,7 +32,7 @@ const categoryData = [
   {
     name: 'เกมมิ่งเกียร์',
     icon: '/icons/auto.png',
-    color: 'from-green-500 to-green-600',
+    color: 'bg-white',
     sub: ['คอนโซล', 'เกม PC', 'เมาส์เกม', 'คีย์บอร์ดเกม', 'หูฟังเกม', 'จอเล่นเกม', 'เกมพอร์ตี้'],
     popular: ['PlayStation 5', 'Nintendo Switch OLED', 'Xbox Series X', 'Steam Deck', 'ROG Ally'],
     count: 892,
@@ -40,7 +40,7 @@ const categoryData = [
   {
     name: 'เครื่องใช้ในบ้าน',
     icon: '/icons/home_new.png',
-    color: 'from-teal-500 to-teal-600',
+    color: 'bg-white',
     sub: ['เครื่องดูดฝุ่น', 'เครื่องปรับอากาศ', 'พัดลม', 'กระทะไฟฟ้า', 'เครื่องชงกาแฟ', 'หุงข้าว', 'เครื่องเป่าผม'],
     popular: ['Dyson V15', 'Electrolux', 'Xiaomi Vacuum', 'Phillips Airfryer', 'Coway'],
     count: 3456,
@@ -48,7 +48,7 @@ const categoryData = [
   {
     name: 'สุขภาพ & ความงาม',
     icon: '/icons/beauty.png',
-    color: 'from-rose-500 to-rose-600',
+    color: 'bg-white',
     sub: ['สกินแคร์', 'เครื่องมือความงาม', 'วิตามิน', 'อาหารเสริม', 'มาส์กหน้า', 'น้ำหอม', 'เครื่องสำอาง'],
     popular: ['SK-II', 'La Mer', 'The Ordinary', 'Olay', 'Sulwhasoo'],
     count: 678,
@@ -56,7 +56,7 @@ const categoryData = [
   {
     name: 'แม่ & เด็ก',
     icon: '/icons/mother.png',
-    color: 'from-amber-500 to-amber-600',
+    color: 'bg-white',
     sub: ['ของเล่นเด็ก', 'เสื้อผ้าเด็ก', 'รถเข็น', 'อุปกรณ์ให้นม', 'เป้ออ่อน', 'ของใช้เบบี๋'],
     popular: ['Huggies', 'Pampers', 'Medela', 'Chicco', 'Aprica'],
     count: 1234,
@@ -64,7 +64,7 @@ const categoryData = [
   {
     name: 'กีฬา & กิจกรรม',
     icon: '/icons/sports.png',
-    color: 'from-emerald-500 to-emerald-600',
+    color: 'bg-white',
     sub: ['รองเท้าวิ่ง', 'ฟิตเนส', 'จักรยาน', 'อุปกรณ์เล่นกีฬา', 'เสื้อผ้ากีฬา', 'กระเป๋า', 'นาฬิกา'],
     popular: ['Nike', 'Adidas', 'Under Armour', 'Asics', 'Puma'],
     count: 2345,
@@ -72,7 +72,7 @@ const categoryData = [
   {
     name: 'ยานยนต์',
     icon: '/icons/icon3.png',
-    color: 'from-slate-500 to-slate-600',
+    color: 'bg-white',
     sub: ['อุปกรณ์ตกแต่ง', 'กล้องติดรถ', 'เครื่องเสียงรถยนต์', 'ยางรถยนต์', 'น้ำมันเครื่อง', 'เบาะรถ'],
     popular: ['JBL Car', 'Pioneer', 'Michelin', 'Castrol', '3M'],
     count: 567,
@@ -80,7 +80,7 @@ const categoryData = [
   {
     name: 'สัตว์เลี้ยง',
     icon: '/icons/pet.png',
-    color: 'from-orange-500 to-orange-600',
+    color: 'bg-white',
     sub: ['อาหารสุนัข', 'อาหารแมว', 'เตียงสัตว์', 'ของเล่นสัตว์', 'อุปกรณ์ดูแล', 'ปลอกคอ', 'กระเป๋าใส่สัตว์'],
     popular: ['Royal Canin', "Hill's", 'Whiskas', 'Pedigree', 'Frontline'],
     count: 432,
@@ -88,7 +88,7 @@ const categoryData = [
   {
     name: 'หนังสือ & สื่อ',
     icon: '/icons/books.png',
-    color: 'from-indigo-500 to-indigo-600',
+    color: 'bg-white',
     sub: ['นิยาย', 'หนังสือเรียน', 'วารสาร', 'การ์ตูน', 'เพลง', 'ภาพยนตร์', 'ซอฟต์แวร์'],
     popular: ['Harry Potter', 'One Piece', 'Marvel', 'DC Comics', 'K-Pop'],
     count: 890,
@@ -96,7 +96,7 @@ const categoryData = [
   {
     name: 'แฟชั่น',
     icon: '/icons/icon5.png',
-    color: 'from-fuchsia-500 to-fuchsia-600',
+    color: 'bg-white',
     sub: ['เสื้อผ้าผู้หญิง', 'เสื้อผ้าผู้ชาย', 'รองเท้า', 'กระเป๋า', 'นาฬิกา', 'เครื่องประดับ'],
     popular: ['Zara', 'H&M', 'Uniqlo', 'Adidas', 'Nike'],
     count: 1543,
@@ -185,7 +185,7 @@ export default function CategoriesPage() {
                   className={`relative bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer group ${activeCategory === cat.name ? 'border-violet-400 ring-2 ring-violet-200' : ''}`}
                   onClick={() => setActiveCategory(activeCategory === cat.name ? null : cat.name)}
                 >
-                  <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center mb-3 mx-auto`}>
+                  <div className={`w-10 h-10 rounded-2xl ${cat.color} border border-gray-200 flex items-center justify-center mb-3 mx-auto`}>
                     <img src={cat.icon} alt={cat.name} className="w-6 h-6 object-contain" />
                   </div>
                   <h3 className="font-bold text-xs text-gray-800 leading-tight text-center mb-1">{cat.name}</h3>
@@ -195,7 +195,7 @@ export default function CategoriesPage() {
                   {activeCategory === cat.name && (
                     <div className="absolute top-full left-0 right-0 z-50 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 mt-2 min-w-[280px]">
                       <h4 className="font-bold text-sm text-gray-800 mb-3 flex items-center gap-2">
-                        <div className={`w-6 h-6 rounded-lg bg-gradient-to-br ${cat.color} flex items-center justify-center`}>
+                        <div className={`w-6 h-6 rounded-lg ${cat.color} border border-gray-200 flex items-center justify-center`}>
                           <img src={cat.icon} alt={cat.name} className="w-4 h-4 object-contain" />
                         </div>
                         {cat.name}
