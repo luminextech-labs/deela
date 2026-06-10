@@ -221,11 +221,11 @@ function FlashSaleSection() {
         <a href="/search?filter=flash" className="text-white text-xs font-semibold hover:underline">ดูทั้งหมด →</a>
       </div>
 
-      {/* Products */}
-      <div className="p-4">
-        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+      {/* Products - Horizontal Scroll */}
+      <div className="p-4 pt-2">
+        <div className="flex gap-3 overflow-x-auto pb-3 px-4 -mx-4 scroll-smooth snap-x snap-mandatory">
           {flashSaleProducts.map((p) => (
-            <a key={p.id} href={`/product/${p.id}`} className="shrink-0 w-[150px] bg-gray-50 rounded-xl p-2.5 hover:shadow-md transition cursor-pointer block border border-gray-100 hover:border-red-200">
+            <a key={p.id} href={`/product/${p.id}`} className="shrink-0 w-[150px] bg-gray-50 rounded-xl p-2.5 hover:shadow-md transition cursor-pointer block border border-gray-100 hover:border-red-200 snap-start">
               <div className="relative mb-2">
                 <img src={p.image} alt={p.name} className="w-full h-24 object-cover rounded-lg" onError={(e) => { e.currentTarget.src = '/placeholder.png'; }} />
                 <span className="absolute top-1 left-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">-{p.discount}%</span>
