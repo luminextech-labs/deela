@@ -287,7 +287,7 @@ function PopularBrands() {
       <div className="grid grid-cols-4 lg:grid-cols-8 gap-2">
         {brands.map((brand) => (
           <a key={brand.name} href={`/search?brand=${brand.name}`} className="flex flex-col items-center gap-1 p-2 rounded-xl hover:bg-gray-50 transition group">
-            <div className="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center group-hover:border-violet-200 transition">
+            <div className="w-10 h-10 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center group-hover:border-violet-200 transition">
               <img src={brand.logo} alt={brand.name} className="w-8 h-8 object-contain" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
             </div>
             <span className="text-[10px] text-gray-500 font-medium group-hover:text-violet-600 transition">{brand.name}</span>
