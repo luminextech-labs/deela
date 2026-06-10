@@ -24,16 +24,16 @@ const topCategories = [
 
 // Category icons for the horizontal row
 const categoryIcons = [
-  { name: 'มือถือ', icon: '/icons/mobile.png', href: '/categories?cat=mobile' },
-  { name: 'คอมพิวเตอร์', icon: '/icons/computer.png', href: '/categories?cat=computer' },
-  { name: 'หูฟัง', icon: '/icons/audio.png', href: '/categories?cat=audio' },
-  { name: 'เกมมิ่ง', icon: '/icons/auto.png', href: '/categories?cat=gaming' },
-  { name: 'เครื่องใช้', icon: '/icons/home_new.png', href: '/categories?cat=home' },
-  { name: 'สุขภาพ', icon: '/icons/beauty.png', href: '/categories?cat=beauty' },
-  { name: 'แม่ & เด็ก', icon: '/icons/mother.png', href: '/categories?cat=mother' },
-  { name: 'กีฬา', icon: '/icons/sports.png', href: '/categories?cat=sports' },
-  { name: 'ยานยนต์', icon: '/icons/icon3.png', href: '/categories?cat=auto' },
-  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.png', href: '/categories?cat=pet' },
+  { name: 'มือถือ',    icon: '/icons/mobile.png',    href: '/categories?cat=mobile',    bg: 'bg-gray-900' },
+  { name: 'คอมพิวเตอร์', icon: '/icons/computer.png',  href: '/categories?cat=computer',  bg: 'bg-gray-800' },
+  { name: 'หูฟัง',     icon: '/icons/audio.png',     href: '/categories?cat=audio',     bg: 'bg-sky-500' },
+  { name: 'เกมมิ่ง',   icon: '/icons/auto.png',      href: '/categories?cat=gaming',   bg: 'bg-violet-600' },
+  { name: 'เครื่องใช้', icon: '/icons/home_new.png',  href: '/categories?cat=home',     bg: 'bg-gray-700' },
+  { name: 'สุขภาพ',    icon: '/icons/beauty.png',    href: '/categories?cat=beauty',   bg: 'bg-pink-500' },
+  { name: 'แม่ & เด็ก', icon: '/icons/mother.png',    href: '/categories?cat=mother',   bg: 'bg-pink-400' },
+  { name: 'กีฬา',      icon: '/icons/sports.png',    href: '/categories?cat=sports',   bg: 'bg-green-600' },
+  { name: 'ยานยนต์',   icon: '/icons/icon3.png',     href: '/categories?cat=auto',     bg: 'bg-blue-700' },
+  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.png',       href: '/categories?cat=pet',      bg: 'bg-amber-500' },
 ];
 
 // Flash sale products
@@ -176,7 +176,7 @@ function CategoryRow() {
       <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
         {categoryIcons.map((cat) => (
           <a key={cat.name} href={cat.href} className="flex flex-col items-center gap-1.5 shrink-0 group">
-            <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center group-hover:border-violet-300 group-hover:bg-violet-50 transition">
+            <div className={`w-12 h-12 rounded-2xl ${cat.bg} border border-gray-200 flex items-center justify-center group-hover:border-violet-300 transition`}>
               <img src={cat.icon} alt={cat.name} className="w-8 h-8 object-contain" />
             </div>
             <span className="text-[10px] text-gray-600 font-medium text-center whitespace-nowrap group-hover:text-violet-600 transition">{cat.name}</span>
