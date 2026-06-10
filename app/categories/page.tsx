@@ -2,28 +2,126 @@
 
 import { useState } from 'react';
 import MobileSidebar from '../components/MobileSidebar';
+import ProductCard from '../components/ProductCard';
 
-const categories = [
-  { name: 'มือถือ & แก็ดเจ็ต', icon: '/icons/mobile.jpg', count: 856 },
-  { name: 'คอมพิวเตอร์', icon: '/icons/computer.jpg', count: 2341 },
-  { name: 'หูฟัง & เสียง', icon: '/icons/audio.jpg', count: 1567 },
-  { name: 'บ้าน & ไลฟ์สไตล์', icon: '/icons/icon6.jpg', count: 3456 },
-  { name: 'สุขภาพ & ความงาม', icon: '/icons/beauty.svg', count: 678 },
-  { name: 'แม่ & เด็ก', icon: '/icons/icon5.jpg', count: 1234 },
-  { name: 'กีฬา & กิจกรรม', icon: '/icons/icon4.jpg', count: 2345 },
-  { name: 'ยานยนต์', icon: '/icons/icon3.jpg', count: 567 },
-  { name: 'หนังสือ & สื่อ', icon: '/icons/icon2.jpg', count: 890 },
-  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.jpg', count: 432 },
+const categoryData = [
+  {
+    name: 'มือถือ & แก็ดเจ็ต',
+    icon: '/icons/mobile.jpg',
+    color: 'from-blue-500 to-blue-600',
+    sub: ['สมาร์ทโฟน', 'แท็บเล็ต', 'สมาร์ทวอทช์', 'หูฟัง', 'แบตเตอร์สำรอง', 'เคสมือถือ', 'ฟิล์มกระจก', 'สายชาร์จ'],
+    popular: ['iPhone 16', 'Samsung S25', 'Xiaomi 14', 'OPPO Find X8', 'vivo X200'],
+    count: 856,
+  },
+  {
+    name: 'คอมพิวเตอร์',
+    icon: '/icons/computer.jpg',
+    color: 'from-violet-500 to-violet-600',
+    sub: ['โน้ตบุ๊ก', 'PC / คอมเดสก์', 'จอมอนิเตอร์', 'คีย์บอร์ด', 'เมาส์', 'สิ่งของต่อพีซี', 'เครื่องพิมพ์', 'อัพเกรด PC'],
+    popular: ['MacBook Pro M4', 'ThinkPad X1', 'Dell XPS', 'ASUS ROG', 'MSI Gaming'],
+    count: 2341,
+  },
+  {
+    name: 'หูฟัง & เสียง',
+    icon: '/icons/audio.jpg',
+    color: 'from-pink-500 to-pink-600',
+    sub: ['หูฟังบลูทูธ TWS', 'หูฟังแบบเกม', 'หูฟังครอบหู', 'ลำโพงบลูทูธ', 'Soundbar', 'ไมค์', 'DAC/Amplifier'],
+    popular: ['AirPods Pro 2', 'Sony WF-1000XM5', 'Samsung Buds2 Pro', 'JBL Tune', 'Anker'],
+    count: 1567,
+  },
+  {
+    name: 'เกมมิ่งเกียร์',
+    icon: '/icons/auto.jpg',
+    color: 'from-green-500 to-green-600',
+    sub: ['คอนโซล', 'เกม PC', 'เมาส์เกม', 'คีย์บอร์ดเกม', 'หูฟังเกม', 'จอเล่นเกม', 'เกมพอร์ตี้'],
+    popular: ['PlayStation 5', 'Nintendo Switch OLED', 'Xbox Series X', 'Steam Deck', 'ROG Ally'],
+    count: 892,
+  },
+  {
+    name: 'เครื่องใช้ในบ้าน',
+    icon: '/icons/home_new.jpg',
+    color: 'from-teal-500 to-teal-600',
+    sub: ['เครื่องดูดฝุ่น', 'เครื่องปรับอากาศ', 'พัดลม', 'กระทะไฟฟ้า', 'เครื่องชงกาแฟ', 'หุงข้าว', 'เครื่องเป่าผม'],
+    popular: ['Dyson V15', 'Electrolux', 'Xiaomi Vacuum', 'Phillips Airfryer', 'Coway'],
+    count: 3456,
+  },
+  {
+    name: 'สุขภาพ & ความงาม',
+    icon: '/icons/beauty.jpg',
+    color: 'from-rose-500 to-rose-600',
+    sub: ['สกินแคร์', 'เครื่องมือความงาม', 'วิตามิน', 'อาหารเสริม', 'มาส์กหน้า', 'น้ำหอม', 'เครื่องสำอาง'],
+    popular: ['SK-II', 'La Mer', 'The Ordinary', 'Olay', 'Sulwhasoo'],
+    count: 678,
+  },
+  {
+    name: 'แม่ & เด็ก',
+    icon: '/icons/mother.jpg',
+    color: 'from-amber-500 to-amber-600',
+    sub: ['ของเล่นเด็ก', 'เสื้อผ้าเด็ก', 'รถเข็น', 'อุปกรณ์ให้นม', 'เป้ออ่อน', 'ของใช้เบบี๋'],
+    popular: ['Huggies', 'Pampers', 'Medela', 'Chicco', 'Aprica'],
+    count: 1234,
+  },
+  {
+    name: 'กีฬา & กิจกรรม',
+    icon: '/icons/sports.jpg',
+    color: 'from-emerald-500 to-emerald-600',
+    sub: ['รองเท้าวิ่ง', 'ฟิตเนส', 'จักรยาน', 'อุปกรณ์เล่นกีฬา', 'เสื้อผ้ากีฬา', 'กระเป๋า', 'นาฬิกา'],
+    popular: ['Nike', 'Adidas', 'Under Armour', 'Asics', 'Puma'],
+    count: 2345,
+  },
+  {
+    name: 'ยานยนต์',
+    icon: '/icons/icon3.jpg',
+    color: 'from-slate-500 to-slate-600',
+    sub: ['อุปกรณ์ตกแต่ง', 'กล้องติดรถ', 'เครื่องเสียงรถยนต์', 'ยางรถยนต์', 'น้ำมันเครื่อง', 'เบาะรถ'],
+    popular: ['JBL Car', 'Pioneer', 'Michelin', 'Castrol', '3M'],
+    count: 567,
+  },
+  {
+    name: 'สัตว์เลี้ยง',
+    icon: '/icons/pet.jpg',
+    color: 'from-orange-500 to-orange-600',
+    sub: ['อาหารสุนัข', 'อาหารแมว', 'เตียงสัตว์', 'ของเล่นสัตว์', 'อุปกรณ์ดูแล', 'ปลอกคอ', 'กระเป๋าใส่สัตว์'],
+    popular: ['Royal Canin', "Hill's", 'Whiskas', 'Pedigree', 'Frontline'],
+    count: 432,
+  },
+  {
+    name: 'หนังสือ & สื่อ',
+    icon: '/icons/books.jpg',
+    color: 'from-indigo-500 to-indigo-600',
+    sub: ['นิยาย', 'หนังสือเรียน', 'วารสาร', 'การ์ตูน', 'เพลง', 'ภาพยนตร์', 'ซอฟต์แวร์'],
+    popular: ['Harry Potter', 'One Piece', 'Marvel', 'DC Comics', 'K-Pop'],
+    count: 890,
+  },
+  {
+    name: 'แฟชั่น',
+    icon: '/icons/icon5.jpg',
+    color: 'from-fuchsia-500 to-fuchsia-600',
+    sub: ['เสื้อผ้าผู้หญิง', 'เสื้อผ้าผู้ชาย', 'รองเท้า', 'กระเป๋า', 'นาฬิกา', 'เครื่องประดับ'],
+    popular: ['Zara', 'H&M', 'Uniqlo', 'Adidas', 'Nike'],
+    count: 1543,
+  },
+];
+
+const featuredProducts = [
+  { id: 'feat-1', name: 'iPhone 16 Pro Max 256GB ราคาพิเศษ', price: 47900, oldPrice: 54900, discount: 13, shop: 'Shopee', rating: 4.9, reviews: 8560, sold: 12000, image: '/placeholder.jpg' },
+  { id: 'feat-2', name: 'MacBook Air M3 13" รุ่นใหม่ล่าสุด', price: 36900, oldPrice: 44900, discount: 18, shop: 'Lazada', rating: 4.8, reviews: 2340, sold: 4500, image: '/placeholder.jpg' },
+  { id: 'feat-3', name: 'Sony WH-1000XM5 หูฟัง ANC ระดับท็อป', price: 8990, oldPrice: 12900, discount: 30, shop: 'Shopee', rating: 4.9, reviews: 3450, sold: 8900, image: '/placeholder.jpg' },
+  { id: 'feat-4', name: 'Dyson V12 Detect Slim เครื่องดูดฝุ่น', price: 18900, oldPrice: 22900, discount: 17, shop: 'Lazada', rating: 4.8, reviews: 890, sold: 2100, image: '/placeholder.jpg' },
+  { id: 'feat-5', name: 'Nintendo Switch OLED พร้อมเกมติดตั้ง', price: 10900, oldPrice: 13900, discount: 22, shop: 'TikTok', rating: 4.7, reviews: 4560, sold: 6700, image: '/placeholder.jpg' },
+  { id: 'feat-6', name: 'Samsung Galaxy Tab S10 Ultra 256GB', price: 32900, oldPrice: 39900, discount: 18, shop: 'Shopee', rating: 4.8, reviews: 1230, sold: 3200, image: '/placeholder.jpg' },
 ];
 
 export default function CategoriesPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-[#F5F5FA] flex">
-      <aside className="w-[240px] bg-white border-r border-gray-100 p-6 flex flex-col h-screen sticky top-0 overflow-y-auto flex-shrink-0 hidden lg:flex">
-        <img src="/logo.png" alt="deela logo" className="h-16 mb-8 object-contain" />
-        <nav className="space-y-1 mb-8">
+      {/* Sidebar */}
+      <aside className="w-[240px] bg-white border-r border-gray-100 p-5 flex flex-col h-screen sticky top-0 overflow-y-auto flex-shrink-0 hidden lg:flex">
+        <img src="/logo.png" alt="deela logo" className="h-14 mb-6 object-contain" />
+        <nav className="space-y-0.5 mb-6">
           {[
             { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.jpg' },
             { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.jpg' },
@@ -34,20 +132,12 @@ export default function CategoriesPage() {
             { name: 'ประวัติการเข้าชม', href: '/history', icon: '/icons/icon_history.jpg' },
             { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.jpg' },
           ].map((item) => (
-            <a key={item.name} href={item.href} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition font-medium text-sm ${item.active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
+            <a key={item.name} href={item.href} className={`flex items-center gap-2 px-3 py-2.5 rounded-xl transition font-medium text-sm ${(item as any).active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
               <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />
               <span>{item.name}</span>
             </a>
           ))}
         </nav>
-        <div className="mt-auto mb-4">
-          <span className="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 font-semibold">หมวดหมู่</span>
-          <div className="space-y-1">
-            {['อิเล็กทรอนิกส์', 'มือถือ & แก็ดเจ็ต', 'คอมพิวเตอร์', 'หูฟัง & เสียง', 'เกมมิ่งเกียร์', 'บ้าน & ไลฟ์สไตล์', 'สุขภาพ & ความงาม', 'แฟชั่น'].map((cat) => (
-              <a key={cat} href="#" className="flex items-center gap-2 px-3 py-2 text-sm text-gray-500 cursor-pointer hover:text-violet-600 hover:bg-violet-50 rounded-lg transition">{cat}</a>
-            ))}
-          </div>
-        </div>
         <div className="bg-violet-50 rounded-2xl p-3 flex items-center gap-3">
           <img src="/placeholder.jpg" alt="" className="w-10 h-10 rounded-full object-cover" />
           <div>
@@ -60,6 +150,7 @@ export default function CategoriesPage() {
       <MobileSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activePage="/categories" />
 
       <main className="flex-1 min-w-0 pb-20">
+        {/* Header */}
         <div className="bg-white border-b border-gray-100 px-4 py-3 sticky top-0 z-30">
           <div className="flex items-center gap-3">
             <a href="/" className="text-gray-500 hover:text-gray-700 text-xl">←</a>
@@ -68,13 +159,82 @@ export default function CategoriesPage() {
         </div>
 
         <div className="p-4 lg:p-6">
-          <div className="grid grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4">
-            {categories.map((cat, i) => (
-              <a key={i} href="#" className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer flex flex-col items-center text-center">
-                <img src={cat.icon} alt={cat.name} className="w-10 h-10 mb-2 object-contain" style={{imageRendering:'auto'}} />
-                <h3 className="font-bold text-xs text-gray-800 leading-tight">{cat.name}</h3>
-              </a>
-            ))}
+          {/* Featured Products Banner */}
+          <div className="bg-gradient-to-r from-violet-600 to-fuchsia-500 rounded-2xl p-5 mb-6">
+            <h2 className="text-white font-black text-lg mb-3">🔥 สินค้าขายดีประจำเดือน</h2>
+            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+              {featuredProducts.map((p) => (
+                <a key={p.id} href={`/product/${p.id}`} className="shrink-0 w-[160px] bg-white/95 rounded-xl p-2.5 hover:shadow-lg transition cursor-pointer">
+                  <img src={p.image} alt={p.name} className="w-full h-24 object-cover rounded-lg mb-2" onError={(e) => { e.currentTarget.src = '/placeholder.jpg'; }} />
+                  <h3 className="font-semibold text-[11px] text-gray-800 line-clamp-2 mb-1 leading-tight">{p.name}</h3>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-sm font-black text-red-500">฿{p.price.toLocaleString()}</span>
+                    <span className="text-[9px] text-gray-400 line-through">฿{p.oldPrice.toLocaleString()}</span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Category Grid */}
+          <div className="mb-6">
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+              {categoryData.map((cat, i) => (
+                <div
+                  key={i}
+                  className={`relative bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer group ${activeCategory === cat.name ? 'border-violet-400 ring-2 ring-violet-200' : ''}`}
+                  onClick={() => setActiveCategory(activeCategory === cat.name ? null : cat.name)}
+                >
+                  <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center mb-3 mx-auto`}>
+                    <img src={cat.icon} alt={cat.name} className="w-6 h-6 object-contain" />
+                  </div>
+                  <h3 className="font-bold text-xs text-gray-800 leading-tight text-center mb-1">{cat.name}</h3>
+                  <p className="text-[10px] text-gray-400 text-center">{cat.count.toLocaleString()} รายการ</p>
+
+                  {/* Expanded subcategories */}
+                  {activeCategory === cat.name && (
+                    <div className="absolute top-full left-0 right-0 z-50 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 mt-2 min-w-[280px]">
+                      <h4 className="font-bold text-sm text-gray-800 mb-3 flex items-center gap-2">
+                        <div className={`w-6 h-6 rounded-lg bg-gradient-to-br ${cat.color} flex items-center justify-center`}>
+                          <img src={cat.icon} alt={cat.name} className="w-4 h-4 object-contain" />
+                        </div>
+                        {cat.name}
+                      </h4>
+                      <div className="grid grid-cols-2 gap-1 mb-4">
+                        {cat.sub.map((s) => (
+                          <a key={s} href={`/search?q=${encodeURIComponent(s)}`} className="px-3 py-2 text-xs text-gray-600 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition">
+                            {s}
+                          </a>
+                        ))}
+                      </div>
+                      <div>
+                        <h5 className="text-xs font-semibold text-gray-500 mb-2">🔥 คำค้นหายอดนิยม</h5>
+                        <div className="flex flex-wrap gap-1">
+                          {cat.popular.map((p) => (
+                            <a key={p} href={`/search?q=${encodeURIComponent(p)}`} className="bg-gray-100 hover:bg-violet-100 text-gray-600 hover:text-violet-700 text-[10px] font-medium px-2.5 py-1 rounded-full transition">
+                              {p}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Top Products in Categories */}
+          <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-black text-gray-800">💎 สินค้ายอดนิยมในหมวดหมู่</h2>
+              <a href="/search" className="text-violet-600 font-semibold text-sm hover:underline">ดูทั้งหมด →</a>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {featuredProducts.map((p) => (
+                <ProductCard key={p.id} product={p as any} />
+              ))}
+            </div>
           </div>
         </div>
       </main>
