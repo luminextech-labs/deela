@@ -189,7 +189,28 @@ function CategoryRow() {
 
 function FlashSaleSection() {
   const [timeLeft, setTimeLeft] = useState({ h: 10, m: 30, s: 45 });
+  const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Auto-scroll carousel
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const interval = setInterval(() => {
+      const cardWidth = 150 + 12; // card width + gap
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      
+      if (el.scrollLeft >= maxScroll - 10) {
+        el.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        el.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      }
+    }, 3000); // every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Countdown timer
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft(prev => {
@@ -221,9 +242,21 @@ function FlashSaleSection() {
         <a href="/search?filter=flash" className="text-white text-xs font-semibold hover:underline">ดูทั้งหมด →</a>
       </div>
 
-      {/* Products - Horizontal Scroll */}
+      {/* Products - Horizontal Scroll Auto */}
       <div className="p-4 pt-2">
-        <div className="flex gap-3 overflow-x-auto pb-3 px-4 -mx-4 scroll-smooth snap-x snap-mandatory">
+        <div
+          ref={scrollRef}
+          className="flex gap-3 overflow-x-auto pb-3 px-4 -mx-4 scroll-smooth snap-x snap-mandatory"
+          onMouseEnter={() => {
+            // Pause auto-scroll on hover
+            const el = scrollRef.current;
+            if (el) el.style.scrollBehavior = 'auto';
+          }}
+          onMouseLeave={() => {
+            const el = scrollRef.current;
+            if (el) el.style.scrollBehavior = 'smooth';
+          }}
+        >
           {flashSaleProducts.map((p) => (
             <a key={p.id} href={`/product/${p.id}`} className="shrink-0 w-[150px] bg-gray-50 rounded-xl p-2.5 hover:shadow-md transition cursor-pointer block border border-gray-100 hover:border-red-200 snap-start">
               <div className="relative mb-2">
