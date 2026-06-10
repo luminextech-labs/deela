@@ -24,16 +24,16 @@ const topCategories = [
 
 // Category icons for the horizontal row
 const categoryIcons = [
-  { name: 'มือถือ', icon: '/icons/mobile.png', href: '/categories?cat=mobile' },
-  { name: 'คอมพิวเตอร์', icon: '/icons/computer.png', href: '/categories?cat=computer' },
-  { name: 'หูฟัง', icon: '/icons/audio.png', href: '/categories?cat=audio' },
-  { name: 'เกมมิ่ง', icon: '/icons/auto.png', href: '/categories?cat=gaming' },
-  { name: 'เครื่องใช้', icon: '/icons/home_new.png', href: '/categories?cat=home' },
-  { name: 'สุขภาพ', icon: '/icons/beauty.png', href: '/categories?cat=beauty' },
-  { name: 'แม่ & เด็ก', icon: '/icons/mother.png', href: '/categories?cat=mother' },
-  { name: 'กีฬา', icon: '/icons/sports.png', href: '/categories?cat=sports' },
-  { name: 'ยานยนต์', icon: '/icons/icon3.png', href: '/categories?cat=auto' },
-  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.png', href: '/categories?cat=pet' },
+  { name: 'มือถือ', icon: '/icons/mobile.svg', href: '/categories?cat=mobile' },
+  { name: 'คอมพิวเตอร์', icon: '/icons/computer.svg', href: '/categories?cat=computer' },
+  { name: 'หูฟัง', icon: '/icons/audio.svg', href: '/categories?cat=audio' },
+  { name: 'เกมมิ่ง', icon: '/icons/auto.svg', href: '/categories?cat=gaming' },
+  { name: 'เครื่องใช้', icon: '/icons/home_new.svg', href: '/categories?cat=home' },
+  { name: 'สุขภาพ', icon: '/icons/beauty.svg', href: '/categories?cat=beauty' },
+  { name: 'แม่ & เด็ก', icon: '/icons/mother.svg', href: '/categories?cat=mother' },
+  { name: 'กีฬา', icon: '/icons/sports.svg', href: '/categories?cat=sports' },
+  { name: 'ยานยนต์', icon: '/icons/icon3.svg', href: '/categories?cat=auto' },
+  { name: 'สัตว์เลี้ยง', icon: '/icons/pet.svg', href: '/categories?cat=pet' },
 ];
 
 // Flash sale products
