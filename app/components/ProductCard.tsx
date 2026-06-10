@@ -4,6 +4,7 @@ interface ProductCardProps {
   product: {
     id: string;
     name: string;
+    slug?: string;
     price?: number;
     oldPrice?: number;
     discount?: number;
@@ -16,6 +17,7 @@ interface ProductCardProps {
     lowest_price?: string | number;
     highest_rating?: string | number;
   };
+  rank?: number;
 }
 
 function ShopBadge({ shop }: { shop: string }) {
@@ -31,7 +33,7 @@ function ShopBadge({ shop }: { shop: string }) {
   );
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, rank }: ProductCardProps) {
   const price = product.price ?? Number(product.lowest_price) ?? 0;
   const oldPrice = product.oldPrice ?? 0;
   const discount = product.discount ?? (oldPrice > price ? Math.round((1 - price / oldPrice) * 100) : 0);
@@ -40,12 +42,25 @@ export default function ProductCard({ product }: ProductCardProps) {
   const sold = product.sold ?? 0;
   const image = product.image || product.image_url || '/placeholder.png';
   const shop = product.shop || 'Shopee';
+  const slug = product.slug || product.id;
+  const href = `/product/${slug}`;
 
   return (
     <a
-      href={`/product/${product.id}`}
-      className="bg-white rounded-xl p-2.5 shadow-sm border border-gray-100 hover:shadow-md hover:border-violet-200 transition cursor-pointer block group"
+      href={href}
+      className="bg-white rounded-xl p-2.5 shadow-sm border border-gray-100 hover:shadow-md hover:border-violet-200 transition cursor-pointer block group relative"
     >
+      {/* Rank badge */}
+      {rank && rank <= 3 && (
+        <div className={`absolute top-1.5 left-1.5 z-10 w-6 h-6 rounded-full flex items-center justify-center text-xs font-black ${
+          rank === 1 ? 'bg-amber-400 text-white' :
+          rank === 2 ? 'bg-gray-300 text-gray-700' :
+          'bg-amber-600 text-white'
+        }`}>
+          {rank}
+        </div>
+      )}
+
       {/* Image */}
       <div className="relative mb-2">
         <img
@@ -55,7 +70,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           onError={(e) => { e.currentTarget.src = '/placeholder.png'; }}
         />
         {discount > 0 && (
-          <span className="absolute top-1.5 left-1.5 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
+          <span className="absolute top-1.5 right-1.5 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
             -{discount}%
           </span>
         )}
@@ -83,8 +98,10 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
           <span className="text-yellow-400 text-[10px]">⭐</span>
-          <span className="text-[10px] font-medium text-gray-600">{rating.toFixed(1)}</span>
-          <span className="text-[9px] text-gray-400">({reviews > 999 ? `${(reviews/1000).toFixed(1)}K` : reviews})</span>
+          <span className="text-[10px] font-medium text-gray-600">{Number(rating).toFixed(1)}</span>
+          <span className="text-[9px] text-gray-400">
+            ({reviews > 999 ? `${(reviews/1000).toFixed(1)}K` : reviews.toLocaleString()})
+          </span>
         </div>
         <ShopBadge shop={shop} />
       </div>

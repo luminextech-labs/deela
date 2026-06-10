@@ -119,9 +119,9 @@ export default function CategoriesPage() {
   return (
     <div className="min-h-screen bg-[#F5F5FA] flex">
       {/* Sidebar */}
-      <aside className="w-[240px] bg-white border-r border-gray-100 p-5 flex flex-col h-screen sticky top-0 overflow-y-auto flex-shrink-0 hidden lg:flex">
-        <img src="/logo.png" alt="deela logo" className="h-14 mb-6 object-contain" />
-        <nav className="space-y-0.5 mb-6">
+      <aside className="w-[260px] bg-white border-r border-gray-100 p-5 flex flex-col h-screen sticky top-0 overflow-y-auto flex-shrink-0 hidden lg:flex">
+        <img src="/logo.png" alt="Deela" className="h-12 mb-5 object-contain" />
+        <nav className="space-y-1">
           {[
             { name: 'หน้าหลัก', href: '/', icon: '/icons/icon_home_menu.png' },
             { name: 'ค้นหา', href: '/search', icon: '/icons/icon_search.png' },
@@ -133,18 +133,12 @@ export default function CategoriesPage() {
             { name: 'รายการโปรด', href: '/favorites', icon: '/icons/icon_favorites.png' },
           ].map((item) => (
             <a key={item.name} href={item.href} className={`flex items-center gap-2 px-3 py-2.5 rounded-xl transition font-medium text-sm ${(item as any).active ? 'bg-violet-50 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}>
-              <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />
+                <img src={item.icon} alt={item.name} className="w-5 h-5 object-contain shrink-0" />
               <span>{item.name}</span>
             </a>
           ))}
         </nav>
-        <div className="bg-violet-50 rounded-2xl p-3 flex items-center gap-3">
-          <img src="/placeholder.png" alt="" className="w-10 h-10 rounded-full object-cover" />
-          <div>
-            <div className="font-semibold text-sm">Nattawat</div>
-            <div className="text-xs text-gray-500">Premium</div>
-          </div>
-        </div>
+
       </aside>
 
       <MobileSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activePage="/categories" />
