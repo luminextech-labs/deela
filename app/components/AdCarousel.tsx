@@ -28,13 +28,13 @@ export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProp
     fetchBanners()
   }, [])
 
-  // Auto scroll slide
+  // Auto scroll - move 2 at a time
   useEffect(() => {
-    if (banners.length <= 1) return
+    if (banners.length <= 2) return
     const interval = setInterval(() => {
       setTransitioning(true)
       setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % banners.length)
+        setCurrentIndex((prev) => (prev + 2) % banners.length)
         setTransitioning(false)
       }, 500)
     }, autoScrollInterval)
@@ -43,92 +43,62 @@ export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProp
 
   if (isLoading) {
     return (
-      <div className="mb-4 rounded-2xl overflow-hidden bg-gray-200 animate-pulse aspect-[21/9]" />
+      <div className="mb-4 grid grid-cols-2 gap-4">
+        {[...Array(2)].map((_, i) => (
+          <div key={i} className="rounded-2xl overflow-hidden bg-gray-200 animate-pulse aspect-[16/9]" />
+        ))}
+      </div>
     )
   }
 
   if (banners.length === 0) {
     return (
-      <div className="mb-4 rounded-2xl overflow-hidden bg-gradient-to-br from-violet-600 to-fuchsia-500 aspect-[21/9] flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 mx-auto mb-3 bg-white/20 rounded-2xl flex items-center justify-center">
-            <span className="text-4xl">🎯</span>
-          </div>
-          <p className="text-white/80 text-sm font-medium">รอการตั้งค่าโฆษณา</p>
+      <div className="mb-4 grid grid-cols-2 gap-4">
+        <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-violet-600 to-fuchsia-500 aspect-[16/9] flex items-center justify-center">
+          <span className="text-4xl">🎯</span>
+        </div>
+        <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-fuchsia-500 to-pink-500 aspect-[16/9] flex items-center justify-center">
+          <span className="text-4xl">🔥</span>
         </div>
       </div>
     )
   }
 
-  const currentBanner = banners[currentIndex]
+  // Get 2 banners at a time
+  const getVisibleBanners = () => {
+    return [0, 1].map(i => banners[(currentIndex + i) % banners.length])
+  }
+
+  const visibleBanners = getVisibleBanners()
 
   return (
     <div className="mb-4">
-      <div className="relative rounded-2xl overflow-hidden shadow-xl">
-        {/* Single banner that slides */}
-        <div 
-          className={`transition-transform duration-500 ease-in-out ${transitioning ? '-translate-x-full opacity-0' : 'translate-x-0 opacity-100'}`}
-        >
+      <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 transition-opacity duration-300 ${transitioning ? 'opacity-80' : 'opacity-100'}`}>
+        {visibleBanners.map((banner, i) => (
           <a
-            href={currentBanner.link_url || '#'}
+            key={`${banner.id}-${currentIndex}`}
+            href={banner.link_url || '#'}
             target="_blank"
             rel="noopener noreferrer"
-            className="block relative aspect-[21/9] bg-gradient-to-br from-violet-600 to-fuchsia-500"
+            className="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
           >
-            {currentBanner.image_url ? (
-              <Image
-                src={currentBanner.image_url}
-                alt="Advertisement"
-                fill
-                className="object-cover"
-                sizes="100vw"
-                priority={currentIndex === 0}
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-5xl">🎯</span>
-              </div>
-            )}
+            <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-violet-600 to-fuchsia-500">
+              {banner.image_url ? (
+                <Image
+                  src={banner.image_url}
+                  alt="Advertisement"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-4xl">🎯</span>
+                </div>
+              )}
+            </div>
           </a>
-        </div>
-
-        {/* Progress bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
-          <div 
-            className="h-full bg-white/60 transition-all duration-300"
-            style={{ width: `${((currentIndex + 1) / banners.length) * 100}%` }}
-          />
-        </div>
-
-        {/* Navigation arrows */}
-        {banners.length > 1 && (
-          <>
-            <button
-              onClick={() => {
-                setTransitioning(true)
-                setTimeout(() => {
-                  setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length)
-                  setTransitioning(false)
-                }, 500)
-              }}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 opacity-70 hover:opacity-100 transition-all"
-            >
-              ‹
-            </button>
-            <button
-              onClick={() => {
-                setTransitioning(true)
-                setTimeout(() => {
-                  setCurrentIndex((prev) => (prev + 1) % banners.length)
-                  setTransitioning(false)
-                }, 500)
-              }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 opacity-70 hover:opacity-100 transition-all"
-            >
-              ›
-            </button>
-          </>
-        )}
+        ))}
       </div>
     </div>
   )
