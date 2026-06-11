@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/app/lib/supabase";
 
 export default function DebugPage() {
-  const [results, setResults] = useState<any>({});
+  const [results, setResults] = useState<Record<string, any>>({});
 
   useEffect(() => {
     async function runTests() {
       // 1. Test env vars
-      setResults(r => ({
-        ...r,
+      setResults(prev => ({
+        ...prev,
         env: {
           NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || "❌ หาย",
           NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "✅ มี" : "❌ หาย",
@@ -21,18 +21,18 @@ export default function DebugPage() {
       // 2. Test DNS resolution (fetch a small resource)
       try {
         const start = Date.now();
-        const dnsTest = await fetch("https://dtdkjwqwnqvzokayeps.supabase.co", { 
+        await fetch("https://dtdkjwqwnqvzokayeps.supabase.co", { 
           method: "HEAD",
           mode: "no-cors"
         });
-        setResults(r => ({ 
-          ...r, 
+        setResults(prev => ({ 
+          ...prev, 
           dns: "✅ resolve ได้",
           dnsTime: `${Date.now() - start}ms`
         }));
       } catch (e: any) {
-        setResults(r => ({ 
-          ...r, 
+        setResults(prev => ({ 
+          ...prev, 
           dns: "❌ " + e.message,
           dnsErrorType: e.name
         }));
@@ -44,18 +44,18 @@ export default function DebugPage() {
           .from("ad_banners")
           .select("*");
         
-        setResults(r => ({ 
-          ...r, 
+        setResults(prev => ({ 
+          ...prev, 
           supabase: { 
             dataCount: data?.length || 0,
-            error,
+            error: error ? { message: error.message, code: error.code, details: error.details } : null,
             status,
             statusText 
           } 
         }));
       } catch (e: any) {
-        setResults(r => ({ 
-          ...r, 
+        setResults(prev => ({ 
+          ...prev, 
           supabase: { error: e.message, errorName: e.name } 
         }));
       }
@@ -72,27 +72,27 @@ export default function DebugPage() {
           }
         );
         const text = await res.text();
-        setResults(r => ({ 
-          ...r, 
+        setResults(prev => ({ 
+          ...prev, 
           directFetch: { 
             status: res.status, 
             ok: res.ok,
-            body: text.slice(0, 200)
+            body: text.slice(0, 300)
           } 
         }));
       } catch (e: any) {
-        setResults(r => ({ 
-          ...r, 
-          directFetch: { error: e.message } 
+        setResults(prev => ({ 
+          ...prev, 
+          directFetch: { error: e.message }
         }));
       }
 
       // 5. Test Google (to confirm internet works)
       try {
-        const googleRes = await fetch("https://www.google.com/favicon.ico", { mode: "no-cors" });
-        setResults(r => ({ ...r, internet: "✅ เชื่อมต่อได้" }));
+        await fetch("https://www.google.com/favicon.ico", { mode: "no-cors" });
+        setResults(prev => ({ ...prev, internet: "✅ เชื่อมต่อได้" }));
       } catch (e: any) {
-        setResults(r => ({ ...r, internet: "❌ " + e.message }));
+        setResults(prev => ({ ...prev, internet: "❌ " + e.message }));
       }
     }
 
@@ -111,9 +111,9 @@ export default function DebugPage() {
       </div>
 
       <div style={{ marginBottom: 20 }}>
-        <h2 style={{ fontSize: 16, color: "#888" }}>Internet Connection</h2>
+        <h2 style={{ fontSize: 16, color: "#888" }}>Internet Connection (Google)</h2>
         <pre style={{ background: "#222", padding: 10, borderRadius: 8 }}>
-          {JSON.stringify(results.internet || "waiting...", null, 2)}
+          {results.internet || "waiting..."}
         </pre>
       </div>
 
@@ -122,20 +122,21 @@ export default function DebugPage() {
         <pre style={{ background: "#222", padding: 10, borderRadius: 8 }}>
           {JSON.stringify({
             status: results.dns || "waiting...",
-            time: results.dnsTime || "-"
+            time: results.dnsTime || "-",
+            errorType: results.dnsErrorType || "-"
           }, null, 2)}
         </pre>
       </div>
 
       <div style={{ marginBottom: 20 }}>
-        <h2 style={{ fontSize: 16, color: "#888" }}>Direct Fetch to Supabase REST</h2>
+        <h2 style={{ fontSize: 16, color: "#888" }}>Direct Fetch to Supabase REST API</h2>
         <pre style={{ background: "#222", padding: 10, borderRadius: 8 }}>
           {JSON.stringify(results.directFetch || "waiting...", null, 2)}
         </pre>
       </div>
 
       <div style={{ marginBottom: 20 }}>
-        <h2 style={{ fontSize: 16, color: "#888" }}>Supabase Client (via SDK)</h2>
+        <h2 style={{ fontSize: 16, color: "#888" }}>Supabase Client (SDK)</h2>
         <pre style={{ background: "#222", padding: 10, borderRadius: 8 }}>
           {JSON.stringify(results.supabase || "waiting...", null, 2)}
         </pre>
