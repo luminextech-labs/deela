@@ -5,16 +5,16 @@ import Image from 'next/image'
 import { getAdBanners, type AdBanner } from '@/app/lib/supabase'
 
 interface AdCarouselProps {
-  maxVisible?: number
   autoScrollInterval?: number
 }
 
-export default function AdCarousel({ maxVisible = 2, autoScrollInterval = 4000 }: AdCarouselProps) {
+export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProps) {
   const [banners, setBanners] = useState<AdBanner[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [touchStartX, setTouchStartX] = useState(0)
   const [touchEndX, setTouchEndX] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const [isTransitioning, setIsTransitioning] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -31,11 +31,15 @@ export default function AdCarousel({ maxVisible = 2, autoScrollInterval = 4000 }
     fetchBanners()
   }, [])
 
-  // Auto scroll
+  // Auto scroll with smooth transition
   useEffect(() => {
     if (banners.length <= 1) return
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % banners.length)
+      setIsTransitioning(true)
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % banners.length)
+        setTimeout(() => setIsTransitioning(false), 50)
+      }, 300)
     }, autoScrollInterval)
     return () => clearInterval(interval)
   }, [banners.length, autoScrollInterval])
@@ -51,29 +55,39 @@ export default function AdCarousel({ maxVisible = 2, autoScrollInterval = 4000 }
   const handleTouchEnd = () => {
     const diff = touchStartX - touchEndX
     if (Math.abs(diff) > 50) {
+      setIsTransitioning(true)
       if (diff > 0) {
-        // Swipe left - next
         setCurrentIndex((prev) => (prev + 1) % banners.length)
       } else {
-        // Swipe right - previous
         setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length)
       }
+      setTimeout(() => setIsTransitioning(false), 300)
     }
   }
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % banners.length)
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % banners.length)
+      setTimeout(() => setIsTransitioning(false), 300)
+    }, 50)
   }
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length)
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev - 1 + banners.length) % banners.length)
+      setTimeout(() => setIsTransitioning(false), 300)
+    }, 50)
   }
 
   if (isLoading) {
     return (
       <div className="mb-4">
         <div className="grid grid-cols-2 gap-4">
-          {[...Array(maxVisible)].map((_, i) => (
+          {[...Array(2)].map((_, i) => (
             <div key={i} className="rounded-2xl border-2 border-violet-200 overflow-hidden bg-gray-100 animate-pulse aspect-[16/9]" />
           ))}
         </div>
@@ -82,7 +96,6 @@ export default function AdCarousel({ maxVisible = 2, autoScrollInterval = 4000 }
   }
 
   if (banners.length === 0) {
-    // Fallback placeholder
     return (
       <div className="mb-4">
         <div className="grid grid-cols-2 gap-4">
@@ -107,14 +120,20 @@ export default function AdCarousel({ maxVisible = 2, autoScrollInterval = 4000 }
     )
   }
 
-  // Show maxVisible banners at a time
-  const visibleBanners = banners.slice(currentIndex, currentIndex + maxVisible)
-  const remaining = currentIndex + maxVisible - banners.length
-  const wrappedBanners = remaining > 0 ? [...visibleBanners, ...banners.slice(0, remaining)] : visibleBanners
+  // Show 2 banners at a time
+  const getVisibleBanners = () => {
+    const result = []
+    for (let i = 0; i < 2; i++) {
+      const idx = (currentIndex + i) % banners.length
+      result.push(banners[idx])
+    }
+    return result
+  }
+
+  const visibleBanners = getVisibleBanners()
 
   return (
     <div className="mb-4">
-      {/* Carousel Container */}
       <div 
         ref={containerRef}
         className="relative rounded-2xl overflow-hidden"
@@ -122,10 +141,14 @@ export default function AdCarousel({ maxVisible = 2, autoScrollInterval = 4000 }
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="grid grid-cols-2 gap-4">
-          {wrappedBanners.map((banner, i) => (
+        <div 
+          className={`grid grid-cols-2 gap-4 transition-opacity duration-300 ${
+            isTransitioning ? 'opacity-80' : 'opacity-100'
+          }`}
+        >
+          {visibleBanners.map((banner, i) => (
             <a
-              key={banner.id}
+              key={`${banner.id}-${currentIndex}`}
               href={banner.link_url || '#'}
               target="_blank"
               rel="noopener noreferrer"
@@ -137,7 +160,8 @@ export default function AdCarousel({ maxVisible = 2, autoScrollInterval = 4000 }
                     src={banner.image_url}
                     alt={banner.title || 'Advertisement'}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 50vw, 25vw"
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -149,10 +173,8 @@ export default function AdCarousel({ maxVisible = 2, autoScrollInterval = 4000 }
                     </p>
                   </div>
                 )}
-                {/* Overlay on hover */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
               </div>
-              {/* Arrow indicators */}
               {banner.title && (
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
                   <p className="text-white text-xs font-medium truncate">{banner.title}</p>
@@ -162,44 +184,24 @@ export default function AdCarousel({ maxVisible = 2, autoScrollInterval = 4000 }
           ))}
         </div>
 
-        {/* Navigation Arrows - Desktop */}
-        {banners.length > maxVisible && (
+        {/* Navigation Arrows */}
+        {banners.length > 1 && (
           <>
             <button
               onClick={prevSlide}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 opacity-60 hover:opacity-100 transition-opacity hidden lg:flex"
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 opacity-60 hover:opacity-100 transition-all duration-200 hidden lg:flex"
             >
               ‹
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 opacity-60 hover:opacity-100 transition-opacity hidden lg:flex"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 opacity-60 hover:opacity-100 transition-all duration-200 hidden lg:flex"
             >
               ›
             </button>
           </>
         )}
-
-        {/* Dots Indicator */}
-        {banners.length > 1 && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            {banners.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentIndex(i)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  currentIndex === i ? 'bg-white w-4' : 'bg-white/50 hover:bg-white/70'
-                }`}
-              />
-            ))}
-          </div>
-        )}
       </div>
-
-      {/* Banner count indicator */}
-      <p className="text-center text-xs text-gray-400 mt-2">
-        {currentIndex + 1} / {banners.length} รูป
-      </p>
     </div>
   )
 }
