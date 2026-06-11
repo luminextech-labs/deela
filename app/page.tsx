@@ -362,37 +362,14 @@ export default function HomePage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-4">
-        {/* Hero Banner */}
-        <div className="rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-500 p-6 lg:p-8 mb-4 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
-
-          {/* Headline */}
-          <h2 className="text-2xl lg:text-4xl font-black text-white leading-tight mb-1 relative z-10">ค้นหาของที่ใช่<br />ในราคาที่คุ้มที่สุด</h2>
-          <p className="text-white/80 text-sm mb-4 relative z-10">เปรียบเทียบราคาจาก Shopee, Lazada และ TikTok Shop</p>
-
-          {/* 2 Search Boxes - Auto Scroll */}
-          <div className="relative z-10 overflow-hidden">
-            <div className="flex gap-3 animate-marquee-slow">
-              {/* Set 1 */}
-              <div className="shrink-0 flex gap-2">
-                <input placeholder="ลองค้นหา เช่น iPhone 15..." className="w-52 bg-white rounded-xl px-4 py-2.5 text-sm text-black outline-none shadow-lg" />
-                <button className="bg-white text-violet-600 px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg">🔍</button>
+        {/* Hero Ad Banner */}
+        <div className="rounded-2xl border-2 border-violet-300 overflow-hidden mb-4 bg-gradient-to-br from-violet-600 to-fuchsia-500">
+          <div className="w-full aspect-[3/1] flex items-center justify-center">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-3 bg-white/20 rounded-2xl flex items-center justify-center">
+                <span className="text-4xl">🎯</span>
               </div>
-              {/* Set 2 */}
-              <div className="shrink-0 flex gap-2">
-                <input placeholder="หูฟัง, แล็ปท็อป, สมาร์ทโฟน..." className="w-52 bg-white rounded-xl px-4 py-2.5 text-sm text-black outline-none shadow-lg" />
-                <button className="bg-white text-violet-600 px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg">🔍</button>
-              </div>
-              {/* Duplicate for seamless loop */}
-              <div className="shrink-0 flex gap-2">
-                <input placeholder="ลองค้นหา เช่น iPhone 15..." className="w-52 bg-white rounded-xl px-4 py-2.5 text-sm text-black outline-none shadow-lg" />
-                <button className="bg-white text-violet-600 px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg">🔍</button>
-              </div>
-              <div className="shrink-0 flex gap-2">
-                <input placeholder="หูฟัง, แล็ปท็อป, สมาร์ทโฟน..." className="w-52 bg-white rounded-xl px-4 py-2.5 text-sm text-black outline-none shadow-lg" />
-                <button className="bg-white text-violet-600 px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg">🔍</button>
-              </div>
+              <p className="text-white/80 text-sm font-medium">Advertisement</p>
             </div>
           </div>
         </div>
