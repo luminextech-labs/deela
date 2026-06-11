@@ -55,12 +55,12 @@ export default function AdsAdminPage() {
 
       if (uploadError) throw uploadError;
 
-      const { data: urlData } = supabase.storage
-        .from("ad-banners")
-        .getPublicUrl(filePath);
+      // สร้าง URL ที่ถูกต้องเอง เพราะ getPublicUrl อาจ return ผิด
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+      const imageUrl = `${supabaseUrl}/storage/v1/object/public/ad-banners/${filePath}`;
 
       await addAdBanner({
-        image_url: urlData.publicUrl,
+        image_url: imageUrl,
         link_url: "",
         title: file.name.replace(`.${fileExt}`, ""),
       });
