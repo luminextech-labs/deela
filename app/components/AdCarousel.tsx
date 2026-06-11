@@ -78,7 +78,7 @@ export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProp
             {currentBanner.image_url ? (
               <Image
                 src={currentBanner.image_url}
-                alt={currentBanner.title || 'Advertisement'}
+                alt="Advertisement"
                 fill
                 className="object-cover"
                 sizes="100vw"
@@ -87,11 +87,6 @@ export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProp
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="text-5xl">🎯</span>
-              </div>
-            )}
-            {currentBanner.title && (
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white font-medium">{currentBanner.title}</p>
               </div>
             )}
           </a>
