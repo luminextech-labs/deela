@@ -3,144 +3,93 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/app/lib/supabase";
 
+type DebugState = {
+  envUrl: string;
+  envKey: string;
+  internetTest: string;
+  dnsTest: string;
+  directFetch: string;
+  supabaseTest: string;
+};
+
 export default function DebugPage() {
-  const [results, setResults] = useState<Record<string, any>>({});
+  const [state, setState] = useState<DebugState>({
+    envUrl: "...",
+    envKey: "...",
+    internetTest: "...",
+    dnsTest: "...",
+    directFetch: "...",
+    supabaseTest: "..."
+  });
 
   useEffect(() => {
-    async function runTests() {
-      // 1. Test env vars
-      setResults(prev => ({
-        ...prev,
-        env: {
-          NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || "❌ หาย",
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "✅ มี" : "❌ หาย",
-          NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || "❌ หาย",
-        }
-      }));
+    // Test 1: ENV
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "❌ หาย";
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? "✅ มี" : "❌ หาย";
+    setState(s => ({ ...s, envUrl: url, envKey: key }));
 
-      // 2. Test DNS resolution (fetch a small resource)
-      try {
-        const start = Date.now();
-        await fetch("https://dtdkjwqwnqvzokayeps.supabase.co", { 
-          method: "HEAD",
-          mode: "no-cors"
+    // Test 2: Internet (Google)
+    fetch("https://www.google.com/generate_204", { cache: "no-store" })
+      .then(() => setState(s => ({ ...s, internetTest: "✅ ได้" })))
+      .catch((e) => setState(s => ({ ...s, internetTest: "❌ " + String(e.message) })));
+
+    // Test 3: DNS (fetch Supabase)
+    const startDns = Date.now();
+    fetch("https://dtdkjwqwnqvzokayeps.supabase.co", { cache: "no-store" })
+      .then(() => setState(s => ({ ...s, dnsTest: `✅ ${Date.now() - startDns}ms` })))
+      .catch((e) => setState(s => ({ ...s, dnsTest: "❌ " + String(e.message) })));
+
+    // Test 4: Direct fetch REST API
+    const keyVal = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+    fetch("https://dtdkjwqwnqvzokayeps.supabase.co/rest/v1/ad_banners?select=id&limit=1", {
+      headers: { "apikey": keyVal, "Authorization": "Bearer " + keyVal }
+    })
+      .then(res => setState(s => ({ ...s, directFetch: "status: " + res.status })))
+      .catch(e => setState(s => ({ ...s, directFetch: "❌ " + String(e.message) })));
+
+    // Test 5: Supabase SDK
+    if (supabase) {
+      supabase.from("ad_banners").select("id").limit(1)
+        .then(({ data, error }) => {
+          if (error) setState(s => ({ ...s, supabaseTest: "❌ " + error.message }));
+          else setState(s => ({ ...s, supabaseTest: "✅ count: " + (data?.length ?? 0) }));
         });
-        setResults(prev => ({ 
-          ...prev, 
-          dns: "✅ resolve ได้",
-          dnsTime: `${Date.now() - start}ms`
-        }));
-      } catch (e: any) {
-        setResults(prev => ({ 
-          ...prev, 
-          dns: "❌ " + e.message,
-          dnsErrorType: e.name
-        }));
-      }
-
-      // 3. Test Supabase API (actual query)
-      try {
-        const { data, error, status, statusText } = await supabase
-          .from("ad_banners")
-          .select("*");
-        
-        setResults(prev => ({ 
-          ...prev, 
-          supabase: { 
-            dataCount: data?.length || 0,
-            error: error ? { message: error.message, code: error.code, details: error.details } : null,
-            status,
-            statusText 
-          } 
-        }));
-      } catch (e: any) {
-        setResults(prev => ({ 
-          ...prev, 
-          supabase: { error: e.message, errorName: e.name } 
-        }));
-      }
-
-      // 4. Test direct fetch with apikey
-      try {
-        const res = await fetch(
-          "https://dtdkjwqwnqvzokayeps.supabase.co/rest/v1/ad_banners?select=id",
-          {
-            headers: {
-              "apikey": process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "",
-              "Authorization": `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""}`
-            }
-          }
-        );
-        const text = await res.text();
-        setResults(prev => ({ 
-          ...prev, 
-          directFetch: { 
-            status: res.status, 
-            ok: res.ok,
-            body: text.slice(0, 300)
-          } 
-        }));
-      } catch (e: any) {
-        setResults(prev => ({ 
-          ...prev, 
-          directFetch: { error: e.message }
-        }));
-      }
-
-      // 5. Test Google (to confirm internet works)
-      try {
-        await fetch("https://www.google.com/favicon.ico", { mode: "no-cors" });
-        setResults(prev => ({ ...prev, internet: "✅ เชื่อมต่อได้" }));
-      } catch (e: any) {
-        setResults(prev => ({ ...prev, internet: "❌ " + e.message }));
-      }
+    } else {
+      setState(s => ({ ...s, supabaseTest: "❌ supabase = null" }));
     }
-
-    runTests();
   }, []);
 
   return (
     <div style={{ padding: 20, color: "white", fontFamily: "monospace", background: "#111", minHeight: "100vh" }}>
-      <h1 style={{ fontSize: 24, marginBottom: 20 }}>🔧 Deela Debug Page</h1>
-      
-      <div style={{ marginBottom: 20 }}>
-        <h2 style={{ fontSize: 16, color: "#888" }}>ENV Variables</h2>
-        <pre style={{ background: "#222", padding: 10, borderRadius: 8 }}>
-          {JSON.stringify(results.env || {}, null, 2)}
-        </pre>
-      </div>
-
-      <div style={{ marginBottom: 20 }}>
-        <h2 style={{ fontSize: 16, color: "#888" }}>Internet Connection (Google)</h2>
-        <pre style={{ background: "#222", padding: 10, borderRadius: 8 }}>
-          {results.internet || "waiting..."}
-        </pre>
-      </div>
-
-      <div style={{ marginBottom: 20 }}>
-        <h2 style={{ fontSize: 16, color: "#888" }}>DNS to Supabase</h2>
-        <pre style={{ background: "#222", padding: 10, borderRadius: 8 }}>
-          {JSON.stringify({
-            status: results.dns || "waiting...",
-            time: results.dnsTime || "-",
-            errorType: results.dnsErrorType || "-"
-          }, null, 2)}
-        </pre>
-      </div>
-
-      <div style={{ marginBottom: 20 }}>
-        <h2 style={{ fontSize: 16, color: "#888" }}>Direct Fetch to Supabase REST API</h2>
-        <pre style={{ background: "#222", padding: 10, borderRadius: 8 }}>
-          {JSON.stringify(results.directFetch || "waiting...", null, 2)}
-        </pre>
-      </div>
-
-      <div style={{ marginBottom: 20 }}>
-        <h2 style={{ fontSize: 16, color: "#888" }}>Supabase Client (SDK)</h2>
-        <pre style={{ background: "#222", padding: 10, borderRadius: 8 }}>
-          {JSON.stringify(results.supabase || "waiting...", null, 2)}
-        </pre>
-      </div>
+      <h1 style={{ fontSize: 24, marginBottom: 20 }}>🔧 Deela Debug</h1>
+      <table style={{ borderCollapse: "collapse", width: "100%", maxWidth: 800 }}>
+        <tbody>
+          <tr style={{ background: "#222" }}>
+            <td style={{ padding: 12, border: "1px solid #444", fontWeight: "bold" }}>ENV URL</td>
+            <td style={{ padding: 12, border: "1px solid #444" }}>{state.envUrl}</td>
+          </tr>
+          <tr style={{ background: "#222" }}>
+            <td style={{ padding: 12, border: "1px solid #444", fontWeight: "bold" }}>ENV Key</td>
+            <td style={{ padding: 12, border: "1px solid #444" }}>{state.envKey}</td>
+          </tr>
+          <tr style={{ background: "#222" }}>
+            <td style={{ padding: 12, border: "1px solid #444", fontWeight: "bold" }}>Internet (Google)</td>
+            <td style={{ padding: 12, border: "1px solid #444" }}>{state.internetTest}</td>
+          </tr>
+          <tr style={{ background: "#222" }}>
+            <td style={{ padding: 12, border: "1px solid #444", fontWeight: "bold" }}>DNS → Supabase</td>
+            <td style={{ padding: 12, border: "1px solid #444" }}>{state.dnsTest}</td>
+          </tr>
+          <tr style={{ background: "#222" }}>
+            <td style={{ padding: 12, border: "1px solid #444", fontWeight: "bold" }}>Direct Fetch REST</td>
+            <td style={{ padding: 12, border: "1px solid #444" }}>{state.directFetch}</td>
+          </tr>
+          <tr style={{ background: "#222" }}>
+            <td style={{ padding: 12, border: "1px solid #444", fontWeight: "bold" }}>Supabase SDK</td>
+            <td style={{ padding: 12, border: "1px solid #444" }}>{state.supabaseTest}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
