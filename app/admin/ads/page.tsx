@@ -14,11 +14,18 @@ export default function AdsAdminPage() {
   }, []);
 
   async function fetchBanners() {
-    if (!supabase) return;
-    const { data } = await supabase
+    if (!supabase) {
+      setMessage({ type: "error", text: "❌ Supabase ไม่เชื่อมต่อ ตรวจสอบ env บน Vercel" });
+      setLoading(false);
+      return;
+    }
+    const { data, error } = await supabase
       .from("ad_banners")
       .select("*")
       .order("created_at", { ascending: false });
+    if (error) {
+      setMessage({ type: "error", text: `❌ Error: ${error.message}` });
+    }
     if (data) setBanners(data);
     setLoading(false);
   }
