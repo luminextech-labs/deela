@@ -8,12 +8,19 @@ export default function AdsAdminPage() {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [debug, setDebug] = useState<{url: string; key: string} | null>(null);
 
   useEffect(() => {
     fetchBanners();
   }, []);
 
   async function fetchBanners() {
+    // Debug: show env values
+    setDebug({
+      url: process.env.NEXT_PUBLIC_SUPABASE_URL || "❌ ไม่มีค่า",
+      key: (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "❌ ไม่มีค่า").slice(0, 20) + "..."
+    });
+    
     if (!supabase) {
       setMessage({ type: "error", text: "❌ Supabase ไม่เชื่อมต่อ ตรวจสอบ env บน Vercel" });
       setLoading(false);
@@ -84,6 +91,14 @@ export default function AdsAdminPage() {
   return (
     <div className="min-h-screen bg-gray-950 text-white p-8">
       <div className="max-w-4xl mx-auto">
+        {/* Debug info */}
+        {debug && (
+          <div className="mb-6 p-4 bg-yellow-900/30 rounded-lg text-sm font-mono">
+            <p className="text-yellow-400">🐛 DEBUG:</p>
+            <p>URL: {debug.url}</p>
+            <p>KEY: {debug.key}</p>
+          </div>
+        )}
         <h1 className="text-3xl font-bold mb-2">📢 Ad Banner Admin</h1>
         <p className="text-gray-400 mb-8">จัดการโฆษณาของคุณ</p>
 
