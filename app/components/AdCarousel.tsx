@@ -43,7 +43,7 @@ export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProp
 
   if (isLoading) {
     return (
-      <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mb-4 grid grid-cols-1 xl:grid-cols-2 gap-4">
         {[...Array(2)].map((_, i) => (
           <div key={i} className="rounded-2xl overflow-hidden bg-gray-200 animate-pulse aspect-[16/9]" />
         ))}
@@ -53,7 +53,7 @@ export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProp
 
   if (banners.length === 0) {
     return (
-      <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mb-4 grid grid-cols-1 xl:grid-cols-2 gap-4">
         <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-violet-600 to-fuchsia-500 aspect-[16/9] flex items-center justify-center">
           <span className="text-4xl">🎯</span>
         </div>
@@ -73,7 +73,7 @@ export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProp
 
   return (
     <div className="mb-4">
-      <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 transition-opacity duration-300 ${transitioning ? 'opacity-80' : 'opacity-100'}`}>
+      <div className={`grid grid-cols-1 xl:grid-cols-2 gap-4 transition-opacity duration-300 ${transitioning ? 'opacity-80' : 'opacity-100'}`}>
         {visibleBanners.map((banner, i) => (
           <a
             key={`${banner.id}-${currentIndex}`}
