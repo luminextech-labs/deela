@@ -94,7 +94,7 @@ export default function AdsAdminPage() {
         {/* Debug info */}
         {debug && (
           <div className="mb-6 p-4 bg-yellow-900/30 rounded-lg text-sm font-mono">
-            <p className="text-yellow-400">🐛 DEBUG:</p>
+            <p className="text-yellow-400">🔧 ENV DEBUG:</p>
             <p>URL: {debug.url}</p>
             <p>KEY: {debug.key}</p>
           </div>
