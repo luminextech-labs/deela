@@ -129,8 +129,15 @@ export default function HomePage() {
         <div className="p-4 lg:p-8">
           {/* Hero Banner */}
           <div className="rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-500 p-6 lg:p-10 mb-6 relative overflow-hidden">
-            <h2 className="text-2xl lg:text-4xl font-black text-white leading-tight mb-2">ค้นหาของที่ใช่<br />ในราคาที่คุ้มที่สุด</h2>
-            <p className="text-white/80 text-sm mb-4">เปรียบเทียบราคาจาก Shopee, Lazada และ TikTok Shop</p>
+            {/* 2 กล่องใส่รูปโฆษณา */}
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl overflow-hidden aspect-[2/1] flex items-center justify-center border-2 border-dashed border-white/40">
+                <span className="text-white/60 text-xs text-center px-2">📢 Ad Banner 1<br /><span className="text-white/40 text-[10px]">300×150</span></span>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-xl overflow-hidden aspect-[2/1] flex items-center justify-center border-2 border-dashed border-white/40">
+                <span className="text-white/60 text-xs text-center px-2">📢 Ad Banner 2<br /><span className="text-white/40 text-[10px]">300×150</span></span>
+              </div>
+            </div>
             <div className="bg-white/20 backdrop-blur-sm rounded-xl p-2 flex items-center gap-2">
               <Link href="/search" className="flex-1 bg-white rounded-lg px-4 py-2 text-sm text-black outline-none w-full text-center font-medium">
                 พิมพ์ชื่อสินค้าที่ต้องการ...
