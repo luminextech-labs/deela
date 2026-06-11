@@ -362,14 +362,28 @@ export default function HomePage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-4">
-        {/* Hero Ad Banner */}
-        <div className="rounded-2xl border-2 border-violet-300 overflow-hidden mb-4 bg-gradient-to-br from-violet-600 to-fuchsia-500">
-          <div className="w-full aspect-[3/1] flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-3 bg-white/20 rounded-2xl flex items-center justify-center">
-                <span className="text-4xl">🎯</span>
+        {/* Hero Ad Banners */}
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          {/* Ad Banner 1 */}
+          <div className="rounded-2xl border-2 border-violet-300 overflow-hidden bg-gradient-to-br from-violet-600 to-fuchsia-500">
+            <div className="w-full aspect-[16/9] flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-12 h-12 mx-auto mb-2 bg-white/20 rounded-2xl flex items-center justify-center">
+                  <span className="text-3xl">🎯</span>
+                </div>
+                <p className="text-white/80 text-xs font-medium">Advertisement</p>
               </div>
-              <p className="text-white/80 text-sm font-medium">Advertisement</p>
+            </div>
+          </div>
+          {/* Ad Banner 2 */}
+          <div className="rounded-2xl border-2 border-violet-300 overflow-hidden bg-gradient-to-br from-fuchsia-500 to-pink-500">
+            <div className="w-full aspect-[16/9] flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-12 h-12 mx-auto mb-2 bg-white/20 rounded-2xl flex items-center justify-center">
+                  <span className="text-3xl">🔥</span>
+                </div>
+                <p className="text-white/80 text-xs font-medium">Advertisement</p>
+              </div>
             </div>
           </div>
         </div>
