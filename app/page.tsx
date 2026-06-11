@@ -364,7 +364,7 @@ export default function HomePage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-4">
         {/* Hero Ad Banners Carousel */}
-        <AdCarousel maxVisible={2} autoScrollInterval={4000} />
+        <AdCarousel autoScrollInterval={4000} />
 
         {/* Category Row */}
         <CategoryRow />
