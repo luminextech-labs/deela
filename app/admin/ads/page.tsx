@@ -53,9 +53,10 @@ export default function AdsAdminPage() {
 
       setMessage({ type: "success", text: "อัปโหลดสำเร็จ! 🎉" });
       fetchBanners();
-    } catch (err) {
-      setMessage({ type: "error", text: "เกิดข้อผิดพลาด ลองใหม่อีกครั้ง" });
-      console.error(err);
+    } catch (err: any) {
+      const errorMsg = err?.message || err?.error?.message || JSON.stringify(err) || "เกิดข้อผิดพลาดไม่ทราบสาเหตุ";
+      setMessage({ type: "error", text: `❌ ผิดพลาด: ${errorMsg}` });
+      console.error("Upload error:", err);
     } finally {
       setUploading(false);
       e.target.value = "";
