@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import MobileSidebar from './components/MobileSidebar';
 import ProductCard from './components/ProductCard';
 import AdCarousel from './components/AdCarousel';
+import ProductShowcase from './components/ProductShowcase';
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://deela-foa0.onrender.com').replace(/\/$/, '');
 
@@ -377,6 +378,9 @@ export default function HomePage() {
 
         {/* Popular Brands */}
         <PopularBrands />
+
+        {/* Product Showcase - ดึงข้อมูลจริงจาก API */}
+        <ProductShowcase />
 
         {/* Just For You - Product Grid */}
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
