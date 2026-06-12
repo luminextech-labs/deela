@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import { getAdBanners, type AdBanner } from '@/app/lib/supabase'
 
@@ -12,7 +12,10 @@ export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProp
   const [banners, setBanners] = useState<AdBanner[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
-  const [transitioning, setTransitioning] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const touchStartX = useRef<number | null>(null)
+  const touchEndX = useRef<number | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     async function fetchBanners() {
@@ -28,77 +31,138 @@ export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProp
     fetchBanners()
   }, [])
 
-  // Auto scroll - move 2 at a time
+  const goTo = useCallback((index: number) => {
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setCurrentIndex(index)
+      setIsTransitioning(false)
+    }, 200)
+  }, [isTransitioning])
+
+  const goNext = useCallback(() => {
+    if (banners.length <= 1) return
+    goTo((currentIndex + 1) % banners.length)
+  }, [banners.length, currentIndex, goTo])
+
+  const goPrev = useCallback(() => {
+    if (banners.length <= 1) return
+    goTo((currentIndex - 1 + banners.length) % banners.length)
+  }, [banners.length, currentIndex, goTo])
+
+  // Auto scroll
   useEffect(() => {
-    if (banners.length <= 2) return
-    const interval = setInterval(() => {
-      setTransitioning(true)
-      setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 2) % banners.length)
-        setTransitioning(false)
-      }, 500)
-    }, autoScrollInterval)
+    if (banners.length <= 1) return
+    const interval = setInterval(goNext, autoScrollInterval)
     return () => clearInterval(interval)
-  }, [banners.length, autoScrollInterval])
+  }, [banners.length, autoScrollInterval, goNext])
+
+  // Touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return
+    const diff = touchStartX.current - touchEndX.current
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) goNext()
+      else goPrev()
+    }
+    touchStartX.current = null
+    touchEndX.current = null
+  }
 
   if (isLoading) {
     return (
-      <div className="mb-4 grid grid-cols-1 xl:grid-cols-2 gap-4">
-        {[...Array(2)].map((_, i) => (
-          <div key={i} className="rounded-2xl overflow-hidden bg-gray-200 animate-pulse aspect-[16/9]" />
-        ))}
+      <div className="mb-4">
+        <div className="w-full aspect-[16/9] rounded-2xl overflow-hidden bg-gray-200 animate-pulse" />
+        <div className="flex justify-center gap-2 mt-3">
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="w-2 h-2 rounded-full bg-gray-300" />
+          ))}
+        </div>
       </div>
     )
   }
 
   if (banners.length === 0) {
     return (
-      <div className="mb-4 grid grid-cols-1 xl:grid-cols-2 gap-4">
-        <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-violet-600 to-fuchsia-500 aspect-[16/9] flex items-center justify-center">
+      <div className="mb-4">
+        <div className="w-full aspect-[16/9] rounded-2xl overflow-hidden bg-gradient-to-br from-violet-600 to-fuchsia-500 flex items-center justify-center">
           <span className="text-4xl">🎯</span>
         </div>
-        <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-fuchsia-500 to-pink-500 aspect-[16/9] flex items-center justify-center">
-          <span className="text-4xl">🔥</span>
+        <div className="flex justify-center gap-2 mt-3">
+          <div className="w-2 h-2 rounded-full bg-white/50" />
         </div>
       </div>
     )
   }
 
-  // Get 2 banners at a time
-  const getVisibleBanners = () => {
-    return [0, 1].map(i => banners[(currentIndex + i) % banners.length])
-  }
-
-  const visibleBanners = getVisibleBanners()
+  const currentBanner = banners[currentIndex]
 
   return (
     <div className="mb-4">
-      <div className={`grid grid-cols-1 xl:grid-cols-2 gap-4 transition-opacity duration-300 ${transitioning ? 'opacity-80' : 'opacity-100'}`}>
-        {visibleBanners.map((banner, i) => (
-          <a
-            key={`${banner.id}-${currentIndex}`}
-            href={banner.link_url || '#'}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
-          >
-            <div className="w-full aspect-[16/9] relative bg-gradient-to-br from-violet-600 to-fuchsia-500">
-              {banner.image_url ? (
-                <Image
-                  src={banner.image_url}
-                  alt="Advertisement"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-4xl">🎯</span>
-                </div>
-              )}
-            </div>
-          </a>
-        ))}
+      <div
+        ref={containerRef}
+        className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden shadow-lg cursor-pointer"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onClick={() => {
+          if (currentBanner.link_url) {
+            window.open(currentBanner.link_url, '_blank', 'noopener,noreferrer')
+          }
+        }}
+      >
+        <a
+          href={currentBanner.link_url || '#'}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full h-full"
+        >
+          <div className={`w-full h-full transition-opacity duration-200 ${isTransitioning ? 'opacity-80' : 'opacity-100'}`}>
+            {currentBanner.image_url ? (
+              <Image
+                src={currentBanner.image_url}
+                alt="Advertisement"
+                fill
+                className="object-cover"
+                sizes="100vw"
+                priority={currentIndex === 0}
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-violet-600 to-fuchsia-500 flex items-center justify-center">
+                <span className="text-4xl">🎯</span>
+              </div>
+            )}
+          </div>
+        </a>
+
+        {/* Dots */}
+        {banners.length > 1 && (
+          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
+            {banners.map((_, i) => (
+              <button
+                key={i}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  goTo(i)
+                }}
+                className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                  i === currentIndex
+                    ? 'bg-white w-4'
+                    : 'bg-white/50 hover:bg-white/75'
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
