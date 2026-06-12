@@ -8,6 +8,11 @@ const nextConfig = {
         hostname: 'dtdkjtqwnwqvozkayeps.supabase.co',
         pathname: '/storage/v1/object/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.dummyjson.com',
+        pathname: '/product-images/**',
+      },
     ],
   },
 };
