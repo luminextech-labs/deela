@@ -341,10 +341,24 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch(`${API_BASE}/api/products/`);
+        const res = await fetch('/api/products');
         if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
-        setProducts(data.slice(0, 24));
+        // Flatten all categories into one product list
+        const allProducts = data.flatMap((cat: any) =>
+          (cat.products || []).map((p: any) => ({
+            id: String(p.id),
+            name: p.title,
+            price: p.price,
+            rating: p.rating,
+            image: p.thumbnail,
+            brand: p.brand,
+            shop: 'Shopee',
+            reviews: 0,
+            sold: 0,
+          }))
+        );
+        setProducts(allProducts.slice(0, 24));
       } catch (err) {
         console.error('API error:', err);
         setProducts([]);

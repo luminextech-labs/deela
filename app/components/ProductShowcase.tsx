@@ -34,21 +34,16 @@ export default function ProductShowcase() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const results = await Promise.all(
-          CATEGORIES.map(async (cat) => {
-            const res = await fetch(
-              `https://dummyjson.com/products/category/${cat.slug}?limit=20&select=id,title,price,thumbnail,description,rating,brand,category`
-            )
-            const data = await res.json()
-            return {
-              name: cat.name,
-              slug: cat.slug,
-              emoji: cat.emoji,
-              products: data.products as Product[],
-            }
-          })
+        const res = await fetch('/api/products')
+        const data = await res.json()
+        setCategories(
+          CATEGORIES.map((cat, i) => ({
+            name: cat.name,
+            slug: cat.slug,
+            emoji: cat.emoji,
+            products: (data[i]?.products || []) as Product[],
+          }))
         )
-        setCategories(results)
       } catch (error) {
         console.error('Error fetching products:', error)
       } finally {
