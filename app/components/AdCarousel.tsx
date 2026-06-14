@@ -8,7 +8,7 @@ interface AdCarouselProps {
   autoScrollInterval?: number
 }
 
-export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProps) {
+export default function AdCarousel({ autoScrollInterval = 10000 }: AdCarouselProps) {
   const [banners, setBanners] = useState<AdBanner[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
@@ -125,7 +125,7 @@ export default function AdCarousel({ autoScrollInterval = 4000 }: AdCarouselProp
           rel="noopener noreferrer"
           className="block w-full h-full"
         >
-          <div className={`w-full h-full transition-opacity duration-200 ${isTransitioning ? 'opacity-80' : 'opacity-100'}`}>
+          <div className={`w-full h-full transition-opacity duration-5000 ${isTransitioning ? 'opacity-80' : 'opacity-100'}`}>
             {currentBanner.image_url ? (
               <Image
                 src={currentBanner.image_url}
